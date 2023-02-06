@@ -2,15 +2,14 @@
 
 void init()
 {
-	pWindow = SDL_CreateWindow("PacMan", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, 700, 900, SDL_WINDOW_SHOWN);
+	pWindow = SDL_CreateWindow(GAME_TITLE, SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, GAME_SCREEN_WIDTH, GAME_SCREEN_HEIGHT, SDL_WINDOW_SHOWN);
 	win_surf = SDL_GetWindowSurface(pWindow);
 
-	plancheSprites = SDL_LoadBMP("./pacman_sprites.bmp");
+	plancheSprites = SDL_LoadBMP(PACMAN_PATH_BMP);
     count = 0;
 }
 
 
-// fonction qui met à jour la surface de la fenetre "win_surf"
 void draw()
 {
     SDL_SetColorKey(plancheSprites, false, 0);
