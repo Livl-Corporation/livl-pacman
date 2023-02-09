@@ -45,21 +45,5 @@ SDL_Rect imgPlayButtonZoom = {200, 400, 290, 100 };
 SDL_Rect imgPlayButtonHover = {0, 30, 110, 30 };
 SDL_Rect imgPlayButtonHoverZoom = {200, 400, 290, 100 };
 
-/**
- * FUNCTIONS
-**/
-void initSDL();
-void loadMedia();
-
-void displayMainMenu();
-void handleMainMenuEvents();
-bool isPointInPlayButton(int x, int y);
-
-void startGameLoop();
-bool handleGameEvents();
-void draw();
-
-void SDL_ExitWithError(const char *message);
-void closeWindow();
 
 #endif // PACMAN_H
