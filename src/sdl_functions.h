@@ -5,8 +5,6 @@
 #ifndef PACMAN_SDL_FUNCTIONS_H
 #define PACMAN_SDL_FUNCTIONS_H
 
-#include "pacman.h"
-
 void initSDL();
 void loadMedia();
 void SDL_ExitWithError(const char *message);

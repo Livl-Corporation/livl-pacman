@@ -1,4 +1,5 @@
 #include "menu_window.h"
+#include "pacman.h"
 
 void displayMainMenu()
 {

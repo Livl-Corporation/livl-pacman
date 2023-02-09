@@ -5,7 +5,7 @@
 #ifndef PACMAN_PACMAN_WINDOW_H
 #define PACMAN_PACMAN_WINDOW_H
 
-#include "pacman.h"
+#include <stdbool.h>
 
 void startGameLoop();
 bool handleGameEvents();

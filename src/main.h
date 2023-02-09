@@ -5,6 +5,7 @@
 #ifndef PACMAN_MAIN_H
 #define PACMAN_MAIN_H
 
-#include "pacman.h"
+#include "sdl_functions.h"
+#include "menu_window.h"
 
 #endif //PACMAN_MAIN_H

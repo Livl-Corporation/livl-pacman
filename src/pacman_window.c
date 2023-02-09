@@ -1,4 +1,8 @@
 #include "pacman_window.h"
+#include "pacman.h"
+
+int count = 0;
+bool* pGameQuit = false;
 
 bool handleGameEvents()
 {
