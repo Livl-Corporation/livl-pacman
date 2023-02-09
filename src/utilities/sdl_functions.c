@@ -1,4 +1,4 @@
-#include "sdl_functions.h"
+#include "../../includes/sdl_functions.h"
 
 SDL_Window* pWindow = NULL;
 SDL_Surface* pSurfaceWindow = NULL;

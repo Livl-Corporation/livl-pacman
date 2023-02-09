@@ -1,9 +1,15 @@
-#ifndef PACMAN_H
-#define PACMAN_H
+//
+// Created by Julien on 09/02/2023.
+//
+
+#ifndef PACMAN_MAIN_H
+#define PACMAN_MAIN_H
 
 #include <SDL.h>
 #include <stdio.h>
 #include <stdbool.h>
+#include "sdl_functions.h"
+#include "menu_window.h"
 
 #define GAME_TITLE "PacMan"
 #define PATH_SPRITE_SHEET_PACMAN "../assets/img/pacman_sprites.bmp"
@@ -43,5 +49,4 @@ extern SDL_Rect imgPlayButtonZoom;
 extern SDL_Rect imgPlayButtonHover;
 extern SDL_Rect imgPlayButtonHoverZoom;
 
-
-#endif // PACMAN_H
+#endif //PACMAN_MAIN_H

@@ -1,4 +1,4 @@
-#include "menu_window.h"
+#include "../../includes/menu_window.h"
 
 SDL_Rect imgPacmanTitle = {0, 0, 190, 50 };
 SDL_Rect imgPacmanTitleZoom = {100, 100, 500, 130 };

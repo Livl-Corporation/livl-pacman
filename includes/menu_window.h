@@ -5,7 +5,7 @@
 #ifndef PACMAN_MENU_WINDOW_H
 #define PACMAN_MENU_WINDOW_H
 
-#include "pacman.h"
+#include "main.h"
 #include "pacman_window.h"
 
 void displayMainMenu();

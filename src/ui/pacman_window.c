@@ -1,4 +1,4 @@
-#include "pacman_window.h"
+#include "../../includes/pacman_window.h"
 
 int count = 0;
 bool* pGameQuit = false;
