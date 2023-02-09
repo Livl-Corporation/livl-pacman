@@ -16,17 +16,13 @@ void initSDL()
 
 void loadMedia()
 {
-    pSurfacePacmanSpriteSheet = SDL_LoadBMP(PATH_SPRITE_SHEET_IMAGE);
+    pSurfacePacmanSpriteSheet = SDL_LoadBMP(PATH_SPRITE_SHEET_PACMAN);
     if(pSurfacePacmanSpriteSheet == NULL)
         SDL_ExitWithError("Loading of the sprite-sheet");
 
-    pSurfacePlayButton = SDL_LoadBMP(PATH_PLAY_BTN_IMAGE);
+    pSurfacePlayButton = SDL_LoadBMP(PATH_SPRITE_SHEET_PLAY_BTN);
     if (pSurfacePlayButton == NULL)
         SDL_ExitWithError("Loading of the button play");
-
-    pSurfacePlayButtonHover = SDL_LoadBMP(PATH_PLAY_BTN_HOVER_IMAGE);
-    if (pSurfacePlayButtonHover == NULL)
-        SDL_ExitWithError("Loading of the button play hover");
 }
 
 void displayMainMenu()
@@ -54,26 +50,21 @@ void handleMainMenuEvents()
         SDL_Event event;
         while (!quit && SDL_PollEvent(&event))
         {
+            SDL_GetMouseState(&x, &y);
             switch (event.type)
             {
                 case SDL_QUIT:
                     quit = true;
                     break;
                 case SDL_MOUSEBUTTONUP:
-                    SDL_GetMouseState(&x, &y);
                     if (isPointInPlayButton(x, y))
-                    {
                         startGameLoop();
-                    }
                     break;
                 case SDL_MOUSEMOTION:
-                    SDL_GetMouseState(&x, &y);
                     if (isPointInPlayButton(x, y))
                     {
-                        SDL_Log("x: %d, y: %d", x, y);
-
-                        SDL_SetColorKey(pSurfacePlayButtonHover, true, 0);
-                        SDL_BlitScaled(pSurfacePlayButtonHover, &imgPlayButtonHover, pSurfaceWindow, &imgPlayButtonHoverZoom);
+                        SDL_SetColorKey(pSurfacePlayButton, true, 0);
+                        SDL_BlitScaled(pSurfacePlayButton, &imgPlayButtonHover, pSurfaceWindow, &imgPlayButtonHoverZoom);
                     }
                     else
                     {
