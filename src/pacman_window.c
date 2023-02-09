@@ -1,8 +1,15 @@
 #include "pacman_window.h"
-#include "pacman.h"
 
 int count = 0;
 bool* pGameQuit = false;
+SDL_Rect imgMazeBlueCoins = {200, 3, 168, 216 };
+SDL_Rect imgMazeBlueCoinsZoom = {4, 4, 672, 864 };
+
+SDL_Rect ghostRedEyesRight = {3, 123, 16, 16 };
+SDL_Rect ghostRedEyesLeft = {37, 123, 16, 16 };
+SDL_Rect ghostRedEyesDown = {105, 123, 16, 16 };
+SDL_Rect ghostRedEyesUp = {71, 123, 16, 16 };
+SDL_Rect ghostRedZoom = {34, 34, 32, 32 };
 
 bool handleGameEvents()
 {

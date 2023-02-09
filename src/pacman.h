@@ -14,8 +14,6 @@
 /**
  * VARIABLES
 **/
-extern int count;
-extern bool* pGameQuit;
 extern SDL_Window* pWindow;
 extern SDL_Surface* pSurfaceWindow;
 extern SDL_Surface* pSurfacePacmanSpriteSheet;
@@ -25,13 +23,13 @@ extern SDL_Surface* pSurfacePlayButton;
  * IMAGE : Spire-Sheets
 **/
 extern SDL_Rect imgMazeBlueCoins;
-extern SDL_Rect imgMazeBlueCoinsZoom;
+extern SDL_Rect imgMazeBlueCoinsZoom; // we zoom the maze x4 to fit the window
 
 extern SDL_Rect ghostRedEyesRight;
 extern SDL_Rect ghostRedEyesLeft;
 extern SDL_Rect ghostRedEyesDown;
 extern SDL_Rect ghostRedEyesUp;
-extern SDL_Rect ghostRedZoom;
+extern SDL_Rect ghostRedZoom; // we zoom the ghost x2
 
 extern SDL_Rect imgPacmanTitle;
 extern SDL_Rect imgPacmanTitleZoom;

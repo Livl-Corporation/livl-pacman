@@ -1,28 +1,10 @@
 #include "sdl_functions.h"
-#include "pacman.h"
-
-SDL_Rect imgMazeBlueCoins = {200, 3, 168, 216 };
-SDL_Rect imgMazeBlueCoinsZoom = {4, 4, 672, 864 }; // we zoom the maze x4 to fit the window
-
-SDL_Rect ghostRedEyesRight = {3, 123, 16, 16 };
-SDL_Rect ghostRedEyesLeft = {37, 123, 16, 16 };
-SDL_Rect ghostRedEyesDown = {105, 123, 16, 16 };
-SDL_Rect ghostRedEyesUp = {71, 123, 16, 16 };
-SDL_Rect ghostRedZoom = {34, 34, 32, 32 }; // we zoom the ghost x2
-
-SDL_Rect imgPacmanTitle = {0, 0, 190, 50 };
-SDL_Rect imgPacmanTitleZoom = {100, 100, 500, 130 };
-SDL_Rect imgBlackBackground = {0, 0, 0, 0 };
-
-SDL_Rect imgPlayButton = {0, 0, 110, 30 };
-SDL_Rect imgPlayButtonZoom = {200, 400, 290, 100 };
-SDL_Rect imgPlayButtonHover = {0, 30, 110, 30 };
-SDL_Rect imgPlayButtonHoverZoom = {200, 400, 290, 100 };
 
 SDL_Window* pWindow = NULL;
 SDL_Surface* pSurfaceWindow = NULL;
 SDL_Surface* pSurfacePacmanSpriteSheet = NULL;
 SDL_Surface* pSurfacePlayButton = NULL;
+
 void initSDL()
 {
     if (SDL_Init(SDL_INIT_VIDEO) != 0)

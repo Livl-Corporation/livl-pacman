@@ -5,7 +5,10 @@
 #ifndef PACMAN_PACMAN_WINDOW_H
 #define PACMAN_PACMAN_WINDOW_H
 
-#include <stdbool.h>
+#include "pacman.h"
+
+extern int count;
+extern bool* pGameQuit;
 
 void startGameLoop();
 bool handleGameEvents();

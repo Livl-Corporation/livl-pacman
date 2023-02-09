@@ -1,5 +1,13 @@
 #include "menu_window.h"
-#include "pacman.h"
+
+SDL_Rect imgPacmanTitle = {0, 0, 190, 50 };
+SDL_Rect imgPacmanTitleZoom = {100, 100, 500, 130 };
+SDL_Rect imgBlackBackground = {0, 0, 0, 0 };
+
+SDL_Rect imgPlayButton = {0, 0, 110, 30 };
+SDL_Rect imgPlayButtonZoom = {200, 400, 290, 100 };
+SDL_Rect imgPlayButtonHover = {0, 30, 110, 30 };
+SDL_Rect imgPlayButtonHoverZoom = {200, 400, 290, 100 };
 
 void displayMainMenu()
 {
