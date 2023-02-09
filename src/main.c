@@ -6,7 +6,7 @@ int main(void)
 
     loadMedia();
 
-    displayMainMenu();
+    startMainMenuLoop();
 
     closeWindow();
 

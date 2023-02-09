@@ -12,6 +12,6 @@ extern bool* pGameQuit;
 
 void startGameLoop();
 bool handleGameEvents();
-void draw();
+void drawGame();
 
 #endif //PACMAN_PACMAN_WINDOW_H

@@ -11,6 +11,20 @@ SDL_Rect ghostRedEyesDown = {105, 123, 16, 16 };
 SDL_Rect ghostRedEyesUp = {71, 123, 16, 16 };
 SDL_Rect ghostRedZoom = {34, 34, 32, 32 };
 
+void startGameLoop()
+{
+    while (!pGameQuit)
+    {
+        handleGameEvents();
+
+        drawGame();
+
+        SDL_Delay(20); // ~50 fps use SDL_GetTicks64() pour plus de precision
+
+        SDL_UpdateWindowSurface(pWindow);
+    }
+}
+
 bool handleGameEvents()
 {
     SDL_Event event;
@@ -37,22 +51,7 @@ bool handleGameEvents()
         SDL_Log("DOWN");
 }
 
-
-void startGameLoop()
-{
-    while (!pGameQuit)
-    {
-        handleGameEvents();
-
-        draw();
-
-        SDL_Delay(20); // ~50 fps use SDL_GetTicks64() pour plus de precision
-
-        SDL_UpdateWindowSurface(pWindow);
-    }
-}
-
-void draw()
+void drawGame()
 {
     SDL_SetColorKey(pSurfacePacmanSpriteSheet, false, 0);
     SDL_BlitScaled(pSurfacePacmanSpriteSheet, &imgMazeBlueCoins, pSurfaceWindow, &imgMazeBlueCoinsZoom);

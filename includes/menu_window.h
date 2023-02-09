@@ -8,7 +8,10 @@
 #include "main.h"
 #include "pacman_window.h"
 
-void displayMainMenu();
+extern bool pMainMenuQuit;
+
+void startMainMenuLoop();
+void drawMainMenu();
 void handleMainMenuEvents();
 bool isPointInPlayButton(int x, int y);
 
