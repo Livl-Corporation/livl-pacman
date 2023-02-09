@@ -23,6 +23,10 @@ void loadMedia()
     pSurfacePlayButton = SDL_LoadBMP(PATH_PLAY_BTN_IMAGE);
     if (pSurfacePlayButton == NULL)
         SDL_ExitWithError("Loading of the button play");
+
+    pSurfacePlayButtonHover = SDL_LoadBMP(PATH_PLAY_BTN_HOVER_IMAGE);
+    if (pSurfacePlayButtonHover == NULL)
+        SDL_ExitWithError("Loading of the button play hover");
 }
 
 void displayMainMenu()
@@ -61,6 +65,23 @@ void handleMainMenuEvents()
                     {
                         startGameLoop();
                     }
+                    break;
+                case SDL_MOUSEMOTION:
+                    SDL_GetMouseState(&x, &y);
+                    if (isPointInPlayButton(x, y))
+                    {
+                        SDL_Log("x: %d, y: %d", x, y);
+
+                        SDL_SetColorKey(pSurfacePlayButtonHover, true, 0);
+                        SDL_BlitScaled(pSurfacePlayButtonHover, &imgPlayButtonHover, pSurfaceWindow, &imgPlayButtonHoverZoom);
+                    }
+                    else
+                    {
+                        SDL_SetColorKey(pSurfacePlayButton, true, 0);
+                        SDL_BlitScaled(pSurfacePlayButton, &imgPlayButton, pSurfaceWindow, &imgPlayButtonZoom);
+                    }
+                    SDL_UpdateWindowSurface(pWindow);
+
                     break;
                 default: break;
             }

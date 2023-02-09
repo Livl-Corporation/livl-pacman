@@ -8,6 +8,7 @@
 #define GAME_TITLE "PacMan"
 #define PATH_SPRITE_SHEET_IMAGE "../assets/img/pacman_sprites.bmp"
 #define PATH_PLAY_BTN_IMAGE "../assets/img/play_btn.bmp"
+#define PATH_PLAY_BTN_HOVER_IMAGE "../assets/img/play_btn_hover.bmp"
 #define WINDOW_SCREEN_WIDTH 700
 #define WINDOW_SCREEN_HEIGHT 900
 
@@ -20,6 +21,8 @@ SDL_Window* pWindow = NULL;
 SDL_Surface* pSurfaceWindow = NULL;
 SDL_Surface* pSurfacePacmanSpriteSheet = NULL;
 SDL_Surface* pSurfacePlayButton = NULL;
+SDL_Surface* pSurfacePlayButtonHover = NULL;
+
 
 /**
  * IMAGE : Spire-Sheets
@@ -42,6 +45,9 @@ SDL_Rect imgBlackBackground = {0, 0, 0, 0 };
 **/
 SDL_Rect imgPlayButton = {0, 0, 98, 28 };
 SDL_Rect imgPlayButtonZoom = {200, 400, 300, 100 };
+SDL_Rect imgPlayButtonHover = {0, 0, 98, 28 };
+SDL_Rect imgPlayButtonHoverZoom = {200, 400, 300, 100 };
+
 
 /**
  * FUNCTIONS
