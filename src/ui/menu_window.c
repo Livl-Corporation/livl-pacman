@@ -14,6 +14,7 @@ SDL_Rect imgPlayButtonHoverZoom = {200, 400, 290, 100 };
 void startMainMenuLoop()
 {
     drawMainMenu();
+    initMusic();
 
     while (!pMainMenuQuit)
     {

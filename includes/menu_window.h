@@ -7,6 +7,7 @@
 
 #include "main.h"
 #include "pacman_window.h"
+#include "sdl_music.h"
 
 extern bool pMainMenuQuit;
 
