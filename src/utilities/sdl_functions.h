@@ -5,7 +5,13 @@
 #ifndef PACMAN_SDL_FUNCTIONS_H
 #define PACMAN_SDL_FUNCTIONS_H
 
-#include "../main.h"
+#define GAME_TITLE "PacMan"
+#define PATH_SPRITE_SHEET_PACMAN "../assets/img/pacman_sprites.bmp"
+#define PATH_SPRITE_SHEET_PLAY_BTN "../assets/img/play_btn.bmp"
+#define WINDOW_SCREEN_WIDTH 700
+#define WINDOW_SCREEN_HEIGHT 900
+
+#include <SDL.h>
 
 void initSDL();
 void loadMedia();

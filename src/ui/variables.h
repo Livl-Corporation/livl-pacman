@@ -1,25 +1,12 @@
 //
-// Created by Julien on 09/02/2023.
+// Created by Franck GUTMANN on 15/02/2023.
 //
 
-#ifndef PACMAN_MAIN_H
-#define PACMAN_MAIN_H
+#ifndef PACMAN_VARIABLES_H
+#define PACMAN_VARIABLES_H
 
 #include <SDL.h>
-#include <stdio.h>
-#include <stdbool.h>
-#include "utilities/sdl_functions.h"
-#include "ui/menu_window.h"
 
-#define GAME_TITLE "PacMan"
-#define PATH_SPRITE_SHEET_PACMAN "../assets/img/pacman_sprites.bmp"
-#define PATH_SPRITE_SHEET_PLAY_BTN "../assets/img/play_btn.bmp"
-#define WINDOW_SCREEN_WIDTH 700
-#define WINDOW_SCREEN_HEIGHT 900
-
-/**
- * VARIABLES
-**/
 extern SDL_Window* pWindow;
 extern SDL_Surface* pSurfaceWindow;
 extern SDL_Surface* pSurfacePacmanSpriteSheet;
@@ -49,4 +36,4 @@ extern SDL_Rect imgPlayButtonZoom;
 extern SDL_Rect imgPlayButtonHover;
 extern SDL_Rect imgPlayButtonHoverZoom;
 
-#endif //PACMAN_MAIN_H
+#endif //PACMAN_VARIABLES_H
