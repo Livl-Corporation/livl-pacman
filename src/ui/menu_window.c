@@ -1,4 +1,4 @@
-#include "../../includes/menu_window.h"
+#include "menu_window.h"
 
 bool pMainMenuQuit = false;
 
@@ -50,14 +50,13 @@ void handleMainMenuEvents()
                     startGameLoop();
                 break;
             case SDL_MOUSEMOTION:
+                SDL_SetColorKey(pSurfacePlayButton, true, 0);
                 if (isPointInPlayButton(x, y))
                 {
-                    SDL_SetColorKey(pSurfacePlayButton, true, 0);
                     SDL_BlitScaled(pSurfacePlayButton, &imgPlayButtonHover, pSurfaceWindow, &imgPlayButtonHoverZoom);
                 }
                 else
                 {
-                    SDL_SetColorKey(pSurfacePlayButton, true, 0);
                     SDL_BlitScaled(pSurfacePlayButton, &imgPlayButton, pSurfaceWindow, &imgPlayButtonZoom);
                 }
                 break;

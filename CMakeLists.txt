@@ -7,7 +7,7 @@ find_package(SDL2 REQUIRED)
 file(GLOB_RECURSE PROJECT_SOURCES CONFIGURE_DEPENDS
 		${CMAKE_CURRENT_SOURCE_DIR}/src/*.c
 		${CMAKE_CURRENT_SOURCE_DIR}/includes/*.h)
-add_executable(${PROJECT_NAME} ${PROJECT_SOURCES})
+add_executable(${PROJECT_NAME} ${PROJECT_SOURCES} src/models/pacman.c src/models/pacman.h)
 target_include_directories(${PROJECT_NAME} PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/includes)
 
 target_include_directories(${PROJECT_NAME} PRIVATE ${SDL2_INCLUDE_DIRS})
