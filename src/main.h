@@ -8,8 +8,8 @@
 #include <SDL.h>
 #include <stdio.h>
 #include <stdbool.h>
-#include "sdl_functions.h"
-#include "menu_window.h"
+#include "utilities/sdl_functions.h"
+#include "ui/menu_window.h"
 
 #define GAME_TITLE "PacMan"
 #define PATH_SPRITE_SHEET_PACMAN "../assets/img/pacman_sprites.bmp"

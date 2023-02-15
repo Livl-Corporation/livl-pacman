@@ -5,7 +5,7 @@
 #ifndef PACMAN_MENU_WINDOW_H
 #define PACMAN_MENU_WINDOW_H
 
-#include "main.h"
+#include "../main.h"
 #include "pacman_window.h"
 
 extern bool pMainMenuQuit;

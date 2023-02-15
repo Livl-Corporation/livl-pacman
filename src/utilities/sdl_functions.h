@@ -5,7 +5,7 @@
 #ifndef PACMAN_SDL_FUNCTIONS_H
 #define PACMAN_SDL_FUNCTIONS_H
 
-#include "main.h"
+#include "../main.h"
 
 void initSDL();
 void loadMedia();

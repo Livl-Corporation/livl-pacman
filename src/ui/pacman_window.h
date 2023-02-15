@@ -5,7 +5,7 @@
 #ifndef PACMAN_PACMAN_WINDOW_H
 #define PACMAN_PACMAN_WINDOW_H
 
-#include "main.h"
+#include "../main.h"
 
 extern int count;
 extern bool* pGameQuit;
