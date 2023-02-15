@@ -5,10 +5,13 @@
 #ifndef PACMAN_MENU_WINDOW_H
 #define PACMAN_MENU_WINDOW_H
 
-#include "../main.h"
-#include "pacman_window.h"
+#define GAME_TITLE "PacMan"
+#define PATH_SPRITE_SHEET_PACMAN "../assets/img/pacman_sprites.bmp"
+#define PATH_SPRITE_SHEET_PLAY_BTN "../assets/img/play_btn.bmp"
+#define WINDOW_SCREEN_WIDTH 700
+#define WINDOW_SCREEN_HEIGHT 900
 
-extern bool pMainMenuQuit;
+#include "game_window.h"
 
 void startMainMenuLoop();
 void drawMainMenu();

@@ -1,7 +1,8 @@
-#include "pacman_window.h"
+#include "game_window.h"
 
 int count = 0;
 bool* pGameQuit = false;
+
 SDL_Rect imgMazeBlueCoins = {200, 3, 168, 216 };
 SDL_Rect imgMazeBlueCoinsZoom = {4, 4, 672, 864 };
 
