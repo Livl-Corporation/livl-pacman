@@ -9,12 +9,14 @@
 #include <SDL.h>
 
 #include "variables.h"
+#include "../pacman/pacman.h"
+#include "models/position.h"
 
 extern int count;
-extern bool* pGameQuit;
+extern bool *pGameQuit;
 
 void startGameLoop();
 bool handleGameEvents();
 void drawGame();
 
-#endif //PACMAN_GAME_WINDOW_H
+#endif // PACMAN_GAME_WINDOW_H
