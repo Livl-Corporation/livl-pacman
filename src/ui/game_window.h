@@ -7,14 +7,16 @@
 
 #include <stdbool.h>
 #include <SDL.h>
-
+#include "../models/maze.h"
+#include "../utilities/console_handler.h"
 #include "variables.h"
 #include "../pacman/pacman.h"
 #include "models/position.h"
 
 extern int count;
-extern bool *pGameQuit;
+extern bool pGameQuit;
 
+void initLoadMaze();
 void startGameLoop();
 bool handleGameEvents();
 void drawGame();

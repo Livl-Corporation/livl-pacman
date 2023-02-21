@@ -1,7 +1,8 @@
 #include "game_window.h"
 
 int count = 0;
-bool *pGameQuit = false;
+
+bool pGameQuit = false;
 
 SDL_Rect imgMazeBlueCoins = {200, 3, 168, 216};
 SDL_Rect imgMazeBlueCoinsZoom = {4, 4, 672, 864};
@@ -10,10 +11,24 @@ SDL_Rect ghostRedEyesRight = {3, 123, 16, 16};
 SDL_Rect ghostRedEyesLeft = {37, 123, 16, 16};
 SDL_Rect ghostRedEyesDown = {105, 123, 16, 16};
 SDL_Rect ghostRedEyesUp = {71, 123, 16, 16};
-SDL_Rect ghostRedZoom = {34, 34, 32, 32};
+SDL_Rect ghostRedZoom = {34, 34, 36, 36};
+
+void initLoadMaze()
+{
+    if (pacmanMazeArray == NULL)
+    {
+        if (!retrieveMazeFromFile())
+        {
+            ConsoleHandlerDisplayError("while retrieving maze from file.");
+            pGameQuit = true;
+        }
+    }
+}
 
 void startGameLoop()
 {
+    initLoadMaze();
+
     while (!pGameQuit)
     {
         handleGameEvents();
@@ -24,18 +39,21 @@ void startGameLoop()
 
         SDL_UpdateWindowSurface(pWindow);
     }
+
+    freeMaze();
 }
 
 // This function should trigger all required events handling
 bool handleGameEvents()
 {
     SDL_Event event;
+
     while (!pGameQuit && SDL_PollEvent(&event))
     {
         switch (event.type)
         {
         case SDL_QUIT:
-            *pGameQuit = true;
+            pGameQuit = true;
             break;
         }
     }
@@ -44,12 +62,11 @@ bool handleGameEvents()
     const Uint8 *keys = SDL_GetKeyboardState(&numberOfKeyboardScancodes);
 
     if (keys[SDL_SCANCODE_ESCAPE])
-        *pGameQuit = true;
+        pGameQuit = true;
 
     handlePacmanEvents();
 }
 
-// This function should draw all required elements in correct order
 void drawGame()
 {
     SDL_SetColorKey(pSurfacePacmanSpriteSheet, false, 0);

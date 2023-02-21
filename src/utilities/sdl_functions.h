@@ -11,6 +11,7 @@
 
 #include <SDL.h>
 #include "constants.h"
+#include "console_handler.h"
 
 void SDL_ExitWithError(const char *message);
 

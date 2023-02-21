@@ -35,13 +35,14 @@ void loadMedia()
 
 void SDL_ExitWithError(const char *message)
 {
-    SDL_Log("ERROR : %s > %s\n", message, SDL_GetError());
-    SDL_Quit();
+    ConsoleHandlerDisplayError("%s > %s", message, SDL_GetError());
+    closeWindow();
     exit(EXIT_FAILURE);
 }
 
 void closeWindow()
 {
+    ConsoleHandlerDisplayMessage("Freeing SDL Surfaces and Window.");
     SDL_FreeSurface(pSurfacePacmanSpriteSheet);
     SDL_FreeSurface(pSurfacePlayButton);
     SDL_FreeSurface(pSurfaceWindow);
