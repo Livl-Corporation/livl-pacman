@@ -26,6 +26,7 @@ void startGameLoop()
     }
 }
 
+// This function should trigger all required events handling
 bool handleGameEvents()
 {
     SDL_Event event;
@@ -44,16 +45,11 @@ bool handleGameEvents()
 
     if (keys[SDL_SCANCODE_ESCAPE])
         *pGameQuit = true;
-    if (keys[SDL_SCANCODE_LEFT])
-        SDL_Log("LEFT");
-    if (keys[SDL_SCANCODE_RIGHT])
-        SDL_Log("RIGHT");
-    if (keys[SDL_SCANCODE_UP])
-        SDL_Log("UP");
-    if (keys[SDL_SCANCODE_DOWN])
-        SDL_Log("DOWN");
+
+    handlePacmanEvents();
 }
 
+// This function should draw all required elements in correct order
 void drawGame()
 {
     SDL_SetColorKey(pSurfacePacmanSpriteSheet, false, 0);
@@ -79,6 +75,7 @@ void drawGame()
         ghostRedZoom.y--;
         break;
     }
+
     count = (count + 1) % (512);
 
     SDL_Rect ghost_in2 = *newGhost;
@@ -88,6 +85,5 @@ void drawGame()
     SDL_SetColorKey(pSurfacePacmanSpriteSheet, true, 0);
     SDL_BlitScaled(pSurfacePacmanSpriteSheet, &ghost_in2, pSurfaceWindow, &ghostRedZoom);
 
-    struct Position pacmanPos = {34, 100};
-    drawPacman(pacmanPos);
+    drawPacman(count);
 }

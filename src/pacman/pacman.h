@@ -10,7 +10,10 @@
 #include "ui/variables.h"
 #include "models/position.h"
 #include "constants.h"
+#include "enums/direction.h"
 
-void drawPacman(struct Position position);
+void handlePacmanEvents();
+
+void drawPacman(int count);
 
 #endif // PACMAN_PACMAN_H

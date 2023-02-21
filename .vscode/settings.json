@@ -2,6 +2,8 @@
     "cmake.configureOnOpen": true,
     "files.associations": {
         "pacman.h": "c",
-        "__node_handle": "c"
+        "__node_handle": "c",
+        "position.h": "c",
+        "sdl_functions.h": "c"
     }
 }
