@@ -46,8 +46,10 @@ void handleMainMenuEvents()
                 pMainMenuQuit = true;
                 break;
             case SDL_MOUSEBUTTONUP:
-                if (isPointInPlayButton(x, y))
+                if (isPointInPlayButton(x, y)) {
                     startGameLoop();
+                    pMainMenuQuit = true;
+                }
                 break;
             case SDL_MOUSEMOTION:
                 SDL_SetColorKey(pSurfacePlayButton, true, 0);
@@ -63,7 +65,6 @@ void handleMainMenuEvents()
             default: break;
         }
     }
-
 }
 
 bool isPointInPlayButton(int x, int y)

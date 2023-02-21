@@ -12,6 +12,7 @@
 #define WINDOW_SCREEN_HEIGHT 900
 
 #include <SDL.h>
+#include "console_handler.h"
 
 void initSDL();
 void loadMedia();
