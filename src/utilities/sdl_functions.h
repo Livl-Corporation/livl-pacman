@@ -5,10 +5,6 @@
 #ifndef PACMAN_SDL_FUNCTIONS_H
 #define PACMAN_SDL_FUNCTIONS_H
 
-#define PATH_SPRITE_SHEET_PLAY_BTN "../assets/img/play_btn.bmp"
-#define WINDOW_SCREEN_WIDTH 700
-#define WINDOW_SCREEN_HEIGHT 900
-
 #include <SDL.h>
 #include "constants.h"
 #include "console_handler.h"

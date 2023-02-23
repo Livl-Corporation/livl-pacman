@@ -94,8 +94,8 @@ struct Position uiPosToGridPos(struct Position posInPx)
     struct Position position;
 
     // Get the center of the sprite
-    position.x += CELL_SIZE/2;
-    position.y += CELL_SIZE/2;
+    posInPx.x += CELL_SIZE/2;
+    posInPx.y += CELL_SIZE/2;
 
     // Get the position in the grid
     position.x = posInPx.x / CELL_SIZE;

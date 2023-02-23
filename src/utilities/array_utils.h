@@ -18,7 +18,7 @@ void allocate2DArray(char ***array, int rows, int columns);
 
 /**
  * Free a 2D array
- * @param array 
+ * @param array
  * @param rows
  */
 void free2DArray(char **array, int rows);

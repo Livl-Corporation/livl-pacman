@@ -1,8 +1,5 @@
 #include "sdl_functions.h"
 
-// TODO : To remove :
-#define PATH_SPRITE_SHEET_PACMAN "../assets/img/pacman_sprites.bmp"
-
 SDL_Window *pWindow = NULL;
 SDL_Surface *pSurfaceWindow = NULL;
 SDL_Surface *pSurfacePacmanSpriteSheet = NULL;

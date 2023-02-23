@@ -61,19 +61,19 @@ void drawPacman(int count)
     {
     case DIRECTION_RIGHT:
         newPacman = (pacmanAnimation == 0) ? &pacmanRight1 : &pacmanRight2;
-        pacmanPosCopy.x++;
+        pacmanPosCopy.x += PACMAN_SPEED;
         break;
     case DIRECTION_LEFT:
         newPacman = (pacmanAnimation == 0) ? &pacmanLeft1 : &pacmanLeft2;
-        pacmanPosCopy.x--;
+        pacmanPosCopy.x -= PACMAN_SPEED
         break;
     case DIRECTION_UP:
         newPacman = (pacmanAnimation == 0) ? &pacmanUp1 : &pacmanUp2;
-        pacmanPosCopy.y--;
+        pacmanPosCopy.y -= PACMAN_SPEED;
         break;
     case DIRECTION_DOWN:
         newPacman = (pacmanAnimation == 0) ? &pacmanDown1 : &pacmanDown2;
-        pacmanPosCopy.y++;
+        pacmanPosCopy.y += PACMAN_SPEED;
         break;
     }
 
@@ -105,6 +105,8 @@ void drawPacman(int count)
 
 void onPacmanGridMove() {
 
+    // It's here that we will check if pacman has eaten food or is in colission with a ghost
+    
 }
 
 void pacmanBlit(SDL_Rect *srcRect) {
