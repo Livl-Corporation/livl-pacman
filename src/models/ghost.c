@@ -4,26 +4,6 @@
 
 #include "ghost.h"
 
-SDL_Rect ghostRedRight;
-SDL_Rect ghostRedLeft;
-SDL_Rect ghostRedDown;
-SDL_Rect ghostRedUp;
-
-SDL_Rect ghostRoseRight;
-SDL_Rect ghostRoseLeft;
-SDL_Rect ghostRoseDown;
-SDL_Rect ghostRoseUp;
-
-SDL_Rect ghostTealRight;
-SDL_Rect ghostTealLeft;
-SDL_Rect ghostTealDown;
-SDL_Rect ghostTealUp;
-
-SDL_Rect ghostOrangeRight;
-SDL_Rect ghostOrangeLeft;
-SDL_Rect ghostOrangeDown;
-SDL_Rect ghostOrangeUp;
-
 struct Ghost *ghostList;
 
 void initGhostList() {
@@ -39,9 +19,47 @@ void initGhostList() {
         ghostList[i].gridPosition.y = 0;
 
         // Sprites :
-        ghostList[i].spritePos = malloc(sizeof(SDL_Rect)*DIRECTION_COUNT);
+        ghostList[i].spritePos = malloc(sizeof(SDL_Rect));
+
+        for (int j = 0; j < DIRECTION_COUNT; j++) {
+            ghostList[i].spritePos[j].x = j*2*(GHOST_SIZE+GHOST_SPACING_X);
+            ghostList[i].spritePos[j].y = i*(GHOST_SIZE+GHOST_SPACING_Y);
+            ghostList[i].spritePos[j].w = GHOST_SIZE;
+            ghostList[i].spritePos[j].h = GHOST_SIZE;
+        }
+
+        spawnGhost(i);
 
     }
 
 }
 
+void freeGhostList() {
+    for (int i = 0; i < GHOST_COUNT; i++) {
+        free(ghostList[i].spritePos);
+    }
+    free(ghostList);
+}
+
+void spawnGhost(int ghostId) {
+    ghostList[ghostId].gridPosition = getInitialPositionOfElement(ghostId);
+    ghostList[ghostId].uiPosition = gridPosToUiPos(ghostList[ghostId].gridPosition);
+}
+
+void drawGhosts(int count) {
+    for (int i = 0; i < GHOST_COUNT; i++) {
+        updateGhost(ghostList[i], count);
+    }
+}
+
+void updateGhost(struct Ghost ghost, int count) {
+
+
+
+}
+
+void blitGhost(struct Ghost ghost, SDL_Rect *spritePos) {
+    SDL_Rect rect = {ghost.uiPosition.x, ghost.uiPosition.y, CELL_SIZE, CELL_SIZE};
+    SDL_SetColorKey(pSurfacePacmanSpriteSheet, 1, 0);
+    SDL_BlitScaled(pSurfacePacmanSpriteSheet, spritePos, pSurfaceWindow, &rect);
+}

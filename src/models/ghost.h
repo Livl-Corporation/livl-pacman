@@ -5,18 +5,11 @@
 #ifndef PACMAN_GHOST_H
 #define PACMAN_GHOST_H
 
-#define GHOST_INITIAL_POS_X 4
-#define GHOST_INITIAL_POS_Y 124
-
-#define GHOST_SPACING_X 3
-#define GHOST_SPACING_Y 4
-
-#define GHOST_SIZE 14
-#define GHOST_COUNT 4
-
 #include <SDL.h>
 #include "models/position.h"
 #include "enums/direction.h"
+#include "constants.h"
+#include "maze.h"
 
 struct Ghost {
     int number;
@@ -51,5 +44,6 @@ void freeGhostList();
 
 // Private
 void updateGhost(struct Ghost ghost, int count);
+void blitGhost(struct Ghost ghost, SDL_Rect *spritePos);
 
 #endif //PACMAN_GHOST_H
