@@ -47,6 +47,7 @@ void handlePacmanEvents()
         pacmanDirection = DIRECTION_UP;
     if (keys[SDL_SCANCODE_DOWN])
         pacmanDirection = DIRECTION_DOWN;
+
 }
 
 void drawPacman(int count)

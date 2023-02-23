@@ -27,6 +27,7 @@ void startGameLoop()
     }
 
     freeMaze();
+    freeGhostList();
 }
 
 // This function should trigger all required events handling
