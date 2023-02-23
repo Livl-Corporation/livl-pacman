@@ -16,7 +16,7 @@ SDL_Rect pacmanDown2 = {127, 90, 14, 14};
 struct Position pacmanSpawnPos = {1, 1};
 
 struct Position pacmanUIPos = {0, 0};
-struct Position pacmanGridPos = {1, 1};
+struct Position pacmanGridPos = {0, 0};
 
 Direction pacmanDirection = DIRECTION_RIGHT;
 
