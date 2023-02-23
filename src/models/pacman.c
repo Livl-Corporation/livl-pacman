@@ -16,7 +16,7 @@ SDL_Rect pacmanDown2 = {127, 90, 14, 14};
 struct Position pacmanSpawnPos = {1, 1};
 
 struct Position pacmanUIPos = {0, 0};
-struct Position pacmanGridPos = {1, 1};
+struct Position pacmanGridPos = {0, 0};
 
 Direction pacmanDirection = DIRECTION_RIGHT;
 
@@ -52,7 +52,7 @@ void drawPacman(int count)
 
     SDL_Rect *newPacman = NULL;
 
-    int pacmanAnimation = (count / 4) % 2;
+    int pacmanAnimation = (count / ANIMATION_SPEED) % 2;
 
     // Copy pacmanPositon to a new
     struct Position pacmanPosCopy = pacmanUIPos;
@@ -61,19 +61,19 @@ void drawPacman(int count)
     {
     case DIRECTION_RIGHT:
         newPacman = (pacmanAnimation == 0) ? &pacmanRight1 : &pacmanRight2;
-        pacmanPosCopy.x += PACMAN_SPEED;
+        pacmanPosCopy.x ++;
         break;
     case DIRECTION_LEFT:
         newPacman = (pacmanAnimation == 0) ? &pacmanLeft1 : &pacmanLeft2;
-        pacmanPosCopy.x -= PACMAN_SPEED
+        pacmanPosCopy.x --;
         break;
     case DIRECTION_UP:
         newPacman = (pacmanAnimation == 0) ? &pacmanUp1 : &pacmanUp2;
-        pacmanPosCopy.y -= PACMAN_SPEED;
+        pacmanPosCopy.y --;
         break;
     case DIRECTION_DOWN:
         newPacman = (pacmanAnimation == 0) ? &pacmanDown1 : &pacmanDown2;
-        pacmanPosCopy.y += PACMAN_SPEED;
+        pacmanPosCopy.y ++;
         break;
     }
 
@@ -106,7 +106,7 @@ void drawPacman(int count)
 void onPacmanGridMove() {
 
     // It's here that we will check if pacman has eaten food or is in colission with a ghost
-    
+
 }
 
 void pacmanBlit(SDL_Rect *srcRect) {

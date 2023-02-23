@@ -25,7 +25,7 @@ void startGameLoop()
 
         drawGame();
 
-        SDL_Delay(20); // ~50 fps use SDL_GetTicks64() pour plus de precision
+        SDL_Delay((1/GAME_SPEED)*1000);
 
         SDL_UpdateWindowSurface(pWindow);
     }
@@ -86,7 +86,7 @@ void drawGame()
     count = (count + 1) % (512);
 
     SDL_Rect ghost_in2 = *newGhost;
-    if ((count / 4) % 2)
+    if ((count / ANIMATION_SPEED) % 2)
         ghost_in2.x += 17;
 
     SDL_SetColorKey(pSurfacePacmanSpriteSheet, true, 0);
