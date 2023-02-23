@@ -4,12 +4,14 @@
 
 #include "ghost.h"
 
-struct Ghost *ghostList;
+struct Sprite *ghostList;
 
 void initGhostList() {
 
+    // TODO : [sprite refactor] use this code also for pacman
+
     // Malloc ghost list
-    ghostList = malloc(sizeof(struct Ghost) * GHOST_COUNT);
+    ghostList = malloc(sizeof(struct Sprite) * GHOST_COUNT);
 
     for (int i = 0; i < GHOST_COUNT; i++) {
         ghostList[i].number = i;
@@ -52,13 +54,13 @@ void drawGhosts(int count) {
     }
 }
 
-void updateGhost(struct Ghost ghost, int count) {
+void updateGhost(struct Sprite ghost, int count) {
 
 
 
 }
 
-void blitGhost(struct Ghost ghost, SDL_Rect *spritePos) {
+void blitGhost(struct Sprite ghost, SDL_Rect *spritePos) {
     SDL_Rect rect = {ghost.uiPosition.x, ghost.uiPosition.y, CELL_SIZE, CELL_SIZE};
     SDL_SetColorKey(pSurfacePacmanSpriteSheet, 1, 0);
     SDL_BlitScaled(pSurfacePacmanSpriteSheet, spritePos, pSurfaceWindow, &rect);

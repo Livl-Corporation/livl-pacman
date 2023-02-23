@@ -10,13 +10,7 @@
 #include "enums/direction.h"
 #include "constants.h"
 #include "maze.h"
-
-struct Ghost {
-    int number;
-    struct Position uiPosition;
-    struct Position gridPosition;
-    SDL_Rect *spritePos;
-};
+#include "models/sprite.h"
 
 /**
  * Initialize the ghost list
@@ -43,7 +37,7 @@ void drawGhosts(int count);
 void freeGhostList();
 
 // Private
-void updateGhost(struct Ghost ghost, int count);
-void blitGhost(struct Ghost ghost, SDL_Rect *spritePos);
+void updateGhost(struct Sprite ghost, int count);
+void blitGhost(struct Sprite ghost, SDL_Rect *spritePos);
 
 #endif //PACMAN_GHOST_H

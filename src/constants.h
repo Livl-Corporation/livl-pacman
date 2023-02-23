@@ -21,6 +21,7 @@
 
 #define GAME_SPEED 50 // IN FPS, BIGGER IS FASTER
 #define ANIMATION_SPEED 14 // BIGGER IS SLOWER
+#define SPRITE_SPEED 1 // Don't change this for the moment
 
 #define GHOST_INITIAL_POS_X 4
 #define GHOST_INITIAL_POS_Y 124

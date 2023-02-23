@@ -20,6 +20,8 @@ struct Position pacmanGridPos = {0, 0};
 
 Direction pacmanDirection = DIRECTION_RIGHT;
 
+// TODO : [sprite refactor] use sprite system for pacman
+
 void spawnPacman()
 {
     pacmanSpawnPos = getInitialPositionOfElement(PACMAN);
