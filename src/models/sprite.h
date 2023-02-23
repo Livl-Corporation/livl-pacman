@@ -16,7 +16,7 @@ struct Sprite {
     struct Position uiPosition;
     struct Position gridPosition;
     Direction direction;
-    SDL_Rect *spritePos;
+    SDL_Rect *rects;
 };
 
 void moveSprintInDirection(struct Sprite *sprite);
