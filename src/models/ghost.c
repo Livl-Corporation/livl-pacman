@@ -21,7 +21,7 @@ void initGhostList() {
         ghostList[i].gridPosition.y = 0;
 
         // Sprites :
-        ghostList[i].spritePos = malloc(sizeof(SDL_Rect));
+        ghostList[i].spritePos = malloc(sizeof(SDL_Rect) * DIRECTION_COUNT);
 
         for (int j = 0; j < DIRECTION_COUNT; j++) {
             ghostList[i].spritePos[j].x = j*2*(GHOST_SIZE+GHOST_SPACING_X);
@@ -50,18 +50,31 @@ void spawnGhost(int ghostId) {
 
 void drawGhosts(int count) {
     for (int i = 0; i < GHOST_COUNT; i++) {
-        updateGhost(ghostList[i], count);
+        updateGhost(&ghostList[i], count);
     }
 }
 
-void updateGhost(struct Sprite ghost, int count) {
+void updateGhost(struct Sprite *sprite, int count) {
 
+    int newDirection = count/128;
 
+    if (newDirection < 4) {
+        sprite->direction = newDirection;
+    }
+
+    moveSprintInDirection(sprite);
+
+    // Animation
+    SDL_Rect ghost_in2 = sprite->spritePos[sprite->direction];
+    if ((count / ANIMATION_SPEED) % 2)
+        ghost_in2.x += 17;
+
+    blitGhost(sprite, &ghost_in2);
 
 }
 
-void blitGhost(struct Sprite ghost, SDL_Rect *spritePos) {
-    SDL_Rect rect = {ghost.uiPosition.x, ghost.uiPosition.y, CELL_SIZE, CELL_SIZE};
+void blitGhost(struct Sprite *sprite, SDL_Rect *spritePos) {
+    SDL_Rect rect = {sprite->uiPosition.x, sprite->uiPosition.y, CELL_SIZE, CELL_SIZE};
     SDL_SetColorKey(pSurfacePacmanSpriteSheet, 1, 0);
     SDL_BlitScaled(pSurfacePacmanSpriteSheet, spritePos, pSurfaceWindow, &rect);
 }

@@ -19,6 +19,6 @@ struct Sprite {
     SDL_Rect *spritePos;
 };
 
-void moveSprintInDirection(struct Sprite sprite, Direction direction);
+void moveSprintInDirection(struct Sprite *sprite);
 
 #endif //PACMAN_SPRITE_H

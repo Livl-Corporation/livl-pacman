@@ -37,7 +37,7 @@ void drawGhosts(int count);
 void freeGhostList();
 
 // Private
-void updateGhost(struct Sprite ghost, int count);
-void blitGhost(struct Sprite ghost, SDL_Rect *spritePos);
+void updateGhost(struct Sprite *sprite, int count);
+void blitGhost(struct Sprite *sprite, SDL_Rect *spritePos);
 
 #endif //PACMAN_GHOST_H

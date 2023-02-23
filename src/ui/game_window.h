@@ -12,6 +12,7 @@
 #include "variables.h"
 #include "models/pacman.h"
 #include "models/position.h"
+#include "models/ghost.h"
 
 extern int count;
 
