@@ -13,9 +13,23 @@ SDL_Rect pacmanUp2 = {93, 90, 14, 14};
 SDL_Rect pacmanDown1 = {110, 90, 14, 14};
 SDL_Rect pacmanDown2 = {127, 90, 14, 14};
 
-struct Position pacmanPos = {34, 50};
+struct Position pacmanSpawnPos = {1, 1};
+
+struct Position pacmanUIPos = {0, 0};
+struct Position pacmanGridPos = {1, 1};
 
 Direction pacmanDirection = DIRECTION_RIGHT;
+
+void spawnPacman()
+{
+    pacmanSpawnPos = getInitialPositionOfElement(PACMAN);
+
+    pacmanGridPos = pacmanSpawnPos;
+    pacmanUIPos = gridPosToUiPos(pacmanGridPos);
+
+    pacmanDirection = DIRECTION_RIGHT;
+
+}
 
 void handlePacmanEvents()
 {
@@ -40,27 +54,61 @@ void drawPacman(int count)
 
     int pacmanAnimation = (count / 4) % 2;
 
+    // Copy pacmanPositon to a new
+    struct Position pacmanPosCopy = pacmanUIPos;
+
     switch (pacmanDirection)
     {
     case DIRECTION_RIGHT:
         newPacman = (pacmanAnimation == 0) ? &pacmanRight1 : &pacmanRight2;
-        pacmanPos.x++;
+        pacmanPosCopy.x++;
         break;
     case DIRECTION_LEFT:
         newPacman = (pacmanAnimation == 0) ? &pacmanLeft1 : &pacmanLeft2;
-        pacmanPos.x--;
+        pacmanPosCopy.x--;
         break;
     case DIRECTION_UP:
         newPacman = (pacmanAnimation == 0) ? &pacmanUp1 : &pacmanUp2;
-        pacmanPos.y--;
+        pacmanPosCopy.y--;
         break;
     case DIRECTION_DOWN:
         newPacman = (pacmanAnimation == 0) ? &pacmanDown1 : &pacmanDown2;
-        pacmanPos.y++;
+        pacmanPosCopy.y++;
         break;
     }
 
-    SDL_Rect rect = {pacmanPos.x, pacmanPos.y, CELL_SIZE, CELL_SIZE};
+    // Get new pacman position in grid
+    struct Position newPacmanGridPos = uiPosToGridPos(pacmanPosCopy);
+
+    if (!arePositionEquals(pacmanGridPos, newPacmanGridPos))
+    {
+
+        if (isObstacle(newPacmanGridPos))
+        {
+            // If pacman, just blit him at without updating his position
+            pacmanBlit(newPacman);
+            return;
+        }
+
+        // Pacman has moved in grid :
+        pacmanGridPos = newPacmanGridPos;
+        onPacmanGridMove();
+
+    }
+
+    // Move is valid, update pacman position
+    pacmanUIPos = pacmanPosCopy;
+
+    pacmanBlit(newPacman);
+
+}
+
+void onPacmanGridMove() {
+
+}
+
+void pacmanBlit(SDL_Rect *srcRect) {
+    SDL_Rect rect = {pacmanUIPos.x, pacmanUIPos.y, CELL_SIZE, CELL_SIZE};
     SDL_SetColorKey(pSurfacePacmanSpriteSheet, 1, 0);
-    SDL_BlitScaled(pSurfacePacmanSpriteSheet, newPacman, pSurfaceWindow, &rect);
+    SDL_BlitScaled(pSurfacePacmanSpriteSheet, srcRect, pSurfaceWindow, &rect);
 }

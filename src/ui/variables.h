@@ -12,6 +12,8 @@ extern SDL_Surface *pSurfaceWindow;
 extern SDL_Surface *pSurfacePacmanSpriteSheet;
 extern SDL_Surface *pSurfacePlayButton;
 
+extern bool pGameQuit;
+
 /**
  * IMAGE : Spire-Sheets
  **/

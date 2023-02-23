@@ -4,6 +4,8 @@
         "pacman.h": "c",
         "__node_handle": "c",
         "position.h": "c",
-        "sdl_functions.h": "c"
-    }
+        "sdl_functions.h": "c",
+        "direction.h": "c"
+    },
+    "C_Cpp.errorSquiggles": "disabled"
 }
