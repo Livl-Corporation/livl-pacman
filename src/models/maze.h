@@ -6,7 +6,7 @@
 #include "constants.h"
 #include "ui/variables.h"
 #include "utilities/array_utils.h"
-#include "models/maze-element.h"
+#include "enums/maze-element.h"
 
 extern char **initialMaze;
 extern char **gameMaze;
