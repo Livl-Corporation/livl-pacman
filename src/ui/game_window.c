@@ -13,21 +13,11 @@ SDL_Rect ghostRedEyesDown = {105, 123, 16, 16};
 SDL_Rect ghostRedEyesUp = {71, 123, 16, 16};
 SDL_Rect ghostRedZoom = {34, 34, 36, 36};
 
-void initLoadMaze()
-{
-    if (pacmanMazeArray == NULL)
-    {
-        if (!retrieveMazeFromFile())
-        {
-            ConsoleHandlerDisplayError("while retrieving maze from file.");
-            pGameQuit = true;
-        }
-    }
-}
-
 void startGameLoop()
 {
-    initLoadMaze();
+    initMaze();
+
+    spawnPacman();
 
     while (!pGameQuit)
     {
