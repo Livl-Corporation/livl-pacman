@@ -6,12 +6,14 @@
 #define PACMAN_GAME_WINDOW_H
 
 #include <stdbool.h>
+#include <time.h>
 #include <SDL.h>
 #include "../models/maze.h"
 #include "../utilities/console_handler.h"
 #include "variables.h"
 #include "models/pacman.h"
 #include "models/position.h"
+#include "models/ghost.h"
 
 extern int count;
 

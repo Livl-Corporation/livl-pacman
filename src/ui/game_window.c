@@ -7,30 +7,39 @@ bool pGameQuit = false;
 SDL_Rect imgMazeBlueCoins = {200, 3, 168, 216};
 SDL_Rect imgMazeBlueCoinsZoom = {4, 4, 672, 864};
 
-SDL_Rect ghostRedEyesRight = {3, 123, 16, 16};
-SDL_Rect ghostRedEyesLeft = {37, 123, 16, 16};
-SDL_Rect ghostRedEyesDown = {105, 123, 16, 16};
-SDL_Rect ghostRedEyesUp = {71, 123, 16, 16};
-SDL_Rect ghostRedZoom = {34, 34, 36, 36};
-
 void startGameLoop()
 {
     initMaze();
 
+    initGhostList();
+
     spawnPacman();
+
+    double delayInSec = 1.0 / GAME_SPEED;
+    Uint32 delayInMs = (delayInSec * 1000);
 
     while (!pGameQuit)
     {
+        clock_t before = clock();
+
+        count = (count + 1) % (512);
+
         handleGameEvents();
 
         drawGame();
 
-        SDL_Delay((1/GAME_SPEED)*1000);
-
         SDL_UpdateWindowSurface(pWindow);
+
+        clock_t difference = clock() - before;
+        int msec = difference * 1000 / CLOCKS_PER_SEC;
+
+        if (delayInMs > msec)
+            SDL_Delay(delayInMs - msec);
+
     }
 
     freeMaze();
+    freeGhostList();
 }
 
 // This function should trigger all required events handling
@@ -59,38 +68,11 @@ bool handleGameEvents()
 
 void drawGame()
 {
+    // TODO : Move maze display to maze file
     SDL_SetColorKey(pSurfacePacmanSpriteSheet, false, 0);
     SDL_BlitScaled(pSurfacePacmanSpriteSheet, &imgMazeBlueCoins, pSurfaceWindow, &imgMazeBlueCoinsZoom);
 
-    SDL_Rect *newGhost = NULL;
-    switch (count / 128)
-    {
-    case 0:
-        newGhost = &(ghostRedEyesRight);
-        ghostRedZoom.x++;
-        break;
-    case 1:
-        newGhost = &(ghostRedEyesDown);
-        ghostRedZoom.y++;
-        break;
-    case 2:
-        newGhost = &(ghostRedEyesLeft);
-        ghostRedZoom.x--;
-        break;
-    case 3:
-        newGhost = &(ghostRedEyesUp);
-        ghostRedZoom.y--;
-        break;
-    }
-
-    count = (count + 1) % (512);
-
-    SDL_Rect ghost_in2 = *newGhost;
-    if ((count / ANIMATION_SPEED) % 2)
-        ghost_in2.x += 17;
-
-    SDL_SetColorKey(pSurfacePacmanSpriteSheet, true, 0);
-    SDL_BlitScaled(pSurfacePacmanSpriteSheet, &ghost_in2, pSurfaceWindow, &ghostRedZoom);
+    drawGhosts(count);
 
     drawPacman(count);
 }

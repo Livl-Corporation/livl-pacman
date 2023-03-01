@@ -10,7 +10,7 @@
 #include "ui/variables.h"
 #include "models/position.h"
 #include "constants.h"
-#include "models/direction.h"
+#include "enums/direction.h"
 #include "models/maze.h"
 
 /**

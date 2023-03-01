@@ -20,6 +20,8 @@ struct Position pacmanGridPos = {0, 0};
 
 Direction pacmanDirection = DIRECTION_RIGHT;
 
+// TODO : [sprite refactor] use sprite system for pacman
+
 void spawnPacman()
 {
     pacmanSpawnPos = getInitialPositionOfElement(PACMAN);
@@ -45,6 +47,7 @@ void handlePacmanEvents()
         pacmanDirection = DIRECTION_UP;
     if (keys[SDL_SCANCODE_DOWN])
         pacmanDirection = DIRECTION_DOWN;
+
 }
 
 void drawPacman(int count)
