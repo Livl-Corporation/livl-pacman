@@ -7,10 +7,10 @@
 
 typedef enum
 {
-    RED = 1,
-    PINK = 2,
-    BLUE = 3,
-    ORANGE = 4,
+    RED = 0,
+    PINK = 1,
+    BLUE = 2,
+    ORANGE = 3,
 } GhostType;
 
 #endif //PACMAN_GHOST_TYPE_ENUM_H

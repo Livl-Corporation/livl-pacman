@@ -15,15 +15,27 @@ void startGameLoop()
 
     spawnPacman();
 
+    double delayInSec = 1.0 / GAME_SPEED;
+    Uint32 delayInMs = (delayInSec * 1000);
+
     while (!pGameQuit)
     {
+        clock_t before = clock();
+
+        count = (count + 1) % (512);
+
         handleGameEvents();
 
         drawGame();
 
-        SDL_Delay((1/GAME_SPEED)*1000);
-
         SDL_UpdateWindowSurface(pWindow);
+
+        clock_t difference = clock() - before;
+        int msec = difference * 1000 / CLOCKS_PER_SEC;
+
+        if (delayInMs > msec)
+            SDL_Delay(delayInMs - msec);
+
     }
 
     freeMaze();

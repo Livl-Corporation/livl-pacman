@@ -14,7 +14,7 @@ void initGhostList() {
     ghostList = malloc(sizeof(struct Sprite) * GHOST_COUNT);
 
     for (int i = 0; i < GHOST_COUNT; i++) {
-        ghostList[i].number = i+1;
+        ghostList[i].number = i;
         ghostList[i].uiPosition.x = 0;
         ghostList[i].uiPosition.y = 0;
         ghostList[i].gridPosition.x = 0;
@@ -59,15 +59,7 @@ void drawGhosts(int count) {
 }
 
 void updateGhost(struct Sprite *sprite, int count) {
-
-    int newDirection = count/64;
-
-    if (newDirection < 4) {
-        sprite->direction = newDirection;
-    }
-
-    moveSprintInDirection(sprite);
-
+    
     // Animation
     SDL_Rect ghost_in2 = sprite->rects[sprite->direction];
     if ((count / ANIMATION_SPEED) % 2)
@@ -79,9 +71,6 @@ void updateGhost(struct Sprite *sprite, int count) {
 
 void blitGhost(struct Sprite *sprite, SDL_Rect *spritePos) {
     SDL_Rect rect = {sprite->uiPosition.x, sprite->uiPosition.y, CELL_SIZE, CELL_SIZE};
-
-    // Todo : remove temporary ghost position offset
-    rect.y += CELL_SIZE*sprite->number;
 
     SDL_SetColorKey(pSurfacePacmanSpriteSheet, 1, 0);
     SDL_BlitScaled(pSurfacePacmanSpriteSheet, spritePos, pSurfaceWindow, &rect);

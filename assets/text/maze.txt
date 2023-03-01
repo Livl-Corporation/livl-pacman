@@ -8,10 +8,10 @@ x.xxx.x.xxxxx.x.xxx.x
 x.xxx.x.xxxxx.x.xxx.x
 x.....x...x...x.....x
 xxxxx.xxx x xxx.xxxxx
-    x.x   1   x.x
+    x.x   0   x.x
     x.x xxdxx x.x
 xxxxx.x x h x x.xxxxx
-     .  x234x  .
+     .  x123x  .
 xxxxx.x xxxxx x.xxxxx
     x.x   p   x.x
     x.x xxxxx x.x
