@@ -10,6 +10,8 @@
 
 extern char **initialMaze;
 extern char **gameMaze;
+extern SDL_Rect imgMazeSmallCoin;
+extern SDL_Rect imgMazBigCoin;
 
 /**
  * Initialize maze
@@ -70,6 +72,8 @@ bool isObstacle(struct Position position);
  * @return Position
  */
 struct Position uiPosToGridPos(struct Position uiPos);
+
+void fillMazeWithCoins();
 
 /**
  * Convert a position in the grid to a position in pixels

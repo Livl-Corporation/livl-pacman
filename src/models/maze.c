@@ -3,6 +3,9 @@
 char **initialMaze = NULL;
 char **gameMaze = NULL;
 
+SDL_Rect imgMazeSmallCoin = {5, 82, 2, 2};
+SDL_Rect imgMazBigCoin = {9, 79, 7, 7};
+
 void initMaze()
 {
 
@@ -41,7 +44,29 @@ bool retrieveMazeFromFile()
 
     resetGameMaze();
 
+    fillMazeWithCoins();
     return true;
+}
+
+void fillMazeWithCoins()
+{
+    for (int i = 0; i < MAP_HEIGHT; i++)
+    {
+        for (int j = 0; j < MAP_WIDTH; j++)
+        {
+            struct Position pos = gridPosToUiPos((struct Position){j,i});
+            SDL_SetColorKey(pSurfacePacmanSpriteSheet, true, 0);
+
+            if (gameMaze[i][j] == SMALL_COIN)
+            {
+                SDL_Rect destinationRect = {pos.x+13, pos.y+13, 13, 13};
+                SDL_BlitScaled(pSurfacePacmanSpriteSheet, &imgMazeSmallCoin, pSurfaceWindow, &destinationRect);
+            } else if (gameMaze[i][j] == BIG_COIN) {
+                SDL_Rect destinationRect = {pos.x+8, pos.y+8, 20, 20};
+                SDL_BlitScaled(pSurfacePacmanSpriteSheet, &imgMazBigCoin, pSurfaceWindow, &destinationRect);
+            }
+        }
+    }
 }
 
 void displayMaze()
