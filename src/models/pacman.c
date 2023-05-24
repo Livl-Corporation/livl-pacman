@@ -92,6 +92,13 @@ void drawPacman(int count)
             return;
         }
 
+        if(isPositionContainsMazeElement(newPacmanGridPos, SMALL_COIN)
+            || isPositionContainsMazeElement(newPacmanGridPos, BIG_COIN))
+        {
+            setElementAtPositionOnMazeAs(newPacmanGridPos, EMPTY);
+            // TODO : issue #19 Point system 💯
+        }
+
         // Pacman has moved in grid :
         pacmanGridPos = newPacmanGridPos;
         onPacmanGridMove();

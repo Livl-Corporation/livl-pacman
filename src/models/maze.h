@@ -26,6 +26,13 @@ void initMaze();
 void freeMaze();
 
 /**
+ * Set at a specific position in the maze a specific element from the maze element enum
+ * @param position the position to set as one of the maze element enum
+ * @param element the element to set at the position
+ */
+void setElementAtPositionOnMazeAs(struct Position position, MazeElement element);
+
+/**
  * Display maze in console
  * For debug usage only
  */

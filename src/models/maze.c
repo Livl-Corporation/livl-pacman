@@ -69,6 +69,14 @@ void fillMazeWithCoins()
     }
 }
 
+void setElementAtPositionOnMazeAs(struct Position position, MazeElement element)
+{
+    if (!isInBounds(position))
+        return;
+
+    gameMaze[position.y][position.x] = element;
+}
+
 void displayMaze()
 {
     for (int i = 0; i < MAP_HEIGHT; i++)
