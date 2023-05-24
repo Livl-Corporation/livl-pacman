@@ -27,7 +27,7 @@ void spawnPacman()
     pacmanSpawnPos = getInitialPositionOfElement(PACMAN);
 
     pacmanGridPos = pacmanSpawnPos;
-    pacmanUIPos = gridPosToUiPos(pacmanGridPos);
+    pacmanUIPos = getGridPosToUiPos(pacmanGridPos);
 
     pacmanDirection = DIRECTION_RIGHT;
 
@@ -81,14 +81,13 @@ void drawPacman(int count)
     }
 
     // Get new pacman position in grid
-    struct Position newPacmanGridPos = uiPosToGridPos(pacmanPosCopy);
+    struct Position newPacmanGridPos = getUiPosToGridPos(pacmanPosCopy);
 
     if (!arePositionEquals(pacmanGridPos, newPacmanGridPos))
     {
-
-        if (isObstacle(newPacmanGridPos))
+        // If pacman, just blit him at without updating his position
+        if (isPositionContainsMazeElement(newPacmanGridPos, WALL))
         {
-            // If pacman, just blit him at without updating his position
             pacmanBlit(newPacman);
             return;
         }

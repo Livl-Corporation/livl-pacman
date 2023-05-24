@@ -54,7 +54,7 @@ void fillMazeWithCoins()
     {
         for (int j = 0; j < MAP_WIDTH; j++)
         {
-            struct Position pos = gridPosToUiPos((struct Position){j,i});
+            struct Position pos = getGridPosToUiPos((struct Position){j,i});
             SDL_SetColorKey(pSurfacePacmanSpriteSheet, true, 0);
 
             if (gameMaze[i][j] == SMALL_COIN)
@@ -104,17 +104,17 @@ void freeMaze()
     free2DArray(gameMaze, MAP_HEIGHT);
 }
 
-bool isObstacle(struct Position position)
+bool isPositionContainsMazeElement(struct Position position, MazeElement mazeElementToCheck)
 {
-    MazeElement element = get2DArrayElement(gameMaze, position.y, position.x);
-    return element == WALL;
+    MazeElement element = (unsigned char)get2DArrayElement(gameMaze, position.y, position.x);
+    return element == mazeElementToCheck;
 }
 
 bool isInBounds(struct Position position) {
     return position.x >= 0 && position.x < MAP_WIDTH && position.y >= 0 && position.y < MAP_HEIGHT;
 }
 
-struct Position uiPosToGridPos(struct Position posInPx)
+struct Position getUiPosToGridPos(struct Position posInPx)
 {
     struct Position position;
 
@@ -129,7 +129,7 @@ struct Position uiPosToGridPos(struct Position posInPx)
     return position;
 }
 
-struct Position gridPosToUiPos(struct Position uiPos) {
+struct Position getGridPosToUiPos(struct Position uiPos) {
     struct Position position;
 
     position.x = uiPos.x * CELL_SIZE;
