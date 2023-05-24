@@ -67,14 +67,6 @@ struct Position getInitialPositionOfElement(MazeElement element);
 bool isInBounds(struct Position position);
 
 /**
- * Check if a position contains a specific maze element (a WALL, a SMALL_COIN, a BIG_COIN, ...)
- * @param position : the position to check in the maze
- * @param mazeElementToCheck : the maze element to check at the position in the maze
- * @return true if the position contains the mazeElementToCheck, false otherwise
- */
-bool isPositionContainsMazeElement(struct Position position, MazeElement mazeElementToCheck);
-
-/**
  * Convert a position in pixels to a position in the grid
  * @param uiPos
  * @return Position

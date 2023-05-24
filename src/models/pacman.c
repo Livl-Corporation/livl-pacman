@@ -86,14 +86,13 @@ void drawPacman(int count)
     if (!arePositionEquals(pacmanGridPos, newPacmanGridPos))
     {
         // If pacman, just blit him at without updating his position
-        if (isPositionContainsMazeElement(newPacmanGridPos, WALL))
+        if (getMazeElementAt(newPacmanGridPos) == WALL)
         {
             pacmanBlit(newPacman);
             return;
         }
 
-        if(isPositionContainsMazeElement(newPacmanGridPos, SMALL_COIN)
-            || isPositionContainsMazeElement(newPacmanGridPos, BIG_COIN))
+        if(getMazeElementAt(newPacmanGridPos) == SMALL_COIN || getMazeElementAt(newPacmanGridPos) == BIG_COIN)
         {
             setElementAtPositionOnMazeAs(newPacmanGridPos, EMPTY);
             // TODO : issue #19 Point system 💯
