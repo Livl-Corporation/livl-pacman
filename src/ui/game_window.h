@@ -16,8 +16,8 @@
 #include "models/ghost.h"
 
 extern int count;
-extern SDL_Rect imgMazeBlueWithoutCoins;
-extern SDL_Rect imgMazeBlueWithoutCoinsZoom;
+extern SDL_Rect imgMaze;
+extern SDL_Rect imgMazeZoom;
 
 void startGameLoop();
 bool handleGameEvents();
