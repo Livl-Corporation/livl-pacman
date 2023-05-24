@@ -59,10 +59,10 @@ void fillMazeWithCoins()
 
             if (gameMaze[i][j] == SMALL_COIN)
             {
-                SDL_Rect destinationRect = {pos.x+13, pos.y+13, 13, 13};
+                SDL_Rect destinationRect = {pos.x+12, pos.y+12, 14, 14};
                 SDL_BlitScaled(pSurfacePacmanSpriteSheet, &imgMazeSmallCoin, pSurfaceWindow, &destinationRect);
             } else if (gameMaze[i][j] == BIG_COIN) {
-                SDL_Rect destinationRect = {pos.x+8, pos.y+8, 20, 20};
+                SDL_Rect destinationRect = {pos.x+2, pos.y+2, 29, 28};
                 SDL_BlitScaled(pSurfacePacmanSpriteSheet, &imgMazBigCoin, pSurfaceWindow, &destinationRect);
             }
         }
