@@ -81,6 +81,9 @@ bool isPositionContainsMazeElement(struct Position position, MazeElement mazeEle
  */
 struct Position getUiPosToGridPos(struct Position uiPos);
 
+/**
+ * Fill the maze with coins
+ */
 void fillMazeWithCoins();
 
 /**
@@ -91,7 +94,16 @@ void fillMazeWithCoins();
 struct Position getGridPosToUiPos(struct Position uiPos);
 
 // Private
+
+/**
+ * Retrieve the maze from a file
+ * @return true if the maze has been retrieved from the file, false otherwise
+ */
 bool retrieveMazeFromFile();
+
+/**
+ * Reset the game maze to the initial maze
+ */
 void resetGameMaze();
 
 #endif // PACMAN_MAZE_H
