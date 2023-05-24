@@ -7,7 +7,7 @@
 
 #define GAME_TITLE "PacMan"
 
-#define CELL_SIZE 32
+#define CELL_SIZE 33
 
 #define MAP_WIDTH 21
 #define MAP_HEIGHT 27
