@@ -4,7 +4,17 @@ char **initialMaze = NULL;
 char **gameMaze = NULL;
 
 SDL_Rect imgMazeSmallCoin = {5, 82, 2, 2};
-SDL_Rect imgMazBigCoin = {9, 79, 7, 7};
+SDL_Rect imgMazeBigCoin = {9, 79, 7, 7};
+
+const int SMALL_COIN_OFFSET_X = 12;
+const int SMALL_COIN_OFFSET_Y = 12;
+const int SMALL_COIN_WIDTH = 14;
+const int SMALL_COIN_HEIGHT = 14;
+
+const int BIG_COIN_OFFSET_X = 2;
+const int BIG_COIN_OFFSET_Y = 2;
+const int BIG_COIN_WIDTH = 29;
+const int BIG_COIN_HEIGHT = 28;
 
 void initMaze()
 {
@@ -48,22 +58,34 @@ bool retrieveMazeFromFile()
     return true;
 }
 
+void blitRectWithOffset(SDL_Rect imgRect, struct Position positionOffsetInMaze, int offsetX, int offsetY, int width, int height)
+{
+    SDL_Rect destinationRect = { positionOffsetInMaze.x + offsetX, positionOffsetInMaze.y + offsetY, width, height };
+    SDL_SetColorKey(pSurfacePacmanSpriteSheet, true, 0);
+    SDL_BlitScaled(pSurfacePacmanSpriteSheet, &imgRect, pSurfaceWindow, &destinationRect);
+}
+
 void fillMazeWithCoins()
 {
     for (int i = 0; i < MAP_HEIGHT; i++)
     {
         for (int j = 0; j < MAP_WIDTH; j++)
         {
-            struct Position pos = getGridPosToUiPos((struct Position){j,i});
-            SDL_SetColorKey(pSurfacePacmanSpriteSheet, true, 0);
+            struct Position position = getGridPosToUiPos((struct Position){j, i});
+            MazeElement mazeElement = (unsigned char)gameMaze[i][j];
 
-            if (gameMaze[i][j] == SMALL_COIN)
+            switch (mazeElement)
             {
-                SDL_Rect destinationRect = {pos.x+12, pos.y+12, 14, 14};
-                SDL_BlitScaled(pSurfacePacmanSpriteSheet, &imgMazeSmallCoin, pSurfaceWindow, &destinationRect);
-            } else if (gameMaze[i][j] == BIG_COIN) {
-                SDL_Rect destinationRect = {pos.x+2, pos.y+2, 29, 28};
-                SDL_BlitScaled(pSurfacePacmanSpriteSheet, &imgMazBigCoin, pSurfaceWindow, &destinationRect);
+                case SMALL_COIN:
+                    blitRectWithOffset(imgMazeSmallCoin, position, SMALL_COIN_OFFSET_X, SMALL_COIN_OFFSET_Y, SMALL_COIN_WIDTH, SMALL_COIN_HEIGHT);
+                    break;
+
+                case BIG_COIN:
+                    blitRectWithOffset(imgMazeBigCoin, position, BIG_COIN_OFFSET_X, BIG_COIN_OFFSET_Y, BIG_COIN_WIDTH, BIG_COIN_HEIGHT);
+                    break;
+
+                default:
+                    break;
             }
         }
     }

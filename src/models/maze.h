@@ -11,7 +11,7 @@
 extern char **initialMaze;
 extern char **gameMaze;
 extern SDL_Rect imgMazeSmallCoin;
-extern SDL_Rect imgMazBigCoin;
+extern SDL_Rect imgMazeBigCoin;
 
 /**
  * Initialize maze
@@ -77,6 +77,17 @@ struct Position getUiPosToGridPos(struct Position uiPos);
  * Fill the maze with coins
  */
 void fillMazeWithCoins();
+
+/**
+ * Blit a rect with an offset
+ * @param imgRect : the image rect to display
+ * @param positionOffsetInMaze : the position where to display the image rect in the maze
+ * @param offsetX
+ * @param offsetY
+ * @param width
+ * @param height
+ */
+void blitRectWithOffset(SDL_Rect imgRect, struct Position positionOffsetInMaze, int offsetX, int offsetY, int width, int height);
 
 /**
  * Convert a position in the grid to a position in pixels
