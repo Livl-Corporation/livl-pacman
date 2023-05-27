@@ -2,6 +2,7 @@
 // Created by Franck GUTMANN on 27/05/2023.
 //
 
+#include <stdio.h>
 #include "game.h"
 
 int score = 0;
@@ -25,4 +26,8 @@ int getLives() {
 
 void decrementLives() {
     lives--;
+}
+
+void drawGameInfos() {
+    // TODO : Issue #22 display informations on screen
 }
