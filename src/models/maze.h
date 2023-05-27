@@ -8,9 +8,6 @@
 #include "utilities/array_utils.h"
 #include "enums/maze-element.h"
 
-extern char **initialMaze;
-extern char **gameMaze;
-
 /**
  * Initialize maze
  * <!> This function must be called at least once before any other maze function
