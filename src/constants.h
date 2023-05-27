@@ -32,4 +32,6 @@
 #define GHOST_SIZE 14
 #define GHOST_COUNT 4
 
+#define INITIAL_LIVES 3
+
 #endif // PACMAN_CONSTANTS_H
