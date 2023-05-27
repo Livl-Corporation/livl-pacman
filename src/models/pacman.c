@@ -95,7 +95,7 @@ void drawPacman(int count)
 
         // Pacman has moved in grid :
         pacmanGridPos = newPacmanGridPos;
-        onPacmanGridMove();
+        pacmanPosCopy = onPacmanGridMove(&pacmanPosCopy);
 
     }
 
@@ -106,9 +106,25 @@ void drawPacman(int count)
 
 }
 
-void onPacmanGridMove() {
+/**
+ * Perform action when pacman has moved in grid
+ * @return pacman position in UI
+ */
+struct Position onPacmanGridMove(struct Position *pacmanUiPos) {
 
     // It's here that we will check if pacman has eaten food or is in colission with a ghost
+
+    MazeElement element = getMazeElementAt(pacmanGridPos);
+
+    switch (element)
+    {
+        case LEFT_TELEPORTER:
+            return teleportPacman(RIGHT_TELEPORTER);
+        case RIGHT_TELEPORTER:
+            return teleportPacman(LEFT_TELEPORTER);
+        default:
+            return *pacmanUiPos;
+    }
 
 }
 
@@ -116,4 +132,14 @@ void pacmanBlit(SDL_Rect *srcRect) {
     SDL_Rect rect = {pacmanUIPos.x, pacmanUIPos.y, CELL_SIZE, CELL_SIZE};
     SDL_SetColorKey(pSurfacePacmanSpriteSheet, 1, 0);
     SDL_BlitScaled(pSurfacePacmanSpriteSheet, srcRect, pSurfaceWindow, &rect);
+}
+
+struct Position teleportPacman(MazeElement teleporter)
+{
+
+    struct Position teleporterPos = getInitialPositionOfElement(teleporter);
+
+    pacmanGridPos = teleporterPos;
+    return gridPosToUiPos(pacmanGridPos);
+
 }

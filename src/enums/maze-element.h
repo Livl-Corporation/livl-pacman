@@ -18,6 +18,8 @@ typedef enum
     ORANGE_GHOST = '3',
     HOME = 'h',
     CHERRY = 'c',
+    LEFT_TELEPORTER = 'l',
+    RIGHT_TELEPORTER = 'r',
 } MazeElement;
 
 #endif //PACMAN_MAZE_ELEMENT_H

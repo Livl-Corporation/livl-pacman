@@ -33,9 +33,11 @@ void drawPacman(int count);
 /**
  * Perform action when pacman has moved in grid
  */
-void onPacmanGridMove();
+struct Position onPacmanGridMove(struct Position *pacmanUiPos);
 
 // -- Private --
 void pacmanBlit(SDL_Rect *srcRect);
+
+struct Position teleportPacman(MazeElement teleporter);
 
 #endif // PACMAN_PACMAN_H
