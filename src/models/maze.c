@@ -82,7 +82,7 @@ void freeMaze()
 bool isObstacle(struct Position position)
 {
     MazeElement element = get2DArrayElement(gameMaze, position.y, position.x);
-    return element == WALL;
+    return element == WALL || element == DOOR;
 }
 
 bool isInBounds(struct Position position) {
