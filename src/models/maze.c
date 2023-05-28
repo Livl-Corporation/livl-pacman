@@ -60,7 +60,7 @@ bool retrieveMazeFromFile()
 
 void blitRectWithOffset(SDL_Rect imgRect, struct Position positionOffsetInMaze, int offsetX, int offsetY, int width, int height)
 {
-    SDL_Rect destinationRect = { positionOffsetInMaze.x + offsetX, positionOffsetInMaze.y + offsetY, width, height };
+    SDL_Rect destinationRect = { positionOffsetInMaze.x + offsetX , positionOffsetInMaze.y + offsetY, width, height};
     SDL_SetColorKey(pSurfacePacmanSpriteSheet, true, 0);
     SDL_BlitScaled(pSurfacePacmanSpriteSheet, &imgRect, pSurfaceWindow, &destinationRect);
 }
@@ -142,9 +142,11 @@ struct Position getUiPosToGridPos(struct Position posInPx)
 {
     struct Position position;
 
-    // Get the center of the sprite
-    posInPx.x += CELL_SIZE/2;
-    posInPx.y += CELL_SIZE/2;
+    posInPx.y -= HEADER_SCREEN_HEIGHT;
+
+    // Get the center of the cell
+    posInPx.x += (CELL_SIZE)/2;
+    posInPx.y += (CELL_SIZE)/2;
 
     // Get the position in the grid
     position.x = posInPx.x / CELL_SIZE;
@@ -157,7 +159,7 @@ struct Position getGridPosToUiPos(struct Position uiPos) {
     struct Position position;
 
     position.x = uiPos.x * CELL_SIZE;
-    position.y = uiPos.y * CELL_SIZE;
+    position.y = uiPos.y * CELL_SIZE + HEADER_SCREEN_HEIGHT;
 
     return position;
 }

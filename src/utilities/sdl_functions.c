@@ -10,7 +10,7 @@ void initSDL()
     if (SDL_Init(SDL_INIT_VIDEO) != 0)
         SDL_ExitWithError("Initialisation of the SDL");
 
-    pWindow = SDL_CreateWindow(GAME_TITLE, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, WINDOW_SCREEN_WIDTH, WINDOW_SCREEN_HEIGHT, SDL_WINDOW_SHOWN);
+    pWindow = SDL_CreateWindow(GAME_TITLE, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, TOTAL_SCREEN_WIDTH, TOTAL_SCREEN_HEIGHT, SDL_WINDOW_SHOWN);
     if (pWindow == NULL)
         SDL_ExitWithError("Creation of the SDL window");
 
