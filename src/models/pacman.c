@@ -92,12 +92,6 @@ void drawPacman(int count)
             return;
         }
 
-        if(getMazeElementAt(newPacmanGridPos) == SMALL_COIN || getMazeElementAt(newPacmanGridPos) == BIG_COIN)
-        {
-            setElementAtPositionOnMazeAs(newPacmanGridPos, EMPTY);
-            // TODO : issue #19 Point system 💯
-        }
-
         // Pacman has moved in grid :
         pacmanGridPos = newPacmanGridPos;
         onPacmanGridMove();
@@ -112,9 +106,18 @@ void drawPacman(int count)
 }
 
 void onPacmanGridMove() {
-
-    // It's here that we will check if pacman has eaten food or is in colission with a ghost
-
+    MazeElement element = getMazeElementAt(pacmanGridPos);
+    switch(element)
+    {
+        case SMALL_COIN:
+            setElementAtPositionOnMazeAs(pacmanGridPos, EMPTY);
+            // TODO : [score] use score system
+            break;
+        case BIG_COIN:
+            setElementAtPositionOnMazeAs(pacmanGridPos, EMPTY);
+            // TODO: score + make pacman invincible to eat ghosts
+            break;
+    }
 }
 
 void pacmanBlit(SDL_Rect *srcRect) {
