@@ -86,7 +86,7 @@ void drawPacman(int count)
     if (!arePositionEquals(pacmanGridPos, newPacmanGridPos))
     {
         // If pacman, just blit him at without updating his position
-        if (getMazeElementAt(newPacmanGridPos) == WALL)
+        if (isObstacle(newPacmanGridPos))
         {
             pacmanBlit(newPacman);
             return;

@@ -138,6 +138,12 @@ bool isInBounds(struct Position position) {
     return position.x >= 0 && position.x < MAP_WIDTH && position.y >= 0 && position.y < MAP_HEIGHT;
 }
 
+bool isObstacle(struct Position position)
+{
+    MazeElement element = (unsigned char)get2DArrayElement(gameMaze, position.y, position.x);
+    return element == WALL;
+}
+
 struct Position getUiPosToGridPos(struct Position posInPx)
 {
     struct Position position;
