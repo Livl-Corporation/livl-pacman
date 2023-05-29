@@ -2,7 +2,7 @@
 
 int count = 0;
 
-bool pGameQuit = false, pauseGame = false;
+bool pGameQuit = false, gamePause = false; // Fixed variable name
 
 SDL_Rect imgMazeBlueCoins = {200, 3, 168, 216};
 SDL_Rect imgMazeBlueCoinsZoom = {4, 4, 672, 864};
@@ -32,7 +32,9 @@ void startGameLoop()
         } else
         {
             handlePauseEvents();
-            //add here any extra bit of code for the pause
+            // add here any extra bit of code for the pause
+            // maybe add a delay to prevent the loop from
+            // constatly being used
         }
 
         clock_t difference = clock() - before;
@@ -60,12 +62,11 @@ void handlePauseEvents()
         case SDL_QUIT:
             pGameQuit = true;
             break;
-        case SDL_KEYDOWN:
-            if (event.key.keysym.sym == SDLK_p)
-                gamePause = !gamePause;
-            break;
         }
     }
+
+    if (keys[SDL_SCANCODE_P])
+        gamePause = !gamePause;
 }
 
 // This function should trigger all required events handling
@@ -80,10 +81,6 @@ bool handleGameEvents()
         case SDL_QUIT:
             pGameQuit = true;
             break;
-        case SDL_KEYDOWN:
-            if (event.key.keysym.sym == SDLK_p)
-                pauseGame = !pauseGame;
-            break;
         }
     }
 
@@ -92,6 +89,10 @@ bool handleGameEvents()
 
     if (keys[SDL_SCANCODE_ESCAPE])
         pGameQuit = true;
+    
+    // Moved out of the event loop
+    if (keys[SDL_SCANCODE_P])
+        gamePause = !gamePause;
 
     handlePacmanEvents();
 }
