@@ -44,7 +44,7 @@ void drawHighScore()
     SDL_Rect imgHighScoreTextUi = {170, 8, 202, 26};
     SDL_Rect imgHighScoreValueUi = {250, 35, 20, 18};
     SDL_BlitScaled(pSurfacePacmanSpriteSheet, &imgHighScoreTextSprite, pSurfaceWindow, &imgHighScoreTextUi);
-    drawScore(0, imgHighScoreValueUi);
+    drawScore(getHighScore(), imgHighScoreValueUi);
 }
 
 void drawScore(int score, SDL_Rect imgUi)
