@@ -19,6 +19,10 @@ int getHighScore() {
 
 void incrementScore(int value) {
     score += value;
+
+    if (score > high_score) {
+        high_score = score;
+    }
 }
 
 void decrementScore(int value) {
