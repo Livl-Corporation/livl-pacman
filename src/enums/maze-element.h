@@ -18,6 +18,7 @@ typedef enum
     ORANGE_GHOST = '3',
     HOME = 'h',
     CHERRY = 'c',
+    DOOR = 'd',
     LEFT_TELEPORTER = 'l',
     RIGHT_TELEPORTER = 'r',
 } MazeElement;
