@@ -9,8 +9,8 @@ typedef enum
 {
     WALL = 'x',
     EMPTY = ' ',
-    COIN = 'o',
-    POINT = '.',
+    BIG_COIN = 'o',
+    SMALL_COIN = '.',
     PACMAN = 'p',
     RED_GHOST = '0',
     PINK_GHOST = '1',

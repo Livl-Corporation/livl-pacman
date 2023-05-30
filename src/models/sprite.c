@@ -20,6 +20,6 @@ void moveSprintInDirection(struct Sprite *sprite) {
             break;
     }
 
-    sprite->gridPosition = uiPosToGridPos(sprite->uiPosition);
+    sprite->gridPosition = getUiPosToGridPos(sprite->uiPosition);
 
 }

@@ -10,6 +10,8 @@
 
 extern char **initialMaze;
 extern char **gameMaze;
+extern SDL_Rect imgMazeSmallCoin;
+extern SDL_Rect imgMazeBigCoin;
 
 /**
  * Initialize maze
@@ -22,6 +24,13 @@ void initMaze();
  * <!> This function must be called before the program ends
  */
 void freeMaze();
+
+/**
+ * Set at a specific position in the maze a specific element from the maze element enum
+ * @param position the position to set as one of the maze element enum
+ * @param element the element to set at the position
+ */
+void setElementAtPositionOnMazeAs(struct Position position, MazeElement element);
 
 /**
  * Display maze in console
@@ -58,6 +67,29 @@ struct Position getInitialPositionOfElement(MazeElement element);
 bool isInBounds(struct Position position);
 
 /**
+ * Convert a position in pixels to a position in the grid
+ * @param uiPos
+ * @return Position
+ */
+struct Position getUiPosToGridPos(struct Position uiPos);
+
+/**
+ * Fill the maze with coins
+ */
+void fillMazeWithCoins();
+
+/**
+ * Blit a rect with an offset
+ * @param imgRect : the image rect to display
+ * @param positionOffsetInMaze : the position where to display the image rect in the maze
+ * @param offsetX
+ * @param offsetY
+ * @param width
+ * @param height
+ */
+void blitRectWithOffset(SDL_Rect imgRect, struct Position positionOffsetInMaze, int offsetX, int offsetY, int width, int height);
+
+/**
  * Check if a position is an obstacle
  * @param position
  * @return true if the position is an obstacle, false otherwise
@@ -65,21 +97,23 @@ bool isInBounds(struct Position position);
 bool isObstacle(struct Position position);
 
 /**
- * Convert a position in pixels to a position in the grid
- * @param uiPos
- * @return Position
- */
-struct Position uiPosToGridPos(struct Position uiPos);
-
-/**
  * Convert a position in the grid to a position in pixels
  * @param uiPos
  * @return Position
  */
-struct Position gridPosToUiPos(struct Position uiPos);
+struct Position getGridPosToUiPos(struct Position uiPos);
 
 // Private
+
+/**
+ * Retrieve the maze from a file
+ * @return true if the maze has been retrieved from the file, false otherwise
+ */
 bool retrieveMazeFromFile();
+
+/**
+ * Reset the game maze to the initial maze
+ */
 void resetGameMaze();
 
 #endif // PACMAN_MAZE_H
