@@ -1,9 +1,6 @@
-name: Build
+name: Build Pacman Game
 
 on:
-  push:
-    branches:
-      - main
   pull_request:
     branches:
       - main
@@ -11,13 +8,22 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    
+
     steps:
-    - name: Checkout code
+    - name: Checkout repository
       uses: actions/checkout@v2
-    
-    - name: Install dependencies
-      run: sudo apt-get install libsdl2-dev libsdl2-image-dev libsdl2-ttf-dev -y
-    
-    - name: Build project
-      run: make
+
+    - name: Set up CMake
+      uses: cmake/setup-cmake@v2
+
+    - name: Install SDL2
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y libsdl2-dev
+
+    - name: Build and Test
+      run: |
+        mkdir build
+        cd build
+        cmake ..
+        make
