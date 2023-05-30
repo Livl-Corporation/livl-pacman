@@ -27,14 +27,13 @@ void spawnPacman()
     pacmanSpawnPos = getInitialPositionOfElement(PACMAN);
 
     pacmanGridPos = pacmanSpawnPos;
-    pacmanUIPos = gridPosToUiPos(pacmanGridPos);
+    pacmanUIPos = getGridPosToUiPos(pacmanGridPos);
 
     pacmanDirection = DIRECTION_RIGHT;
 }
 
 void handlePacmanEvents()
 {
-
     int numberOfKeyboardScancodes;
     const Uint8 *keys = SDL_GetKeyboardState(&numberOfKeyboardScancodes);
 
@@ -50,7 +49,6 @@ void handlePacmanEvents()
 
 void drawPacman(int count)
 {
-
     SDL_Rect *newPacman = NULL;
 
     int pacmanAnimation = (count / ANIMATION_SPEED) % 2;
@@ -79,14 +77,13 @@ void drawPacman(int count)
     }
 
     // Get new pacman position in grid
-    struct Position newPacmanGridPos = uiPosToGridPos(pacmanPosCopy);
+    struct Position newPacmanGridPos = getUiPosToGridPos(pacmanPosCopy);
 
     if (!arePositionEquals(pacmanGridPos, newPacmanGridPos))
     {
-
+        // If pacman, just blit him at without updating his position
         if (isObstacle(newPacmanGridPos))
         {
-            // If pacman, just blit him at without updating his position
             pacmanBlit(newPacman);
             return;
         }
@@ -104,8 +101,18 @@ void drawPacman(int count)
 
 void onPacmanGridMove()
 {
-
-    // It's here that we will check if pacman has eaten food or is in colission with a ghost
+    MazeElement element = getMazeElementAt(pacmanGridPos);
+    switch(element)
+    {
+        case SMALL_COIN:
+            setElementAtPositionOnMazeAs(pacmanGridPos, EMPTY);
+            // TODO : [score] use score system
+            break;
+        case BIG_COIN:
+            setElementAtPositionOnMazeAs(pacmanGridPos, EMPTY);
+            // TODO: score + make pacman invincible to eat ghosts
+            break;
+    }
 }
 
 void pacmanBlit(SDL_Rect *srcRect)

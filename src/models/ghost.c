@@ -49,7 +49,7 @@ void freeGhostList() {
 
 void spawnGhost(int ghostId) {
     ghostList[ghostId].gridPosition = getInitialPositionOfElement(ghostId+'0');
-    ghostList[ghostId].uiPosition = gridPosToUiPos(ghostList[ghostId].gridPosition);
+    ghostList[ghostId].uiPosition = getGridPosToUiPos(ghostList[ghostId].gridPosition);
 }
 
 void drawGhosts(int count) {
