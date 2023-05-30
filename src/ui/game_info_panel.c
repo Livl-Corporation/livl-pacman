@@ -13,6 +13,8 @@ int uiScoreMargin = 13;
 int uiLivesMargin = 15;
 int spriteNumberMargin = 8;
 
+bool isOneUpVisible = true;
+
 void initGameInfoPanel()
 {
     initImgNumbersOnSprite();
@@ -31,12 +33,15 @@ void initImgNumbersOnSprite()
     }
 }
 
-void drawGameInfoPanel()
+void drawGameInfoPanel(int count)
 {
     drawHighScore();
     drawScore(getScore(), imgScoreUi);
     drawLives();
-    drawUp();
+
+    if (count % 125 < 75) {
+        drawUp();
+    }
 }
 
 void drawHighScore()

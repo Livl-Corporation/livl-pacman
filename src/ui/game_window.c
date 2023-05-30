@@ -83,7 +83,7 @@ void drawGame()
 
     drawPacman(count);
 
-    drawGameInfoPanel();
+    drawGameInfoPanel(count);
 
     fillMazeWithCoins();
 }

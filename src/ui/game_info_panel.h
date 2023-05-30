@@ -12,34 +12,16 @@
  */
 extern SDL_Rect imgNumbersSprite[10];
 
-/**
- * @brief Get the img Numbers On Sprite image
- */
 void initImgNumbersOnSprite();
 
-/**
- * @brief Init all the different required img from the sprite sheet
- */
 void initGameInfoPanel();
 
-/**
- * @brief Display all the different things (score, lives, etc) to draw on the UI
- */
-void drawGameInfoPanel();
+void drawGameInfoPanel(int count);
 
-/**
- * @brief Display the high score title and value
- */
 void drawHighScore();
 
-/**
- * @brief Display the score on the game UI
- */
 void drawScore(int score, SDL_Rect imgUi);
 
-/**
- * @brief Display the lives on the game UI
- */
 void drawLives();
 
 void drawUp();
