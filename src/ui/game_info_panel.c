@@ -1,7 +1,7 @@
 #include "game_info_panel.h"
 
 SDL_Rect imgNumbersSprite[10];
-SDL_Rect imgPacmanLeft = {48, 90, 14, 14};
+SDL_Rect imgPacmanLeft = {56, 90, 14, 14};
 
 int uiScoreOriginX = 15;
 int uiScoreOriginY = HEADER_SCREEN_HEIGHT - 25;
@@ -15,8 +15,8 @@ int uiLivesHeight = 25;
 int uiLivesWidth = 25;
 int uiLivesMargin = 15;
 
-int spriteNumberOriginX = 3;
-int spriteNumberOriginY = 53;
+int spriteNumberOriginX = 4;
+int spriteNumberOriginY = 256;
 int spriteNumberMargin = 8;
 int spriteNumberHeight = 7;
 int spriteNumberWidth = 7;
