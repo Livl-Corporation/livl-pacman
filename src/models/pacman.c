@@ -53,7 +53,7 @@ void drawPacman(int count)
 
     int pacmanAnimation = (count / ANIMATION_SPEED) % 2;
 
-    // Copy pacmanPositon to a new
+    // Copy pacman position to a new
     struct Position pacmanPosCopy = pacmanUIPos;
 
     switch (pacmanDirection)
@@ -90,7 +90,7 @@ void drawPacman(int count)
 
         // Pacman has moved in grid :
         pacmanGridPos = newPacmanGridPos;
-        onPacmanGridMove();
+        pacmanPosCopy = onPacmanGridMove(&pacmanPosCopy);
     }
 
     // Move is valid, update pacman position
@@ -99,11 +99,15 @@ void drawPacman(int count)
     pacmanBlit(newPacman);
 }
 
-void onPacmanGridMove()
+struct Position onPacmanGridMove(struct Position *pacmanUiPos)
 {
     MazeElement element = getMazeElementAt(pacmanGridPos);
-    switch(element)
-    {
+
+    switch (element) {
+        case LEFT_TELEPORTER:
+            return teleportPacman(RIGHT_TELEPORTER);
+        case RIGHT_TELEPORTER:
+            return teleportPacman(LEFT_TELEPORTER);
         case SMALL_COIN:
             setElementAtPositionOnMazeAs(pacmanGridPos, EMPTY);
             // TODO : [score] use score system
@@ -112,7 +116,11 @@ void onPacmanGridMove()
             setElementAtPositionOnMazeAs(pacmanGridPos, EMPTY);
             // TODO: score + make pacman invincible to eat ghosts
             break;
+        default:
+            break;
     }
+
+    return *pacmanUiPos;
 }
 
 void pacmanBlit(SDL_Rect *srcRect)
@@ -120,4 +128,10 @@ void pacmanBlit(SDL_Rect *srcRect)
     SDL_Rect rect = {pacmanUIPos.x, pacmanUIPos.y, CELL_SIZE, CELL_SIZE};
     SDL_SetColorKey(pSurfacePacmanSpriteSheet, 1, 0);
     SDL_BlitScaled(pSurfacePacmanSpriteSheet, srcRect, pSurfaceWindow, &rect);
+}
+
+struct Position teleportPacman(MazeElement teleporter)
+{
+    pacmanGridPos = getInitialPositionOfElement(teleporter);
+    return getGridPosToUiPos(pacmanGridPos);
 }

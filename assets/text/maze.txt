@@ -11,7 +11,7 @@ xxxxx.xxx x xxx.xxxxx
     x.x   0   x.x
     x.x xxdxx x.x
 xxxxx.x x h x x.xxxxx
-     .  x123x  .
+l    .  x123x  .    r
 xxxxx.x xxxxx x.xxxxx
     x.x   p   x.x
     x.x xxxxx x.x
