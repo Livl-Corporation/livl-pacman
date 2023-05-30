@@ -16,11 +16,12 @@
 #include "models/ghost.h"
 
 extern int count;
-extern SDL_Rect imgMaze;
-extern SDL_Rect imgMazeZoom;
+extern SDL_Rect imgMazeOnSprite;
+extern SDL_Rect imgMazeOnUi;
 
 void startGameLoop();
 bool handleGameEvents();
 void drawGame();
+void drawHeader();
 
 #endif // PACMAN_GAME_WINDOW_H

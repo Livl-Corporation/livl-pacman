@@ -7,13 +7,16 @@
 
 #define GAME_TITLE "PacMan"
 
-#define CELL_SIZE 32
+#define CELL_SIZE 25
 
 #define MAP_WIDTH 21
 #define MAP_HEIGHT 27
 
-#define WINDOW_SCREEN_WIDTH 672
-#define WINDOW_SCREEN_HEIGHT 864
+#define MAZE_SCREEN_HEIGHT 675
+#define HEADER_SCREEN_HEIGHT 75
+#define FOOTER_SCREEN_HEIGHT 40
+#define TOTAL_SCREEN_WIDTH 525
+#define TOTAL_SCREEN_HEIGHT (MAZE_SCREEN_HEIGHT + HEADER_SCREEN_HEIGHT + FOOTER_SCREEN_HEIGHT)
 
 #define PATH_FILE_MAZE "../assets/text/maze.txt"
 #define PATH_SPRITE_SHEET_PACMAN "../assets/img/pacman_sprites.bmp"
