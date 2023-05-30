@@ -32,6 +32,7 @@ void drawPacman(int count);
 
 /**
  * Perform action when pacman has moved in grid
+ * @return pacman position in UI
  */
 struct Position onPacmanGridMove(struct Position *pacmanUiPos);
 

@@ -53,7 +53,7 @@ void drawPacman(int count)
 
     int pacmanAnimation = (count / ANIMATION_SPEED) % 2;
 
-    // Copy pacmanPositon to a new
+    // Copy pacman position to a new
     struct Position pacmanPosCopy = pacmanUIPos;
 
     switch (pacmanDirection)
@@ -99,14 +99,8 @@ void drawPacman(int count)
     pacmanBlit(newPacman);
 }
 
-/**
- * Perform action when pacman has moved in grid
- * @return pacman position in UI
- */
-struct Position onPacmanGridMove(struct Position *pacmanUiPos) {
-
-    // It's here that we will check if pacman has eaten food or is in colission with a ghost
-
+struct Position onPacmanGridMove(struct Position *pacmanUiPos)
+{
     MazeElement element = getMazeElementAt(pacmanGridPos);
 
     switch (element) {
@@ -123,8 +117,10 @@ struct Position onPacmanGridMove(struct Position *pacmanUiPos) {
             // TODO: score + make pacman invincible to eat ghosts
             break;
         default:
-            return *pacmanUiPos;
+            break;
     }
+
+    return *pacmanUiPos;
 }
 
 void pacmanBlit(SDL_Rect *srcRect)
@@ -136,9 +132,6 @@ void pacmanBlit(SDL_Rect *srcRect)
 
 struct Position teleportPacman(MazeElement teleporter)
 {
-    struct Position teleporterPos = getInitialPositionOfElement(teleporter);
-
-    pacmanGridPos = teleporterPos;
+    pacmanGridPos = getInitialPositionOfElement(teleporter);
     return getGridPosToUiPos(pacmanGridPos);
-
 }
