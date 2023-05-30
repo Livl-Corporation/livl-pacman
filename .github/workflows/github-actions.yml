@@ -13,8 +13,8 @@ jobs:
     - name: Checkout repository
       uses: actions/checkout@v2
 
-    - name: Set up CMake
-      uses: actions/setup-cmake@v2
+    - name: Setup cmake
+      uses: jwlawson/actions-setup-cmake@v1.13
       with:
         cmake-version: '3.7'
 
