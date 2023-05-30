@@ -28,13 +28,20 @@ void initGameInfoPanel();
 void drawGameInfoPanel();
 
 /**
+ * @brief Display the high score title and value
+ */
+void drawHighScore();
+
+/**
  * @brief Display the score on the game UI
  */
-void drawScore();
+void drawScore(int score, SDL_Rect imgUi);
 
 /**
  * @brief Display the lives on the game UI
  */
 void drawLives();
+
+int getNumDigits(int score);
 
 #endif //PACMAN_GAME_INFO_PANEL_H
