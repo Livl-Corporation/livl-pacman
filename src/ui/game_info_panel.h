@@ -42,6 +42,8 @@ void drawScore(int score, SDL_Rect imgUi);
  */
 void drawLives();
 
+void drawUp();
+
 int getNumDigits(int score);
 
 #endif //PACMAN_GAME_INFO_PANEL_H

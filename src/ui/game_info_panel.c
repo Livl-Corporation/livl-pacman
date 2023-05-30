@@ -3,9 +3,11 @@
 SDL_Rect imgNumbersSprite[10];
 SDL_Rect imgNumberSprite = {4, 256, 7, 7};
 
-SDL_Rect imgPacmanLeft = {56, 90, 14, 14};
+SDL_Rect imgPacmanLeftSprite = {56, 90, 14, 14};
 SDL_Rect imgHighScoreTextSprite = {3, 70, 80, 10};
-SDL_Rect imgScoreUi = {15, HEADER_SCREEN_HEIGHT - 25, 20, 18};
+SDL_Rect imgOneUpTextSprite = {4, 81, 22, 7};
+
+SDL_Rect imgScoreUi = {68, 35, 20, 18};
 
 int uiScoreMargin = 13;
 int uiLivesMargin = 15;
@@ -34,6 +36,7 @@ void drawGameInfoPanel()
     drawHighScore();
     drawScore(getScore(), imgScoreUi);
     drawLives();
+    drawUp();
 }
 
 void drawHighScore()
@@ -68,11 +71,17 @@ void drawLives()
     for (int i = 0; i < getLives()-1; i++)
     {
         // Blit the number sprite onto the window surface
-        SDL_BlitScaled(pSurfacePacmanSpriteSheet, &imgPacmanLeft, pSurfaceWindow, &imgLivesUi);
+        SDL_BlitScaled(pSurfacePacmanSpriteSheet, &imgPacmanLeftSprite, pSurfaceWindow, &imgLivesUi);
 
         // Increment xPosition to position the next digit
-        imgLivesUi.x += imgPacmanLeft.w + uiScoreMargin;
+        imgLivesUi.x += imgPacmanLeftSprite.w + uiScoreMargin;
     }
+}
+
+void drawUp()
+{
+    SDL_Rect imgOneUpUi = {40, 13, 50, 18};
+    SDL_BlitScaled(pSurfacePacmanSpriteSheet, &imgOneUpTextSprite, pSurfaceWindow, &imgOneUpUi);
 }
 
 int getNumDigits(int score)
