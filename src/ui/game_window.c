@@ -4,8 +4,8 @@ int count = 0;
 
 bool pGameQuit = false;
 
-SDL_Rect imgMazeBlueCoins = {200, 3, 168, 216};
-SDL_Rect imgMazeBlueCoinsZoom = {4, 4, 672, 864};
+SDL_Rect imgMaze = {370, 4, 166, 215};
+SDL_Rect imgMazeZoom = {0, 0, WINDOW_SCREEN_WIDTH, WINDOW_SCREEN_HEIGHT};
 
 void startGameLoop()
 {
@@ -70,9 +70,11 @@ void drawGame()
 {
     // TODO : Move maze display to maze file
     SDL_SetColorKey(pSurfacePacmanSpriteSheet, false, 0);
-    SDL_BlitScaled(pSurfacePacmanSpriteSheet, &imgMazeBlueCoins, pSurfaceWindow, &imgMazeBlueCoinsZoom);
+    SDL_BlitScaled(pSurfacePacmanSpriteSheet, &imgMaze, pSurfaceWindow, &imgMazeZoom);
 
     drawGhosts(count);
 
     drawPacman(count);
+
+    fillMazeWithCoins();
 }

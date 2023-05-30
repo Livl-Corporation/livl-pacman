@@ -9,8 +9,8 @@ typedef enum
 {
     WALL = 'x',
     EMPTY = ' ',
-    COIN = 'o',
-    POINT = '.',
+    BIG_COIN = 'o',
+    SMALL_COIN = '.',
     PACMAN = 'p',
     RED_GHOST = '0',
     PINK_GHOST = '1',
@@ -19,6 +19,8 @@ typedef enum
     HOME = 'h',
     CHERRY = 'c',
     DOOR = 'd',
+    LEFT_TELEPORTER = 'l',
+    RIGHT_TELEPORTER = 'r',
 } MazeElement;
 
 #endif //PACMAN_MAZE_ELEMENT_H
