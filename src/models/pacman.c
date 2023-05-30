@@ -110,11 +110,12 @@ struct Position onPacmanGridMove(struct Position *pacmanUiPos)
             return teleportPacman(LEFT_TELEPORTER);
         case SMALL_COIN:
             setElementAtPositionOnMazeAs(pacmanGridPos, EMPTY);
-            // TODO : [score] use score system
+            incrementScore(10);
             break;
         case BIG_COIN:
             setElementAtPositionOnMazeAs(pacmanGridPos, EMPTY);
-            // TODO: score + make pacman invincible to eat ghosts
+            incrementScore(50);
+            // TODO: make pacman invincible to eat ghosts
             break;
         default:
             break;
