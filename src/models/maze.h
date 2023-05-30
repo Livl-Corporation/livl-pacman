@@ -90,6 +90,13 @@ void fillMazeWithCoins();
 void blitRectWithOffset(SDL_Rect imgRect, struct Position positionOffsetInMaze, int offsetX, int offsetY, int width, int height);
 
 /**
+ * Check if a position is an obstacle
+ * @param position
+ * @return true if the position is an obstacle, false otherwise
+ */
+bool isObstacle(struct Position position);
+
+/**
  * Convert a position in the grid to a position in pixels
  * @param uiPos
  * @return Position
