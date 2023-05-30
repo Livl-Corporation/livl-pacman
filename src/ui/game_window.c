@@ -18,7 +18,7 @@ void startGameLoop()
 
     spawnPacman();
 
-    initImgNumbersOnSprite();
+    initGameInfoPanel();
 
     double delayInSec = 1.0 / GAME_SPEED;
     Uint32 delayInMs = (delayInSec * 1000);
@@ -83,7 +83,7 @@ void drawGame()
 
     drawPacman(count);
 
-    drawScore();
+    drawGameInfoPanel();
 
     fillMazeWithCoins();
 }

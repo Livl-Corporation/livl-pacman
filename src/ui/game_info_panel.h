@@ -18,8 +18,23 @@ extern SDL_Rect imgNumbersSprite[10];
 void initImgNumbersOnSprite();
 
 /**
+ * @brief Init all the different required img from the sprite sheet
+ */
+void initGameInfoPanel();
+
+/**
+ * @brief Display all the different things (score, lives, etc) to draw on the UI
+ */
+void drawGameInfoPanel();
+
+/**
  * @brief Display the score on the game UI
  */
 void drawScore();
+
+/**
+ * @brief Display the lives on the game UI
+ */
+void drawLives();
 
 #endif //PACMAN_GAME_INFO_PANEL_H
