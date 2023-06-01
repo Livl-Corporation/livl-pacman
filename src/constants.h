@@ -35,6 +35,8 @@
 #define GHOST_SIZE 14
 #define GHOST_COUNT 4
 
+#define EATABLE_GHOST_DURATION 1000
+
 #define INITIAL_LIVES 3
 
 #endif // PACMAN_CONSTANTS_H

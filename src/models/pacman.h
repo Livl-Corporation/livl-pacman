@@ -13,6 +13,7 @@
 #include "enums/direction.h"
 #include "models/maze.h"
 #include "models/game.h"
+#include "models/ghost.h"
 
 /**
  * Initialize pacman position at his spawn point

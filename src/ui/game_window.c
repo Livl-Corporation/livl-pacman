@@ -82,6 +82,9 @@ void drawGame()
     drawPacman(count);
 
     fillMazeWithCoins();
+
+    decreaseEatableGhostTimer();
+
 }
 
 void drawHeader()

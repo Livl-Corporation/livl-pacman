@@ -6,6 +6,12 @@
 
 struct Sprite *ghostList;
 
+int eatableGhostTimer = 0;
+
+int isGhostEatable() {
+    return eatableGhostTimer > 0;
+}
+
 void initGhostList() {
 
     // TODO : [sprite refactor] use this code also for pacman
@@ -74,4 +80,13 @@ void blitGhost(struct Sprite *sprite, SDL_Rect *spritePos) {
 
     SDL_SetColorKey(pSurfacePacmanSpriteSheet, 1, 0);
     SDL_BlitScaled(pSurfacePacmanSpriteSheet, spritePos, pSurfaceWindow, &rect);
+}
+
+void makeGhostsEatable() {
+    eatableGhostTimer = EATABLE_GHOST_DURATION;
+}
+
+void decreaseEatableGhostTimer() {
+    if (eatableGhostTimer > 0)
+        eatableGhostTimer--;
 }
