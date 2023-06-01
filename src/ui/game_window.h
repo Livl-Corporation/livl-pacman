@@ -14,6 +14,7 @@
 #include "models/pacman.h"
 #include "models/position.h"
 #include "models/ghost.h"
+#include "ui/game_info_panel.h"
 
 extern int count;
 extern SDL_Rect imgMazeOnSprite;

@@ -9,6 +9,8 @@
 
 int getScore();
 
+int getHighScore();
+
 void incrementScore(int value);
 
 void decrementScore(int value);
