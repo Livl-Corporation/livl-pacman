@@ -8,6 +8,8 @@ struct Sprite *ghostList;
 
 int eatableGhostTimer = 0;
 
+SDL_Rect eatableGhost1;
+
 int isGhostEatable() {
     return eatableGhostTimer > 0;
 }
@@ -44,6 +46,11 @@ void initGhostList() {
 
     }
 
+    eatableGhost1.x = GHOST_INITIAL_POS_X;
+    eatableGhost1.y = GHOST_INITIAL_POS_Y + 4*(GHOST_SIZE+GHOST_SPACING_Y);
+    eatableGhost1.w = GHOST_SIZE;
+    eatableGhost1.h = GHOST_SIZE;
+
 }
 
 void freeGhostList() {
@@ -66,10 +73,17 @@ void drawGhosts(int count) {
 
 void updateGhost(struct Sprite *sprite, int count) {
     
+    SDL_Rect ghost_in2;
+
+    if (isGhostEatable()) {
+        ghost_in2 = eatableGhost1;
+    } else {
+        ghost_in2 = sprite->rects[sprite->direction];
+    }
+
     // Animation
-    SDL_Rect ghost_in2 = sprite->rects[sprite->direction];
     if ((count / ANIMATION_SPEED) % 2)
-        ghost_in2.x += 17;
+        ghost_in2.x += (GHOST_SIZE + GHOST_SPACING_X);
 
     blitGhost(sprite, &ghost_in2);
 
