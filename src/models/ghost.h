@@ -43,6 +43,8 @@ void makeGhostsEatable();
 
 int isGhostEatable();
 
+int isGhostEatableRunningOut();
+
 void decreaseEatableGhostTimer();
 
 // Private
