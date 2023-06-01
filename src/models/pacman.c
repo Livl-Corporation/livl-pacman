@@ -4,14 +4,14 @@
 
 #include "pacman.h"
 
-SDL_Rect pacmanRight1 = {20, 90, 14, 14};
-SDL_Rect pacmanRight2 = {34, 90, 14, 14};
-SDL_Rect pacmanLeft1 = {48, 90, 14, 14};
-SDL_Rect pacmanLeft2 = {62, 90, 14, 14};
-SDL_Rect pacmanUp1 = {76, 90, 14, 14};
-SDL_Rect pacmanUp2 = {93, 90, 14, 14};
-SDL_Rect pacmanDown1 = {110, 90, 14, 14};
-SDL_Rect pacmanDown2 = {127, 90, 14, 14};
+SDL_Rect pacmanRight1 = {21, 90, 14, 14};
+SDL_Rect pacmanRight2 = {36, 90, 14, 14};
+SDL_Rect pacmanLeft1 = {56, 90, 14, 14};
+SDL_Rect pacmanLeft2 = {75, 90, 14, 14};
+SDL_Rect pacmanUp1 = {89, 90, 14, 14};
+SDL_Rect pacmanUp2 = {106, 90, 14, 14};
+SDL_Rect pacmanDown1 = {123, 90, 14, 14};
+SDL_Rect pacmanDown2 = {140, 90, 14, 14};
 
 struct Position pacmanSpawnPos = {1, 1};
 

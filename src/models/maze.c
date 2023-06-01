@@ -3,18 +3,18 @@
 char **initialMaze = NULL;
 char **gameMaze = NULL;
 
-SDL_Rect imgMazeSmallCoin = {5, 82, 2, 2};
-SDL_Rect imgMazeBigCoin = {9, 79, 7, 7};
+SDL_Rect imgMazeSmallCoin = {163, 96, 2, 2};
+SDL_Rect imgMazeBigCoin = {177, 93, 7, 7};
 
 const int SMALL_COIN_OFFSET_X = 12;
 const int SMALL_COIN_OFFSET_Y = 12;
-const int SMALL_COIN_WIDTH = 14;
-const int SMALL_COIN_HEIGHT = 14;
+const int SMALL_COIN_WIDTH = 7;
+const int SMALL_COIN_HEIGHT = 7;
 
 const int BIG_COIN_OFFSET_X = 2;
-const int BIG_COIN_OFFSET_Y = 2;
-const int BIG_COIN_WIDTH = 29;
-const int BIG_COIN_HEIGHT = 28;
+const int BIG_COIN_OFFSET_Y = 3;
+const int BIG_COIN_WIDTH = 20;
+const int BIG_COIN_HEIGHT = 20;
 
 void initMaze()
 {

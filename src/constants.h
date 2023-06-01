@@ -20,7 +20,6 @@
 
 #define PATH_FILE_MAZE "../assets/text/maze.txt"
 #define PATH_SPRITE_SHEET_PACMAN "../assets/img/pacman_sprites.bmp"
-#define PATH_SPRITE_SHEET_PLAY_BTN "../assets/img/play_btn.bmp"
 
 #define GAME_SPEED 200.0 // IN FPS, BIGGER IS FASTER
 #define ANIMATION_SPEED 14 // BIGGER IS SLOWER

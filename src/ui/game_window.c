@@ -4,7 +4,7 @@ int count = 0;
 
 bool pGameQuit = false;
 
-SDL_Rect imgMazeOnSprite = {370, 4, 166, 215};
+SDL_Rect imgMazeOnSprite = {201, 4, 166, 214};
 SDL_Rect imgMazeOnUi = {0, HEADER_SCREEN_HEIGHT, TOTAL_SCREEN_WIDTH, MAZE_SCREEN_HEIGHT};
 
 SDL_Rect imgBlackHeaderOnSprite = {0, 0, 0, 0};
