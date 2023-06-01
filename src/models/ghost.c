@@ -6,6 +6,14 @@
 
 struct Sprite *ghostList;
 
+int eatableGhostTimer = 0;
+
+SDL_Rect eatableGhostRect;
+
+int isGhostEatable() {
+    return eatableGhostTimer > 0;
+}
+
 void initGhostList() {
 
     // TODO : [sprite refactor] use this code also for pacman
@@ -38,6 +46,11 @@ void initGhostList() {
 
     }
 
+    eatableGhostRect.x = GHOST_INITIAL_POS_X;
+    eatableGhostRect.y = GHOST_INITIAL_POS_Y + 4*(GHOST_SIZE+GHOST_SPACING_Y);
+    eatableGhostRect.w = GHOST_SIZE;
+    eatableGhostRect.h = GHOST_SIZE;
+
 }
 
 void freeGhostList() {
@@ -60,10 +73,21 @@ void drawGhosts(int count) {
 
 void updateGhost(struct Sprite *sprite, int count) {
     
+    SDL_Rect ghost_in2;
+
+    if (isGhostEatable()) {
+        ghost_in2 = eatableGhostRect;
+
+        if (isGhostEatableRunningOut() && (count / ANIMATION_SPEED / 2) % 2)
+            ghost_in2.x += 2*(GHOST_SIZE + GHOST_SPACING_X);
+
+    } else {
+        ghost_in2 = sprite->rects[sprite->direction];
+    }
+
     // Animation
-    SDL_Rect ghost_in2 = sprite->rects[sprite->direction];
     if ((count / ANIMATION_SPEED) % 2)
-        ghost_in2.x += 17;
+        ghost_in2.x += (GHOST_SIZE + GHOST_SPACING_X);
 
     blitGhost(sprite, &ghost_in2);
 
@@ -74,4 +98,17 @@ void blitGhost(struct Sprite *sprite, SDL_Rect *spritePos) {
 
     SDL_SetColorKey(pSurfacePacmanSpriteSheet, 1, 0);
     SDL_BlitScaled(pSurfacePacmanSpriteSheet, spritePos, pSurfaceWindow, &rect);
+}
+
+void makeGhostsEatable() {
+    eatableGhostTimer = EATABLE_GHOST_DURATION;
+}
+
+void decreaseEatableGhostTimer() {
+    if (eatableGhostTimer > 0)
+        eatableGhostTimer--;
+}
+
+int isGhostEatableRunningOut() {
+    return eatableGhostTimer < EATABLE_GHOST_DURATION / 4;
 }

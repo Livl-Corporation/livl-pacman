@@ -115,7 +115,7 @@ struct Position onPacmanGridMove(struct Position *pacmanUiPos)
         case BIG_COIN:
             setElementAtPositionOnMazeAs(pacmanGridPos, EMPTY);
             incrementScore(50);
-            // TODO: make pacman invincible to eat ghosts
+            makeGhostsEatable();
             break;
         default:
             break;

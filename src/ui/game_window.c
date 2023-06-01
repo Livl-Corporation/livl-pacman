@@ -86,6 +86,9 @@ void drawGame()
     drawGameInfoPanel(count);
 
     fillMazeWithCoins();
+
+    decreaseEatableGhostTimer();
+
 }
 
 void drawHeader()

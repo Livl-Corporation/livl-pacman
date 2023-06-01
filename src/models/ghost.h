@@ -36,6 +36,17 @@ void drawGhosts(int count);
  */
 void freeGhostList();
 
+/**
+ * Make all ghost eatable
+ */
+void makeGhostsEatable();
+
+int isGhostEatable();
+
+int isGhostEatableRunningOut();
+
+void decreaseEatableGhostTimer();
+
 // Private
 void updateGhost(struct Sprite *sprite, int count);
 void blitGhost(struct Sprite *sprite, SDL_Rect *spritePos);
