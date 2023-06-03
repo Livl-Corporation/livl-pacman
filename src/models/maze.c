@@ -21,6 +21,7 @@ void initMaze()
 
     if (initialMaze != NULL)
     {
+        // TODO: segmentation fault here in the copy2DArray function when we restart a new game
         resetGameMaze();
         return;
     }
@@ -54,7 +55,6 @@ bool retrieveMazeFromFile()
 
     resetGameMaze();
 
-    fillMazeWithCoins();
     return true;
 }
 
@@ -65,7 +65,7 @@ void blitRectWithOffset(SDL_Rect imgRect, struct Position positionOffsetInMaze, 
     SDL_BlitScaled(pSurfacePacmanSpriteSheet, &imgRect, pSurfaceWindow, &destinationRect);
 }
 
-void fillMazeWithCoins()
+void drawCoins(int count)
 {
     for (int i = 0; i < MAP_HEIGHT; i++)
     {
@@ -81,7 +81,8 @@ void fillMazeWithCoins()
                     break;
 
                 case BIG_COIN:
-                    blitRectWithOffset(imgMazeBigCoin, position, BIG_COIN_OFFSET_X, BIG_COIN_OFFSET_Y, BIG_COIN_WIDTH, BIG_COIN_HEIGHT);
+                    if(count % 50 < 30)
+                        blitRectWithOffset(imgMazeBigCoin, position, BIG_COIN_OFFSET_X, BIG_COIN_OFFSET_Y, BIG_COIN_WIDTH, BIG_COIN_HEIGHT);
                     break;
 
                 default:

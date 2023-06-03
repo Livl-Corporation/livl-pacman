@@ -76,7 +76,7 @@ struct Position getUiPosToGridPos(struct Position uiPos);
 /**
  * Fill the maze with coins
  */
-void fillMazeWithCoins();
+void drawCoins(int count);
 
 /**
  * Blit a rect with an offset
