@@ -62,14 +62,9 @@ void handleGameEvents()
         }
     }
 
-    if (keys[SDL_SCANCODE_P])
-        isGamePause = true;
-
-    if(keys[SDL_SCANCODE_L])
-        isGamePause = false;
-
-    if (keys[SDL_SCANCODE_ESCAPE])
-        pGameQuit = true;
+    if (keys[SDL_SCANCODE_P]) isGamePause = true;
+    if (keys[SDL_SCANCODE_L]) isGamePause = false;
+    if (keys[SDL_SCANCODE_ESCAPE]) pGameQuit = true;
 
     handlePacmanEvents();
 }
@@ -106,7 +101,8 @@ void drawGame()
     drawGameInfoPanel(count);
     drawCoins(count);
 
-    decreaseEatableGhostTimer();
+    if(!isGamePause)
+        decreaseEatableGhostTimer();
 }
 
 void drawMaze()
