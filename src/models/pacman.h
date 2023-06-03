@@ -14,6 +14,7 @@
 #include "models/maze.h"
 #include "models/game.h"
 #include "models/ghost.h"
+#include "../ui/game_window.h"
 
 /**
  * Initialize pacman position at his spawn point
@@ -30,7 +31,7 @@ void handlePacmanEvents();
  * Calculate, validate, update and draw pacman position
  * @param count used for animations
  */
-void drawPacman(int count);
+void drawPacman();
 
 /**
  * Perform action when pacman has moved in grid
@@ -39,7 +40,7 @@ void drawPacman(int count);
 struct Position onPacmanGridMove(struct Position *pacmanUiPos);
 
 // -- Private --
-void pacmanBlit(SDL_Rect *srcRect);
+void pacmanBlit(SDL_Rect srcRect);
 
 struct Position teleportPacman(MazeElement teleporter);
 
