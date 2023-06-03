@@ -17,7 +17,7 @@
 #include "ui/game_info_panel.h"
 #include "ui/menu_window.h"
 
-extern int count;
+extern int frameCount;
 extern bool isGamePause;
 extern SDL_Rect imgMazeOnSprite;
 extern SDL_Rect imgMazeOnUi;

@@ -29,7 +29,7 @@ void handlePacmanEvents();
 
 /**
  * Calculate, validate, update and draw pacman position
- * @param count used for animations
+ * @param frameCount used for animations
  */
 void drawPacman();
 

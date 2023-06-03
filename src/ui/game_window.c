@@ -1,6 +1,6 @@
 #include "game_window.h"
 
-int count = 0;
+int frameCount = 0;
 double delayInSec = 1.0 / GAME_SPEED;
 Uint32 delayInMs = 0;
 
@@ -30,7 +30,7 @@ void startGameLoop()
     while (!pGameQuit)
     {
         clock_t before = clock();
-        count = (count + 1) % (512);
+        frameCount++;
 
         handleGameEvents();
 
@@ -78,7 +78,7 @@ void startReadyLoop()
     while (SDL_GetTicks() - startTime < TIME_START_GAME_READY)
     {
         clock_t before = clock();
-        count = (count + 1) % (512);
+        frameCount++;
 
         SDL_FillRect(pSurfaceWindow, 0, 0 );
 
@@ -98,8 +98,8 @@ void drawGame()
     drawMaze();
     drawGhosts();
     drawPacman();
-    drawGameInfoPanel(count);
-    drawCoins(count);
+    drawGameInfoPanel(frameCount);
+    drawCoins(frameCount);
 
     if(!isGamePause)
         decreaseEatableGhostTimer();

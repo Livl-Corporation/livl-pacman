@@ -82,7 +82,7 @@ void updateGhost(struct Sprite *sprite) {
     if (isGhostEatable()) {
         ghost_in2 = eatableGhostRect;
 
-        if (isGhostEatableRunningOut() && (count / ANIMATION_SPEED / 2) % 2)
+        if (isGhostEatableRunningOut() && (frameCount / ANIMATION_SPEED / 2) % 2)
             ghost_in2.x += 2*(GHOST_SIZE + GHOST_SPACING_X);
 
     } else {
@@ -90,7 +90,7 @@ void updateGhost(struct Sprite *sprite) {
     }
 
     // Animation
-    if ((count / ANIMATION_SPEED) % 2)
+    if ((frameCount / ANIMATION_SPEED) % 2)
         ghost_in2.x += (GHOST_SIZE + GHOST_SPACING_X);
 
     sprite->lastRect = ghost_in2;

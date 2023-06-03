@@ -27,7 +27,7 @@ void spawnGhost(int ghostId);
 
 /**
  * Make all ghost movesafare
- * @param count
+ * @param frameCount
  */
 void drawGhosts();
 

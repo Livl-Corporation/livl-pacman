@@ -61,7 +61,7 @@ void drawPacman()
 
     SDL_Rect newPacman = {0, 0, 0, 0};
 
-    int pacmanAnimation = (count / ANIMATION_SPEED) % 2;
+    int pacmanAnimation = (frameCount / ANIMATION_SPEED) % 2;
 
     // Copy pacman position to a new
     struct Position pacmanPosCopy = pacmanUIPos;

@@ -65,7 +65,7 @@ void blitRectWithOffset(SDL_Rect imgRect, struct Position positionOffsetInMaze, 
     SDL_BlitScaled(pSurfacePacmanSpriteSheet, &imgRect, pSurfaceWindow, &destinationRect);
 }
 
-void drawCoins(int count)
+void drawCoins(int frameCount)
 {
     for (int i = 0; i < MAP_HEIGHT; i++)
     {
@@ -81,7 +81,7 @@ void drawCoins(int count)
                     break;
 
                 case BIG_COIN:
-                    if(count % 50 < 30)
+                    if(frameCount % 50 < 30)
                         blitRectWithOffset(imgMazeBigCoin, position, BIG_COIN_OFFSET_X, BIG_COIN_OFFSET_Y, BIG_COIN_WIDTH, BIG_COIN_HEIGHT);
                     break;
 
