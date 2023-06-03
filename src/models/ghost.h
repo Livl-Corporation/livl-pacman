@@ -11,6 +11,7 @@
 #include "constants.h"
 #include "maze.h"
 #include "models/sprite.h"
+#include "../ui/game_window.h"
 
 /**
  * Initialize the ghost list
@@ -28,7 +29,7 @@ void spawnGhost(int ghostId);
  * Make all ghost movesafare
  * @param count
  */
-void drawGhosts(int count);
+void drawGhosts();
 
 /**
  * Free the ghost list
@@ -48,7 +49,7 @@ int isGhostEatableRunningOut();
 void decreaseEatableGhostTimer();
 
 // Private
-void updateGhost(struct Sprite *sprite, int count);
+void updateGhost(struct Sprite *sprite);
 void blitGhost(struct Sprite *sprite, SDL_Rect *spritePos);
 
 #endif //PACMAN_GHOST_H
