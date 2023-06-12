@@ -81,7 +81,7 @@ void drawCoins(int frameCount)
                     break;
 
                 case BIG_COIN:
-                    if(frameCount % 50 < 30)
+                    if(frameCount % BIG_COIN_RATE)
                         blitRectWithOffset(imgMazeBigCoin, position, BIG_COIN_OFFSET_X, BIG_COIN_OFFSET_Y, BIG_COIN_WIDTH, BIG_COIN_HEIGHT);
                     break;
 

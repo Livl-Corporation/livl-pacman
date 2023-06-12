@@ -39,4 +39,6 @@
 
 #define INITIAL_LIVES 3
 
+#define BIG_COIN_RATE 50 < 30
+
 #endif // PACMAN_CONSTANTS_H
