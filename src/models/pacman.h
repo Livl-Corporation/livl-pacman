@@ -40,6 +40,8 @@ struct Position onPacmanGridMove(struct Position *pacmanUiPos);
 
 // -- Private --
 void pacmanBlit(SDL_Rect srcRect);
+int canMoveInDirection(Direction direction);
+void updatePosition(struct Position *position, Direction direction);
 
 struct Position teleportPacman(MazeElement teleporter);
 
