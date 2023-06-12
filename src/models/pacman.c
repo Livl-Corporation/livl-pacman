@@ -8,11 +8,13 @@
  * IMAGE : Pacman Sprite-Sheet with 4 directions and 2 sprites per direction
  */
 SDL_Rect pacmanSprites[DIRECTION_COUNT][PACMAN_SPRITE_MOUTHS_DIRECTION] = {
-    {{4, 90, 14, 14}, {21, 90, 14, 14}, {36, 90, 14, 14}},  // full - Right1 - Right2
-    {{4, 90, 14, 14}, {56, 90, 14, 14}, {75, 90, 14, 14}},  // full - Left1 - Left2
-    {{4, 90, 14, 14}, {89, 90, 14, 14}, {106, 90, 14, 14}}, // full - Up1 - Up2
-    {{4, 90, 14, 14}, {123, 90, 14, 14}, {140, 90, 14, 14}} // full - Down1 - Down2
+    {{4, 90, PACMAN_SIZE, PACMAN_SIZE}, {21, 90, PACMAN_SIZE, PACMAN_SIZE}, {36, 90, PACMAN_SIZE, PACMAN_SIZE}},  // full - Right1 - Right2
+    {{4, 90, PACMAN_SIZE, PACMAN_SIZE}, {56, 90, PACMAN_SIZE, PACMAN_SIZE}, {75, 90, PACMAN_SIZE, PACMAN_SIZE}},  // full - Left1 - Left2
+    {{4, 90, PACMAN_SIZE, PACMAN_SIZE}, {89, 90, PACMAN_SIZE, PACMAN_SIZE}, {106, 90, PACMAN_SIZE, PACMAN_SIZE}}, // full - Up1 - Up2
+    {{4, 90, PACMAN_SIZE, PACMAN_SIZE}, {123, 90, PACMAN_SIZE, PACMAN_SIZE}, {140, 90, PACMAN_SIZE, PACMAN_SIZE}} // full - Down1 - Down2
 };
+
+SDL_Rect arrowSprite = {4, 266, PACMAN_ARROW_SIZE, PACMAN_ARROW_SIZE};
 
 SDL_Rect lastPacmanDirection = {0, 0, 0, 0};
 
@@ -78,7 +80,7 @@ void drawPacman()
     newPacman = pacmanSprites[pacmanDirection][pacmanAnimation];
 
     // Calculate the target UI position
-    updatePosition(&pacmanPosCopy, pacmanDirection);
+    updatePosition(&pacmanPosCopy, pacmanDirection, 1);
 
     // Get target pacman position in grid
     struct Position newPacmanGridPos = getUiPosToGridPos(pacmanPosCopy);
@@ -104,13 +106,43 @@ void drawPacman()
     pacmanBlit(newPacman);
 }
 
+void drawPacmanArrow()
+{
+
+    if (isGamePause)
+        return;
+
+    SDL_Rect arrowSprite = getArrow(pacmanWishedDirection);
+
+    int offset = (PACMAN_SIZE / 2) - (PACMAN_ARROW_SIZE / 2);
+
+    struct Position arrowPos = {
+        pacmanUIPos.x + offset,
+        pacmanUIPos.y + offset,
+    };
+
+    updatePosition(&arrowPos, pacmanWishedDirection, PACMAN_ARROW_SPACING);
+
+    float scaleRatio = (float)CELL_SIZE / (float)PACMAN_SIZE;
+    int scaledPacmanArrowSize = PACMAN_ARROW_SIZE * scaleRatio;
+
+    struct SDL_Rect arrowPosSDL = {
+        arrowPos.x,
+        arrowPos.y,
+        scaledPacmanArrowSize,
+        scaledPacmanArrowSize,
+    };
+
+    SDL_BlitScaled(pSurfacePacmanSpriteSheet, &arrowSprite, pSurfaceWindow, &arrowPosSDL);
+}
+
 int canMoveInDirection(Direction direction)
 {
 
     // Copy pacman position to a new
     struct Position pacmanPosCopy = pacmanUIPos;
 
-    updatePosition(&pacmanPosCopy, direction);
+    updatePosition(&pacmanPosCopy, direction, 1);
 
     // Get new pacman position in grid
     struct Position newPacmanGridPos = getUiPosToGridPos(pacmanPosCopy);
@@ -118,21 +150,21 @@ int canMoveInDirection(Direction direction)
     return arePositionEquals(pacmanGridPos, newPacmanGridPos) || !isObstacle(newPacmanGridPos);
 }
 
-void updatePosition(struct Position *position, Direction direction)
+void updatePosition(struct Position *position, Direction direction, int step)
 {
     switch (direction)
     {
     case DIRECTION_RIGHT:
-        position->x++;
+        position->x += step;
         break;
     case DIRECTION_LEFT:
-        position->x--;
+        position->x -= step;
         break;
     case DIRECTION_UP:
-        position->y--;
+        position->y -= step;
         break;
     case DIRECTION_DOWN:
-        position->y++;
+        position->y += step;
         break;
     }
 }
@@ -174,4 +206,11 @@ struct Position teleportPacman(MazeElement teleporter)
 {
     pacmanGridPos = getInitialPositionOfElement(teleporter);
     return getGridPosToUiPos(pacmanGridPos);
+}
+
+struct SDL_Rect getArrow(Direction direction)
+{
+    SDL_Rect arrow = arrowSprite;
+    arrow.x += direction * arrow.w;
+    return arrow;
 }
