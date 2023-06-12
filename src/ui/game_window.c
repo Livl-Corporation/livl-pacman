@@ -1,14 +1,18 @@
 #include "game_window.h"
 
-int count = 0;
+int frameCount = 0;
+double delayInSec = 1.0 / GAME_SPEED;
+Uint32 delayInMs = 0;
 
-bool pGameQuit = false;
+bool pGameQuit = false, isGamePause = false;
 
 SDL_Rect imgMazeOnSprite = {201, 4, 166, 214};
 SDL_Rect imgMazeOnUi = {0, HEADER_SCREEN_HEIGHT, TOTAL_SCREEN_WIDTH, MAZE_SCREEN_HEIGHT};
 
 SDL_Rect imgBlackHeaderOnSprite = {0, 0, 0, 0};
 SDL_Rect imgBlackHeaderOnUi = { 0, 0, TOTAL_SCREEN_WIDTH, HEADER_SCREEN_HEIGHT };
+
+SDL_Rect imgReadyOnSprite = { 5, 63, 46, 7 };
 
 void startGameLoop()
 {
@@ -20,79 +24,113 @@ void startGameLoop()
 
     initGameInfoPanel();
 
-    double delayInSec = 1.0 / GAME_SPEED;
-    Uint32 delayInMs = (delayInSec * 1000);
+    delayInMs = (Uint32)(delayInSec * 1000);
+    startReadyLoop();
 
     while (!pGameQuit)
     {
         clock_t before = clock();
-
-        count = (count + 1) % (512);
+        frameCount++;
 
         handleGameEvents();
 
-        SDL_FillRect(pSurfaceWindow, 0, 0 );
+        SDL_FillRect(pSurfaceWindow, 0, 0 );  // Clears the window's surface before drawing the new frame
         drawHeader();
         drawGame();
 
         SDL_UpdateWindowSurface(pWindow);
-
-        clock_t difference = clock() - before;
-        int msec = difference * 1000 / CLOCKS_PER_SEC;
-
-        if (delayInMs > msec)
-            SDL_Delay(delayInMs - msec);
-
+        delayToMaintainFrameRate(before, delayInMs);
     }
 
     freeMaze();
     freeGhostList();
 }
 
-// This function should trigger all required events handling
-bool handleGameEvents()
+void handleGameEvents()
 {
     SDL_Event event;
+    int numberOfKeyboardScancodes;
+    const Uint8 *keys = SDL_GetKeyboardState(&numberOfKeyboardScancodes);
 
     while (!pGameQuit && SDL_PollEvent(&event))
     {
         switch (event.type)
         {
-        case SDL_QUIT:
-            pGameQuit = true;
-            break;
+            case SDL_QUIT:
+                pGameQuit = true;
+                break;
         }
     }
 
-    int numberOfKeyboardScancodes;
-    const Uint8 *keys = SDL_GetKeyboardState(&numberOfKeyboardScancodes);
-
-    if (keys[SDL_SCANCODE_ESCAPE])
-        pGameQuit = true;
+    if (keys[SDL_SCANCODE_P]) isGamePause = true;
+    if (keys[SDL_SCANCODE_L]) isGamePause = false;
+    if (keys[SDL_SCANCODE_ESCAPE]) pGameQuit = true;
 
     handlePacmanEvents();
 }
 
+void startReadyLoop()
+{
+    isGamePause = true;
+
+    Uint32 startTime = SDL_GetTicks();
+
+    while (SDL_GetTicks() - startTime < TIME_START_GAME_READY)
+    {
+        clock_t before = clock();
+        frameCount++;
+
+        SDL_FillRect(pSurfaceWindow, 0, 0 );
+
+        drawGame();
+        drawReadyImg();
+
+        SDL_UpdateWindowSurface(pWindow);
+
+        delayToMaintainFrameRate(before, delayInMs);
+    }
+
+    isGamePause = false;
+}
+
 void drawGame()
+{
+    drawMaze();
+    drawGhosts();
+    drawPacman();
+    drawGameInfoPanel(frameCount);
+    drawCoins(frameCount);
+
+    if(!isGamePause)
+        decreaseEatableGhostTimer();
+}
+
+void drawMaze()
 {
     // TODO : Move maze display to maze file
     SDL_SetColorKey(pSurfacePacmanSpriteSheet, false, 0);
     SDL_BlitScaled(pSurfacePacmanSpriteSheet, &imgMazeOnSprite, pSurfaceWindow, &imgMazeOnUi);
+}
 
-    drawGhosts(count);
-
-    drawPacman(count);
-
-    drawGameInfoPanel(count);
-
-    fillMazeWithCoins();
-
-    decreaseEatableGhostTimer();
-
+void drawReadyImg()
+{
+    struct Position position = getGridPosToUiPos((struct Position){9, 15});
+    SDL_Rect imgReadyOnUi = {position.x + 5, position.y + 7 , 70, 17};
+    SDL_SetColorKey(pSurfacePacmanSpriteSheet, false, 0);
+    SDL_BlitScaled(pSurfacePacmanSpriteSheet, &imgReadyOnSprite, pSurfaceWindow, &imgReadyOnUi);
 }
 
 void drawHeader()
 {
     SDL_SetColorKey(pSurfacePacmanSpriteSheet, false, 0);
     SDL_BlitScaled(pSurfacePacmanSpriteSheet, &imgBlackHeaderOnSprite, pSurfaceWindow, &imgBlackHeaderOnUi);
+}
+
+void delayToMaintainFrameRate(clock_t before, Uint32 desiredDelayInMs)
+{
+    clock_t difference = clock() - before;
+    int64_t milliseconds = (difference * 1000) / CLOCKS_PER_SEC;
+
+    if (desiredDelayInMs > milliseconds)
+        SDL_Delay(desiredDelayInMs - milliseconds);
 }

@@ -16,7 +16,7 @@ void initImgNumbersOnSprite();
 
 void initGameInfoPanel();
 
-void drawGameInfoPanel(int count);
+void drawGameInfoPanel(int frameCount);
 
 void drawHighScore();
 

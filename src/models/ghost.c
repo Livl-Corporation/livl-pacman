@@ -40,6 +40,7 @@ void initGhostList() {
             rect.h = GHOST_SIZE;
 
             ghostList[i].rects[j] = rect;
+            ghostList[i].lastRect = rect;
         }
 
         spawnGhost(i);
@@ -65,20 +66,23 @@ void spawnGhost(int ghostId) {
     ghostList[ghostId].uiPosition = getGridPosToUiPos(ghostList[ghostId].gridPosition);
 }
 
-void drawGhosts(int count) {
+void drawGhosts() {
     for (int i = 0; i < GHOST_COUNT; i++) {
-        updateGhost(&ghostList[i], count);
+        if(isGamePause) {
+            blitGhost(&ghostList[i], &ghostList[i].lastRect);
+            continue;
+        }
+        updateGhost(&ghostList[i]);
     }
 }
 
-void updateGhost(struct Sprite *sprite, int count) {
-    
+void updateGhost(struct Sprite *sprite) {
     SDL_Rect ghost_in2;
 
     if (isGhostEatable()) {
         ghost_in2 = eatableGhostRect;
 
-        if (isGhostEatableRunningOut() && (count / ANIMATION_SPEED / 2) % 2)
+        if (isGhostEatableRunningOut() && (frameCount / ANIMATION_SPEED / 2) % 2)
             ghost_in2.x += 2*(GHOST_SIZE + GHOST_SPACING_X);
 
     } else {
@@ -86,8 +90,10 @@ void updateGhost(struct Sprite *sprite, int count) {
     }
 
     // Animation
-    if ((count / ANIMATION_SPEED) % 2)
+    if ((frameCount / ANIMATION_SPEED) % 2)
         ghost_in2.x += (GHOST_SIZE + GHOST_SPACING_X);
+
+    sprite->lastRect = ghost_in2;
 
     blitGhost(sprite, &ghost_in2);
 
@@ -95,7 +101,6 @@ void updateGhost(struct Sprite *sprite, int count) {
 
 void blitGhost(struct Sprite *sprite, SDL_Rect *spritePos) {
     SDL_Rect rect = {sprite->uiPosition.x, sprite->uiPosition.y, CELL_SIZE, CELL_SIZE};
-
     SDL_SetColorKey(pSurfacePacmanSpriteSheet, 1, 0);
     SDL_BlitScaled(pSurfacePacmanSpriteSheet, spritePos, pSurfaceWindow, &rect);
 }
