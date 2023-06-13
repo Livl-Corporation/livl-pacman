@@ -119,8 +119,7 @@ void makeGhostsEatable() {
 
 void incrementGhostScoreEaten()
 {
-    if(scoreTotalGhostEaten == 0) scoreTotalGhostEaten = SCORE_GHOST_EATEN;
-    else if(scoreTotalGhostEaten > SCORE_GHOST_EATEN_MAX) scoreTotalGhostEaten = 0;
+    if(scoreTotalGhostEaten == 0 || scoreTotalGhostEaten*2 > SCORE_GHOST_EATEN_MAX) scoreTotalGhostEaten = SCORE_GHOST_EATEN;
     else scoreTotalGhostEaten *= 2;
 }
 
