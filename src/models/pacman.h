@@ -17,7 +17,6 @@
 #include "../ui/game_window.h"
 
 extern struct Position pacmanUIPos;
-extern struct Position pacmanGridPos;
 
 /**
  * Initialize pacman position at his spawn point

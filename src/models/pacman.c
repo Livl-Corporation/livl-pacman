@@ -192,7 +192,7 @@ void pacmanBlit(SDL_Rect srcRect)
 void decreaseScoreAnimationOnGhostEaten()
 {
     durationAnimationOnGhostEaten--;
-    if(durationAnimationOnGhostEaten == 0) isGamePause = false;
+    if(durationAnimationOnGhostEaten <= 0) isGamePause = false;
 }
 
 bool isScoreAnimationOnGhostEaten()
@@ -202,14 +202,18 @@ bool isScoreAnimationOnGhostEaten()
 
 void pacmanAndGhostOnSamePosition(MazeElement ghostElement)
 {
-    durationAnimationOnGhostEaten = SCORE_GHOST_EATEN_DURATION;
-
-    if(isGhostEatable()) {
+    if(isGhostEatable()) { // Pacman ate a ghost
         removeMazeElement(ghostElement);
-        incrementScore(200);
+        setElementAtPositionOnMazeAs(pacmanGridPos, PACMAN);
+        incrementScore(scoreTotalGhostEaten);
+
+        durationAnimationOnGhostEaten = SCORE_GHOST_EATEN_DURATION;
         isGamePause = true;
+        ghostElementEaten = ghostElement;
+
+        incrementGhostScoreEaten();
     }
-    else {
+    else { // Pacman is eaten by a ghost
         removeMazeElement(PACMAN);
         decrementLives();
     }
