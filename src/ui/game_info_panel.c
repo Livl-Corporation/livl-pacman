@@ -40,8 +40,10 @@ void drawGameInfoPanel()
     drawLives();
     if (frameCount % TEXT_UP_RATE) drawUp();
 
-    if (frameCount % 125 < 75) {
-        drawUp();
+    if(isScoreAnimationOnGhostEaten())
+    {
+        decreaseScoreAnimationOnGhostEaten();
+        drawScore(200, (SDL_Rect){pacmanUIPos.x, pacmanUIPos.y, 17, 17});
     }
 }
 
