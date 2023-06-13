@@ -43,7 +43,7 @@ void drawGameInfoPanel()
     if(isScoreAnimationOnGhostEaten())
     {
         decreaseScoreAnimationOnGhostEaten();
-        drawScore(200, (SDL_Rect){pacmanUIPos.x, pacmanUIPos.y, 17, 17});
+        drawScore(scoreTotalGhostEaten, (SDL_Rect){pacmanUIPos.x, pacmanUIPos.y, 17, 17});
     }
 }
 
