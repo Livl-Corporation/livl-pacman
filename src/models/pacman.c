@@ -75,7 +75,10 @@ void drawPacman()
 
     // Test is wished direction can be applied
     if (pacmanDirection != pacmanWishedDirection && canMoveInDirection(pacmanWishedDirection))
+    {
         pacmanDirection = pacmanWishedDirection;
+        printf("Pacman direction changed to %d\n", pacmanDirection);
+    }
 
     // Then we can choose the sprite corresponding to direction
     newPacman = pacmanSprites[pacmanDirection][pacmanAnimation];
@@ -83,19 +86,19 @@ void drawPacman()
     // Calculate the target UI position
     updatePosition(&pacmanPosCopy, pacmanDirection, 1);
 
+    if (hasCollision(pacmanPosCopy, CELL_SIZE - 1))
+    {
+        // If pacman ran into obstacle, just blit him at without updating his position
+        pacmanBlit(lastPacmanDirection);
+        return;
+    }
+
     // Get target pacman position in grid
-    struct Position newPacmanGridPos = getUiPosToGridPos(pacmanPosCopy);
+    struct Position newPacmanGridPos = getUiPosToGridPos(getCellCenter(pacmanPosCopy));
 
     if (!arePositionEquals(pacmanGridPos, newPacmanGridPos))
     {
-        // If pacman ran into obstacle, just blit him at without updating his position
-        if (isObstacle(newPacmanGridPos))
-        {
-            pacmanBlit(lastPacmanDirection);
-            return;
-        }
-
-        // Pacman has moved in grid :
+        // Pacman has moved in grid
         pacmanGridPos = newPacmanGridPos;
         pacmanPosCopy = onPacmanGridMove(&pacmanPosCopy);
     }
@@ -134,35 +137,9 @@ void drawPacmanArrow()
 
 int canMoveInDirection(Direction direction)
 {
-
-    // Copy pacman position to a new
     struct Position pacmanPosCopy = pacmanUIPos;
-
     updatePosition(&pacmanPosCopy, direction, 1);
-
-    // Get new pacman position in grid
-    struct Position newPacmanGridPos = getUiPosToGridPos(pacmanPosCopy);
-
-    return arePositionEquals(pacmanGridPos, newPacmanGridPos) || !isObstacle(newPacmanGridPos);
-}
-
-void updatePosition(struct Position *position, Direction direction, int step)
-{
-    switch (direction)
-    {
-    case DIRECTION_RIGHT:
-        position->x += step;
-        break;
-    case DIRECTION_LEFT:
-        position->x -= step;
-        break;
-    case DIRECTION_UP:
-        position->y -= step;
-        break;
-    case DIRECTION_DOWN:
-        position->y += step;
-        break;
-    }
+    return !hasCollision(pacmanPosCopy, CELL_SIZE - 1);
 }
 
 struct Position onPacmanGridMove(struct Position *pacmanUiPos)

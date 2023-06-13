@@ -2,6 +2,7 @@
 #define POSITION_H
 
 #include <stdbool.h>
+#include "enums/direction.h"
 
 struct Position
 {
@@ -16,5 +17,13 @@ struct Position
  * @return
  */
 bool arePositionEquals(struct Position position1, struct Position position2);
+
+/**
+ * Update position according to direction and step
+ * @param position
+ * @param direction
+ * @param step
+ */
+void updatePosition(struct Position *position, Direction direction, int step);
 
 #endif
