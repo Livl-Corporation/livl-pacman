@@ -19,6 +19,7 @@ struct Sprite
     Direction direction;
     SDL_Rect *rects;
     SDL_Rect lastRect;
+    MazeElement ghostElement;
 };
 
 void moveSprintInDirection(struct Sprite *sprite);

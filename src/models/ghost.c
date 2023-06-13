@@ -7,6 +7,8 @@
 struct Sprite *ghostList;
 
 int eatableGhostTimer = 0;
+int scoreTotalGhostEaten = 0;
+MazeElement ghostElementEaten = EMPTY;
 
 SDL_Rect eatableGhostRect;
 
@@ -27,6 +29,7 @@ void initGhostList() {
         ghostList[i].uiPosition.y = 0;
         ghostList[i].gridPosition.x = 0;
         ghostList[i].gridPosition.y = 0;
+        ghostList[i].ghostElement = i + '0';
 
         // Sprites :
         ghostList[i].rects = malloc(sizeof(SDL_Rect) * DIRECTION_COUNT);
@@ -62,18 +65,22 @@ void freeGhostList() {
 }
 
 void spawnGhost(int ghostId) {
-    ghostList[ghostId].gridPosition = getInitialPositionOfElement(ghostId+'0');
+    ghostList[ghostId].gridPosition = getInitialPositionOfElement(ghostList[ghostId].ghostElement);
     ghostList[ghostId].uiPosition = getGridPosToUiPos(ghostList[ghostId].gridPosition);
 }
 
 void drawGhosts() {
     for (int i = 0; i < GHOST_COUNT; i++) {
-        if(isGamePause) {
+        if(canBlitGhostInPausedGame(i))
             blitGhost(&ghostList[i], &ghostList[i].lastRect);
-            continue;
-        }
-        updateGhost(&ghostList[i]);
+        else if(!isGamePause)
+            updateGhost(&ghostList[i]);
     }
+}
+
+bool canBlitGhostInPausedGame(int ghostId)
+{
+    return ((isGamePause && !isScoreAnimationOnGhostEaten()) || (isScoreAnimationOnGhostEaten() && ghostList[ghostId].ghostElement != ghostElementEaten));
 }
 
 void updateGhost(struct Sprite *sprite) {
@@ -107,6 +114,14 @@ void blitGhost(struct Sprite *sprite, SDL_Rect *spritePos) {
 
 void makeGhostsEatable() {
     eatableGhostTimer = EATABLE_GHOST_DURATION;
+    scoreTotalGhostEaten = 0;
+}
+
+void incrementGhostScoreEaten()
+{
+    if(scoreTotalGhostEaten == 0) scoreTotalGhostEaten = SCORE_GHOST_EATEN;
+    else if(scoreTotalGhostEaten > SCORE_GHOST_EATEN_MAX) scoreTotalGhostEaten = 0;
+    else scoreTotalGhostEaten *= 2;
 }
 
 void decreaseEatableGhostTimer() {

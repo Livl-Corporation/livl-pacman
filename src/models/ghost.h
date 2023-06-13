@@ -13,6 +13,12 @@
 #include "models/sprite.h"
 #include "../ui/game_window.h"
 
+extern int scoreTotalGhostEaten;
+/**
+ * The ghost that has been eaten by pacman
+ */
+extern MazeElement ghostElementEaten;
+
 /**
  * Initialize the ghost list
  * <!> Must be called before any other ghost function
@@ -46,6 +52,18 @@ int isGhostEatable();
 int isGhostEatableRunningOut();
 
 void decreaseEatableGhostTimer();
+
+/**
+ * Check if the ghost can be blit in paused game and when a pacman is eaten we only blit all the ghosts except the one who ate the pacman
+ * @param ghostId : the ghost id
+ * @return true if the ghost can be blit
+ */
+bool canBlitGhostInPausedGame(int ghostId);
+
+/**
+ * Increment the score when a ghost is eaten by pacman (200, 400, 800, 1600)
+ */
+void incrementGhostScoreEaten();
 
 // Private
 void updateGhost(struct Sprite *sprite);
