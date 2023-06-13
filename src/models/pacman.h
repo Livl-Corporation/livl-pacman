@@ -32,14 +32,20 @@ void handlePacmanEvents();
  */
 void drawPacman();
 
+void drawPacmanArrow();
+
 /**
  * Perform action when pacman has moved in grid
  * @return pacman position in UI
  */
 struct Position onPacmanGridMove(struct Position *pacmanUiPos);
 
+struct SDL_Rect getArrow(Direction direction);
+
 // -- Private --
 void pacmanBlit(SDL_Rect srcRect);
+int canMoveInDirection(Direction direction);
+void updatePosition(struct Position *position, Direction direction, int step);
 
 struct Position teleportPacman(MazeElement teleporter);
 

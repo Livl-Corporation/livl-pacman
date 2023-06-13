@@ -10,9 +10,9 @@ SDL_Rect imgMazeOnSprite = {201, 4, 166, 214};
 SDL_Rect imgMazeOnUi = {0, HEADER_SCREEN_HEIGHT, TOTAL_SCREEN_WIDTH, MAZE_SCREEN_HEIGHT};
 
 SDL_Rect imgBlackHeaderOnSprite = {0, 0, 0, 0};
-SDL_Rect imgBlackHeaderOnUi = { 0, 0, TOTAL_SCREEN_WIDTH, HEADER_SCREEN_HEIGHT };
+SDL_Rect imgBlackHeaderOnUi = {0, 0, TOTAL_SCREEN_WIDTH, HEADER_SCREEN_HEIGHT};
 
-SDL_Rect imgReadyOnSprite = { 5, 63, 46, 7 };
+SDL_Rect imgReadyOnSprite = {5, 63, 46, 7};
 
 void startGameLoop()
 {
@@ -34,7 +34,7 @@ void startGameLoop()
 
         handleGameEvents();
 
-        SDL_FillRect(pSurfaceWindow, 0, 0 );  // Clears the window's surface before drawing the new frame
+        SDL_FillRect(pSurfaceWindow, 0, 0); // Clears the window's surface before drawing the new frame
         drawHeader();
         drawGame();
 
@@ -56,15 +56,18 @@ void handleGameEvents()
     {
         switch (event.type)
         {
-            case SDL_QUIT:
-                pGameQuit = true;
-                break;
+        case SDL_QUIT:
+            pGameQuit = true;
+            break;
         }
     }
 
-    if (keys[SDL_SCANCODE_P]) isGamePause = true;
-    if (keys[SDL_SCANCODE_L]) isGamePause = false;
-    if (keys[SDL_SCANCODE_ESCAPE]) pGameQuit = true;
+    if (keys[SDL_SCANCODE_P])
+        isGamePause = true;
+    if (keys[SDL_SCANCODE_L])
+        isGamePause = false;
+    if (keys[SDL_SCANCODE_ESCAPE])
+        pGameQuit = true;
 
     handlePacmanEvents();
 }
@@ -80,7 +83,7 @@ void startReadyLoop()
         clock_t before = clock();
         frameCount++;
 
-        SDL_FillRect(pSurfaceWindow, 0, 0 );
+        SDL_FillRect(pSurfaceWindow, 0, 0);
 
         drawGame();
         drawReadyImg();
@@ -100,8 +103,9 @@ void drawGame()
     drawPacman();
     drawGameInfoPanel(frameCount);
     drawCoins(frameCount);
+    drawPacmanArrow();
 
-    if(!isGamePause)
+    if (!isGamePause)
         decreaseEatableGhostTimer();
 }
 
@@ -115,7 +119,7 @@ void drawMaze()
 void drawReadyImg()
 {
     struct Position position = getGridPosToUiPos((struct Position){9, 15});
-    SDL_Rect imgReadyOnUi = {position.x + 5, position.y + 7 , 70, 17};
+    SDL_Rect imgReadyOnUi = {position.x + 5, position.y + 7, 70, 17};
     SDL_SetColorKey(pSurfacePacmanSpriteSheet, false, 0);
     SDL_BlitScaled(pSurfacePacmanSpriteSheet, &imgReadyOnSprite, pSurfaceWindow, &imgReadyOnUi);
 }
