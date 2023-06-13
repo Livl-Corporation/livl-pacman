@@ -171,6 +171,7 @@ void updatePosition(struct Position *position, Direction direction, int step)
 
 struct Position onPacmanGridMove(struct Position *pacmanUiPos)
 {
+    removeMazeElement(PACMAN);
     MazeElement element = getMazeElementAt(pacmanGridPos);
 
     switch (element)
@@ -180,19 +181,46 @@ struct Position onPacmanGridMove(struct Position *pacmanUiPos)
     case RIGHT_TELEPORTER:
         return teleportPacman(LEFT_TELEPORTER);
     case SMALL_COIN:
-        setElementAtPositionOnMazeAs(pacmanGridPos, EMPTY);
         incrementScore(10);
+        setElementAtPositionOnMazeAs(pacmanGridPos, PACMAN);
         break;
     case BIG_COIN:
-        setElementAtPositionOnMazeAs(pacmanGridPos, EMPTY);
         incrementScore(50);
         makeGhostsEatable();
+        setElementAtPositionOnMazeAs(pacmanGridPos, PACMAN);
+        break;
+    case RED_GHOST:
+        pacmanAndGhostOnSamePosition(pacmanGridPos, RED_GHOST);
+        break;
+    case PINK_GHOST:
+        pacmanAndGhostOnSamePosition(pacmanGridPos, PINK_GHOST);
+        break;
+    case BLUE_GHOST:
+        pacmanAndGhostOnSamePosition(pacmanGridPos, BLUE_GHOST);
+        break;
+    case ORANGE_GHOST:
+        pacmanAndGhostOnSamePosition(pacmanGridPos, ORANGE_GHOST);
         break;
     default:
+        setElementAtPositionOnMazeAs(pacmanGridPos, PACMAN);
         break;
     }
 
     return *pacmanUiPos;
+}
+
+void pacmanAndGhostOnSamePosition(struct Position position, MazeElement ghostElement)
+{
+    ConsoleHandlerDisplayMessage("You touched the ghost");
+
+    if(isGhostEatable(ghostElement)) {
+        removeMazeElement(ghostElement);
+        incrementScore(200);
+    }
+    else {
+        removeMazeElement(PACMAN);
+        decrementLives();
+    }
 }
 
 void pacmanBlit(SDL_Rect srcRect)

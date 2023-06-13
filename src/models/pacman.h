@@ -48,5 +48,6 @@ int canMoveInDirection(Direction direction);
 void updatePosition(struct Position *position, Direction direction, int step);
 
 struct Position teleportPacman(MazeElement teleporter);
+void pacmanAndGhostOnSamePosition(struct Position position, MazeElement ghostElement);
 
 #endif // PACMAN_PACMAN_H
