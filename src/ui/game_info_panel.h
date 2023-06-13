@@ -6,6 +6,8 @@
 #include "variables.h"
 #include "../models/game.h"
 #include "../utilities/console_handler.h"
+#include "models/position.h"
+#include "models/pacman.h"
 
 /**
  * @brief Get the img Numbers On Sprite image from number 0 to 9
@@ -16,7 +18,7 @@ void initImgNumbersOnSprite();
 
 void initGameInfoPanel();
 
-void drawGameInfoPanel(int frameCount);
+void drawGameInfoPanel();
 
 void drawHighScore();
 

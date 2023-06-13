@@ -101,7 +101,7 @@ void drawGame()
     drawMaze();
     drawGhosts();
     drawPacman();
-    drawGameInfoPanel(frameCount);
+    drawGameInfoPanel();
     drawCoins(frameCount);
     drawPacmanArrow();
 
