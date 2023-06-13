@@ -75,10 +75,7 @@ void drawPacman()
 
     // Test is wished direction can be applied
     if (pacmanDirection != pacmanWishedDirection && canMoveInDirection(pacmanWishedDirection))
-    {
         pacmanDirection = pacmanWishedDirection;
-        printf("Pacman direction changed to %d\n", pacmanDirection);
-    }
 
     // Then we can choose the sprite corresponding to direction
     newPacman = pacmanSprites[pacmanDirection][pacmanAnimation];
