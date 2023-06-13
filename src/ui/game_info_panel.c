@@ -33,11 +33,12 @@ void initImgNumbersOnSprite()
     }
 }
 
-void drawGameInfoPanel(int frameCount)
+void drawGameInfoPanel()
 {
     drawHighScore();
     drawScore(getScore(), imgScoreUi);
     drawLives();
+    if (frameCount % TEXT_UP_RATE) drawUp();
 
     if (frameCount % 125 < 75) {
         drawUp();
