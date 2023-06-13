@@ -11,14 +11,18 @@
 #include "constants.h"
 #include "models/maze.h"
 
-struct Sprite {
+struct Sprite
+{
     int number;
     struct Position uiPosition;
     struct Position gridPosition;
     Direction direction;
     SDL_Rect *rects;
+    SDL_Rect lastRect;
 };
 
 void moveSprintInDirection(struct Sprite *sprite);
 
-#endif //PACMAN_SPRITE_H
+struct Position getCellCenter(struct Position position);
+
+#endif // PACMAN_SPRITE_H

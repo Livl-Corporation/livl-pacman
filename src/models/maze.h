@@ -76,7 +76,7 @@ struct Position getUiPosToGridPos(struct Position uiPos);
 /**
  * Fill the maze with coins
  */
-void fillMazeWithCoins();
+void drawCoins(int frameCount);
 
 /**
  * Blit a rect with an offset
@@ -95,6 +95,13 @@ void blitRectWithOffset(SDL_Rect imgRect, struct Position positionOffsetInMaze, 
  * @return true if the position is an obstacle, false otherwise
  */
 bool isObstacle(struct Position position);
+
+/**
+ * Check if the provided position has a collision with an obstacle
+ * @param position
+ * @param hitboxSize
+ */
+bool hasCollision(struct Position position, int hitboxSize);
 
 /**
  * Convert a position in the grid to a position in pixels

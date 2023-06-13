@@ -13,12 +13,12 @@ xxxxx.xxx x xxx.xxxxx
 xxxxx.x x h x x.xxxxx
 l    .  x123x  .    r
 xxxxx.x xxxxx x.xxxxx
-    x.x   p   x.x
+    x.x       x.x
     x.x xxxxx x.x
 xxxxx.x xxxxx x.xxxxx
 x.........x.........x
 x.xxx.xxx.x.xxx.xxx.x
-xo..x..... .....x..ox
+xo..x.....p.....x..ox
 xxx.x.x.xxxxx.x.x.xxx
 xxx.x.x.xxxxx.x.x.xxx
 x.....x...x...x.....x

@@ -14,14 +14,23 @@
 #include "models/pacman.h"
 #include "models/position.h"
 #include "models/ghost.h"
+#include "ui/game_info_panel.h"
+#include "ui/menu_window.h"
 
-extern int count;
+extern int frameCount;
+extern bool isGamePause;
 extern SDL_Rect imgMazeOnSprite;
 extern SDL_Rect imgMazeOnUi;
 
 void startGameLoop();
-bool handleGameEvents();
+void startReadyLoop();
+void delayToMaintainFrameRate(clock_t before, Uint32 desiredDelayInMs);
+
+void handleGameEvents();
+
 void drawGame();
+void drawMaze();
 void drawHeader();
+void drawReadyImg();
 
 #endif // PACMAN_GAME_WINDOW_H

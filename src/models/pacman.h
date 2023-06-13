@@ -13,6 +13,8 @@
 #include "enums/direction.h"
 #include "models/maze.h"
 #include "models/game.h"
+#include "models/ghost.h"
+#include "../ui/game_window.h"
 
 /**
  * Initialize pacman position at his spawn point
@@ -27,9 +29,10 @@ void handlePacmanEvents();
 
 /**
  * Calculate, validate, update and draw pacman position
- * @param count used for animations
  */
-void drawPacman(int count);
+void drawPacman();
+
+void drawPacmanArrow();
 
 /**
  * Perform action when pacman has moved in grid
@@ -37,8 +40,11 @@ void drawPacman(int count);
  */
 struct Position onPacmanGridMove(struct Position *pacmanUiPos);
 
+struct SDL_Rect getArrow(Direction direction);
+
 // -- Private --
-void pacmanBlit(SDL_Rect *srcRect);
+void pacmanBlit(SDL_Rect srcRect);
+int canMoveInDirection(Direction direction);
 
 struct Position teleportPacman(MazeElement teleporter);
 

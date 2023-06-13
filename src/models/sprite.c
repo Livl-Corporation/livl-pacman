@@ -4,22 +4,17 @@
 
 #include "sprite.h"
 
-void moveSprintInDirection(struct Sprite *sprite) {
-    switch (sprite->direction) {
-        case DIRECTION_UP:
-            sprite->uiPosition.y -= SPRITE_SPEED;
-            break;
-        case DIRECTION_DOWN:
-            sprite->uiPosition.y += SPRITE_SPEED;
-            break;
-        case DIRECTION_LEFT:
-            sprite->uiPosition.x -= SPRITE_SPEED;
-            break;
-        case DIRECTION_RIGHT:
-            sprite->uiPosition.x += SPRITE_SPEED;
-            break;
-    }
+void moveSprintInDirection(struct Sprite *sprite)
+{
+    updatePosition(&sprite->uiPosition, sprite->direction, SPRITE_SPEED);
+    sprite->gridPosition = getUiPosToGridPos(getCellCenter(sprite->uiPosition));
+}
 
-    sprite->gridPosition = getUiPosToGridPos(sprite->uiPosition);
-
+struct Position getCellCenter(struct Position position)
+{
+    struct Position center = {
+        position.x + CELL_SIZE / 2,
+        position.y + CELL_SIZE / 2,
+    };
+    return center;
 }

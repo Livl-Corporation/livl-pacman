@@ -2,14 +2,14 @@
 
 bool pMainMenuQuit = false;
 
-SDL_Rect imgPacmanTitle = {0, 0, 190, 50 };
-SDL_Rect imgPacmanTitleZoom = {20, 100, 500, 130 };
+SDL_Rect imgPacmanTitle = {4, 4, 180, 46 };
+SDL_Rect imgPacmanTitleZoom = {13, 100, 500, 130 };
 SDL_Rect imgBlackBackground = {0, 0, 0, 0 };
 
-SDL_Rect imgPlayButton = {0, 0, 110, 30 };
-SDL_Rect imgPlayButtonZoom = {TOTAL_SCREEN_WIDTH/5, 400, 290, 100 };
-SDL_Rect imgPlayButtonHover = {0, 30, 110, 30 };
-SDL_Rect imgPlayButtonHoverZoom = {TOTAL_SCREEN_WIDTH/5, 400, 290, 100 };
+SDL_Rect imgPlayButton = {89, 54, 46, 7 };
+SDL_Rect imgPlayButtonZoom = {TOTAL_SCREEN_WIDTH/3, 400, 180, 35};
+SDL_Rect imgPlayButtonHover = {89, 63, 46, 7};
+SDL_Rect imgPlayButtonHoverZoom = {TOTAL_SCREEN_WIDTH/3, 400, 180, 35 };
 
 void startMainMenuLoop()
 {
@@ -29,9 +29,8 @@ void drawMainMenu()
     SDL_BlitScaled(pSurfacePacmanSpriteSheet, &imgBlackBackground, pSurfaceWindow, &imgBlackBackground);
     SDL_BlitScaled(pSurfacePacmanSpriteSheet, &imgPacmanTitle, pSurfaceWindow, &imgPacmanTitleZoom);
 
-
-    SDL_SetColorKey(pSurfacePlayButton, true, 0);
-    SDL_BlitScaled(pSurfacePlayButton, &imgPlayButton, pSurfaceWindow, &imgPlayButtonZoom);
+    SDL_SetColorKey(pSurfacePacmanSpriteSheet, true, 0);
+    SDL_BlitScaled(pSurfacePacmanSpriteSheet, &imgPlayButton, pSurfaceWindow, &imgPlayButtonZoom);
 }
 
 void handleMainMenuEvents()
@@ -54,14 +53,14 @@ void handleMainMenuEvents()
                 }
                 break;
             case SDL_MOUSEMOTION:
-                SDL_SetColorKey(pSurfacePlayButton, true, 0);
+                SDL_SetColorKey(pSurfacePacmanSpriteSheet, true, 0);
                 if (isPointInPlayButton(x, y))
                 {
-                    SDL_BlitScaled(pSurfacePlayButton, &imgPlayButtonHover, pSurfaceWindow, &imgPlayButtonHoverZoom);
+                    SDL_BlitScaled(pSurfacePacmanSpriteSheet, &imgPlayButtonHover, pSurfaceWindow, &imgPlayButtonHoverZoom);
                 }
                 else
                 {
-                    SDL_BlitScaled(pSurfacePlayButton, &imgPlayButton, pSurfaceWindow, &imgPlayButtonZoom);
+                    SDL_BlitScaled(pSurfacePacmanSpriteSheet, &imgPlayButton, pSurfaceWindow, &imgPlayButtonZoom);
                 }
                 break;
             default: break;

@@ -4,23 +4,31 @@
 
 #include "pacman.h"
 
-SDL_Rect pacmanRight1 = {20, 90, 14, 14};
-SDL_Rect pacmanRight2 = {34, 90, 14, 14};
-SDL_Rect pacmanLeft1 = {48, 90, 14, 14};
-SDL_Rect pacmanLeft2 = {62, 90, 14, 14};
-SDL_Rect pacmanUp1 = {76, 90, 14, 14};
-SDL_Rect pacmanUp2 = {93, 90, 14, 14};
-SDL_Rect pacmanDown1 = {110, 90, 14, 14};
-SDL_Rect pacmanDown2 = {127, 90, 14, 14};
+/**
+ * IMAGE : Pacman Sprite-Sheet with 4 directions and 2 sprites per direction
+ */
+SDL_Rect pacmanSprites[DIRECTION_COUNT][PACMAN_SPRITE_MOUTHS_DIRECTION] = {
+    {{4, 90, PACMAN_SIZE, PACMAN_SIZE}, {21, 90, PACMAN_SIZE, PACMAN_SIZE}, {36, 90, PACMAN_SIZE, PACMAN_SIZE}},  // full - Right1 - Right2
+    {{4, 90, PACMAN_SIZE, PACMAN_SIZE}, {56, 90, PACMAN_SIZE, PACMAN_SIZE}, {75, 90, PACMAN_SIZE, PACMAN_SIZE}},  // full - Left1 - Left2
+    {{4, 90, PACMAN_SIZE, PACMAN_SIZE}, {89, 90, PACMAN_SIZE, PACMAN_SIZE}, {106, 90, PACMAN_SIZE, PACMAN_SIZE}}, // full - Up1 - Up2
+    {{4, 90, PACMAN_SIZE, PACMAN_SIZE}, {123, 90, PACMAN_SIZE, PACMAN_SIZE}, {140, 90, PACMAN_SIZE, PACMAN_SIZE}} // full - Down1 - Down2
+};
+
+SDL_Rect arrowSprite = {4, 266, PACMAN_ARROW_SIZE, PACMAN_ARROW_SIZE};
+
+SDL_Rect lastPacmanDirection = {0, 0, 0, 0};
 
 struct Position pacmanSpawnPos = {1, 1};
-
 struct Position pacmanUIPos = {0, 0};
 struct Position pacmanGridPos = {0, 0};
 
-Direction pacmanDirection = DIRECTION_RIGHT;
+Direction defaultDirection = DIRECTION_RIGHT;
 
-// TODO : [sprite refactor] use sprite system for pacman
+Direction pacmanDirection;
+Direction pacmanWishedDirection;
+
+int arrowOffset = (PACMAN_SIZE / 2) - (PACMAN_ARROW_SIZE / 2);
+int arrowDisplaySize = PACMAN_ARROW_SIZE * (float)CELL_SIZE / (float)PACMAN_SIZE;
 
 void spawnPacman()
 {
@@ -29,7 +37,10 @@ void spawnPacman()
     pacmanGridPos = pacmanSpawnPos;
     pacmanUIPos = getGridPosToUiPos(pacmanGridPos);
 
-    pacmanDirection = DIRECTION_RIGHT;
+    pacmanDirection = defaultDirection;
+    pacmanWishedDirection = defaultDirection;
+
+    lastPacmanDirection = pacmanSprites[defaultDirection][0];
 }
 
 void handlePacmanEvents()
@@ -38,101 +49,138 @@ void handlePacmanEvents()
     const Uint8 *keys = SDL_GetKeyboardState(&numberOfKeyboardScancodes);
 
     if (keys[SDL_SCANCODE_LEFT] || keys[SDL_SCANCODE_A])
-        pacmanDirection = DIRECTION_LEFT;
+        pacmanWishedDirection = DIRECTION_LEFT;
     if (keys[SDL_SCANCODE_RIGHT] || keys[SDL_SCANCODE_D])
-        pacmanDirection = DIRECTION_RIGHT;
+        pacmanWishedDirection = DIRECTION_RIGHT;
     if (keys[SDL_SCANCODE_UP] || keys[SDL_SCANCODE_W])
-        pacmanDirection = DIRECTION_UP;
+        pacmanWishedDirection = DIRECTION_UP;
     if (keys[SDL_SCANCODE_DOWN] || keys[SDL_SCANCODE_S])
-        pacmanDirection = DIRECTION_DOWN;
+        pacmanWishedDirection = DIRECTION_DOWN;
 }
 
-void drawPacman(int count)
+void drawPacman()
 {
-    SDL_Rect *newPacman = NULL;
+    if (isGamePause)
+    {
+        pacmanBlit(lastPacmanDirection);
+        return;
+    }
 
-    int pacmanAnimation = (count / ANIMATION_SPEED) % 2;
+    SDL_Rect newPacman = {0, 0, 0, 0};
+
+    int pacmanAnimation = (frameCount / ANIMATION_SPEED) % PACMAN_SPRITE_MOUTHS_DIRECTION;
 
     // Copy pacman position to a new
     struct Position pacmanPosCopy = pacmanUIPos;
 
-    switch (pacmanDirection)
+    // Test is wished direction can be applied
+    if (pacmanDirection != pacmanWishedDirection && canMoveInDirection(pacmanWishedDirection))
+        pacmanDirection = pacmanWishedDirection;
+
+    // Then we can choose the sprite corresponding to direction
+    newPacman = pacmanSprites[pacmanDirection][pacmanAnimation];
+
+    // Calculate the target UI position
+    updatePosition(&pacmanPosCopy, pacmanDirection, 1);
+
+    if (hasCollision(pacmanPosCopy, CELL_SIZE - 1))
     {
-    case DIRECTION_RIGHT:
-        newPacman = (pacmanAnimation == 0) ? &pacmanRight1 : &pacmanRight2;
-        pacmanPosCopy.x++;
-        break;
-    case DIRECTION_LEFT:
-        newPacman = (pacmanAnimation == 0) ? &pacmanLeft1 : &pacmanLeft2;
-        pacmanPosCopy.x--;
-        break;
-    case DIRECTION_UP:
-        newPacman = (pacmanAnimation == 0) ? &pacmanUp1 : &pacmanUp2;
-        pacmanPosCopy.y--;
-        break;
-    case DIRECTION_DOWN:
-        newPacman = (pacmanAnimation == 0) ? &pacmanDown1 : &pacmanDown2;
-        pacmanPosCopy.y++;
-        break;
+        // If pacman ran into obstacle, just blit him at without updating his position
+        pacmanBlit(lastPacmanDirection);
+        return;
     }
 
-    // Get new pacman position in grid
-    struct Position newPacmanGridPos = getUiPosToGridPos(pacmanPosCopy);
+    // Get target pacman position in grid
+    struct Position newPacmanGridPos = getUiPosToGridPos(getCellCenter(pacmanPosCopy));
 
     if (!arePositionEquals(pacmanGridPos, newPacmanGridPos))
     {
-        // If pacman, just blit him at without updating his position
-        if (isObstacle(newPacmanGridPos))
-        {
-            pacmanBlit(newPacman);
-            return;
-        }
-
-        // Pacman has moved in grid :
+        // Pacman has moved in grid
         pacmanGridPos = newPacmanGridPos;
         pacmanPosCopy = onPacmanGridMove(&pacmanPosCopy);
     }
 
     // Move is valid, update pacman position
     pacmanUIPos = pacmanPosCopy;
+    lastPacmanDirection = newPacman;
 
     pacmanBlit(newPacman);
+}
+
+void drawPacmanArrow()
+{
+
+    if (isGamePause)
+        return;
+
+    SDL_Rect arrowSprite = getArrow(pacmanWishedDirection);
+
+    struct Position arrowPos = {
+        pacmanUIPos.x + arrowOffset,
+        pacmanUIPos.y + arrowOffset,
+    };
+
+    updatePosition(&arrowPos, pacmanWishedDirection, PACMAN_ARROW_SPACING);
+
+    struct SDL_Rect arrowPosSDL = {
+        arrowPos.x,
+        arrowPos.y,
+        arrowDisplaySize,
+        arrowDisplaySize,
+    };
+
+    SDL_BlitScaled(pSurfacePacmanSpriteSheet, &arrowSprite, pSurfaceWindow, &arrowPosSDL);
+}
+
+int canMoveInDirection(Direction direction)
+{
+    struct Position pacmanPosCopy = pacmanUIPos;
+    updatePosition(&pacmanPosCopy, direction, 1);
+    return !hasCollision(pacmanPosCopy, CELL_SIZE - 1);
 }
 
 struct Position onPacmanGridMove(struct Position *pacmanUiPos)
 {
     MazeElement element = getMazeElementAt(pacmanGridPos);
 
-    switch (element) {
-        case LEFT_TELEPORTER:
-            return teleportPacman(RIGHT_TELEPORTER);
-        case RIGHT_TELEPORTER:
-            return teleportPacman(LEFT_TELEPORTER);
-        case SMALL_COIN:
-            setElementAtPositionOnMazeAs(pacmanGridPos, EMPTY);
-            incrementScore(10);
-            break;
-        case BIG_COIN:
-            setElementAtPositionOnMazeAs(pacmanGridPos, EMPTY);
-            incrementScore(50);
-            // TODO: make pacman invincible to eat ghosts
-            break;
-        default:
-            break;
+    switch (element)
+    {
+    case LEFT_TELEPORTER:
+        return teleportPacman(RIGHT_TELEPORTER);
+    case RIGHT_TELEPORTER:
+        return teleportPacman(LEFT_TELEPORTER);
+    case SMALL_COIN:
+        setElementAtPositionOnMazeAs(pacmanGridPos, EMPTY);
+        incrementScore(10);
+        break;
+    case BIG_COIN:
+        setElementAtPositionOnMazeAs(pacmanGridPos, EMPTY);
+        incrementScore(50);
+        makeGhostsEatable();
+        break;
+    default:
+        break;
     }
 
     return *pacmanUiPos;
 }
 
-void pacmanBlit(SDL_Rect *srcRect)
+void pacmanBlit(SDL_Rect srcRect)
 {
     SDL_Rect rect = {pacmanUIPos.x, pacmanUIPos.y, CELL_SIZE, CELL_SIZE};
     SDL_SetColorKey(pSurfacePacmanSpriteSheet, 1, 0);
-    SDL_BlitScaled(pSurfacePacmanSpriteSheet, srcRect, pSurfaceWindow, &rect);
+    SDL_BlitScaled(pSurfacePacmanSpriteSheet, &srcRect, pSurfaceWindow, &rect);
 }
 
 struct Position teleportPacman(MazeElement teleporter)
 {
     pacmanGridPos = getInitialPositionOfElement(teleporter);
     return getGridPosToUiPos(pacmanGridPos);
+}
+
+struct SDL_Rect getArrow(Direction direction)
+{
+    SDL_Rect arrow = arrowSprite;
+    arrow.x += direction * arrow.w;
+    return arrow;
 }
