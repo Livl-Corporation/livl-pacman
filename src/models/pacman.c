@@ -30,6 +30,8 @@ Direction pacmanWishedDirection;
 int arrowOffset = (PACMAN_SIZE / 2) - (PACMAN_ARROW_SIZE / 2);
 int arrowDisplaySize = PACMAN_ARROW_SIZE * (float)CELL_SIZE / (float)PACMAN_SIZE;
 
+int durationAnimationOnGhostEaten = 0;
+
 void spawnPacman()
 {
     pacmanSpawnPos = getInitialPositionOfElement(PACMAN);
@@ -62,7 +64,8 @@ void drawPacman()
 {
     if (isGamePause)
     {
-        pacmanBlit(lastPacmanDirection);
+        if(!isScoreAnimationOnGhostEaten())
+            pacmanBlit(lastPacmanDirection);
         return;
     }
 
@@ -160,16 +163,16 @@ struct Position onPacmanGridMove(struct Position *pacmanUiPos)
         setElementAtPositionOnMazeAs(pacmanGridPos, PACMAN);
         break;
     case RED_GHOST:
-        pacmanAndGhostOnSamePosition(pacmanGridPos, RED_GHOST);
+        pacmanAndGhostOnSamePosition(RED_GHOST);
         break;
     case PINK_GHOST:
-        pacmanAndGhostOnSamePosition(pacmanGridPos, PINK_GHOST);
+        pacmanAndGhostOnSamePosition(PINK_GHOST);
         break;
     case BLUE_GHOST:
-        pacmanAndGhostOnSamePosition(pacmanGridPos, BLUE_GHOST);
+        pacmanAndGhostOnSamePosition(BLUE_GHOST);
         break;
     case ORANGE_GHOST:
-        pacmanAndGhostOnSamePosition(pacmanGridPos, ORANGE_GHOST);
+        pacmanAndGhostOnSamePosition(ORANGE_GHOST);
         break;
     default:
         setElementAtPositionOnMazeAs(pacmanGridPos, PACMAN);
@@ -179,25 +182,37 @@ struct Position onPacmanGridMove(struct Position *pacmanUiPos)
     return *pacmanUiPos;
 }
 
-void pacmanAndGhostOnSamePosition(struct Position position, MazeElement ghostElement)
-{
-    ConsoleHandlerDisplayMessage("You touched the ghost");
-
-    if(isGhostEatable(ghostElement)) {
-        removeMazeElement(ghostElement);
-        incrementScore(200);
-    }
-    else {
-        removeMazeElement(PACMAN);
-        decrementLives();
-    }
-}
-
 void pacmanBlit(SDL_Rect srcRect)
 {
     SDL_Rect rect = {pacmanUIPos.x, pacmanUIPos.y, CELL_SIZE, CELL_SIZE};
     SDL_SetColorKey(pSurfacePacmanSpriteSheet, 1, 0);
     SDL_BlitScaled(pSurfacePacmanSpriteSheet, &srcRect, pSurfaceWindow, &rect);
+}
+
+void decreaseScoreAnimationOnGhostEaten()
+{
+    durationAnimationOnGhostEaten--;
+    if(durationAnimationOnGhostEaten == 0) isGamePause = false;
+}
+
+bool isScoreAnimationOnGhostEaten()
+{
+    return durationAnimationOnGhostEaten > 0;
+}
+
+void pacmanAndGhostOnSamePosition(MazeElement ghostElement)
+{
+    durationAnimationOnGhostEaten = SCORE_GHOST_EATEN_DURATION;
+
+    if(isGhostEatable()) {
+        removeMazeElement(ghostElement);
+        incrementScore(200);
+        isGamePause = true;
+    }
+    else {
+        removeMazeElement(PACMAN);
+        decrementLives();
+    }
 }
 
 struct Position teleportPacman(MazeElement teleporter)
