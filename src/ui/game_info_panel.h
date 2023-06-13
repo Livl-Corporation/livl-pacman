@@ -2,6 +2,7 @@
 #define PACMAN_GAME_INFO_PANEL_H
 
 #include <SDL.h>
+#include <math.h>
 #include <stdbool.h>
 #include "variables.h"
 #include "../models/game.h"
@@ -15,6 +16,7 @@
 extern SDL_Rect imgNumbersSprite[10];
 
 void initImgNumbersOnSprite();
+void initImgNumbersEatGhostSprite();
 
 void initGameInfoPanel();
 
@@ -23,6 +25,8 @@ void drawGameInfoPanel();
 void drawHighScore();
 
 void drawScore(int score, SDL_Rect imgUi);
+
+void drawEatGhostScore(int score, SDL_Rect imgUi);
 
 void drawLives();
 

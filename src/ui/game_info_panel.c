@@ -1,23 +1,33 @@
 #include "game_info_panel.h"
 
+/**
+ * @brief Get the img Numbers On Sprite image from number 0 to 9
+ */
 SDL_Rect imgNumbersSprite[10];
 SDL_Rect imgNumberSprite = {4, 256, 7, 7};
+int spriteNumberMargin = 8;
 
 SDL_Rect imgPacmanLeftSprite = {56, 90, 14, 14};
 SDL_Rect imgHighScoreTextSprite = {3, 70, 80, 10};
 SDL_Rect imgOneUpTextSprite = {4, 81, 22, 7};
-
 SDL_Rect imgScoreUi = {68, 35, 20, 18};
+
+/**
+ * @brief Get the img Numbers On Sprite image from number 200, 400, 800, 1600
+ */
+SDL_Rect imgNumbersEatGhostSprite[GHOST_COUNT];
+SDL_Rect imgEatGhostTextSprite = {154, 176, 15, 7};
+int spriteEatGhostMargin = 9;
 
 int uiScoreMargin = 13;
 int uiLivesMargin = 15;
-int spriteNumberMargin = 8;
 
 bool isOneUpVisible = true;
 
 void initGameInfoPanel()
 {
     initImgNumbersOnSprite();
+    initImgNumbersEatGhostSprite();
 }
 
 void initImgNumbersOnSprite()
@@ -33,6 +43,19 @@ void initImgNumbersOnSprite()
     }
 }
 
+void initImgNumbersEatGhostSprite()
+{
+    for(int i=0; i<GHOST_COUNT; i++)
+    {
+        imgNumbersEatGhostSprite[i].x = imgEatGhostTextSprite.x;
+        imgNumbersEatGhostSprite[i].y = imgEatGhostTextSprite.y;
+        imgNumbersEatGhostSprite[i].h = imgEatGhostTextSprite.h;
+        imgNumbersEatGhostSprite[i].w = imgEatGhostTextSprite.w;
+
+        imgEatGhostTextSprite.y += spriteEatGhostMargin;
+    }
+}
+
 void drawGameInfoPanel()
 {
     drawHighScore();
@@ -43,7 +66,7 @@ void drawGameInfoPanel()
     if(isScoreAnimationOnGhostEaten())
     {
         decreaseScoreAnimationOnGhostEaten();
-        drawScore(scoreTotalGhostEaten, (SDL_Rect){pacmanUIPos.x, pacmanUIPos.y, 17, 17});
+        drawEatGhostScore(scoreTotalGhostEaten, (SDL_Rect){pacmanUIPos.x, pacmanUIPos.y+3, CELL_SIZE-5, CELL_SIZE-5});
     }
 }
 
@@ -71,6 +94,13 @@ void drawScore(int score, SDL_Rect imgUi)
         // Increment xPosition to position the next digit
         imgUi.x += imgNumbersSprite[digit].w + uiScoreMargin;
     }
+}
+
+void drawEatGhostScore(int score, SDL_Rect imgUi)
+{
+    int scoreIndex = (int)round(log2((double)score / SCORE_GHOST_EATEN)); // Get the index of the score to display from the score array (0, 1, 2, 3 --> 200, 400, 800, 1600)
+    SDL_Rect rectScoreToDisplay = imgNumbersEatGhostSprite[scoreIndex];
+    SDL_BlitScaled(pSurfacePacmanSpriteSheet, &rectScoreToDisplay, pSurfaceWindow, &imgUi);
 }
 
 void drawLives()
