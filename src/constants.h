@@ -40,6 +40,8 @@
 
 #define EATABLE_GHOST_DURATION 1000
 
+#define SCORE_GHOST_EATEN_DURATION 200 // when pacman eat a ghost
+
 #define INITIAL_LIVES 3
 
 #define BIG_COIN_RATE 50 < 30
