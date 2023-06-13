@@ -74,7 +74,7 @@ void drawPacman()
     struct Position pacmanPosCopy = pacmanUIPos;
 
     // Test is wished direction can be applied
-    if (canMoveInDirection(pacmanWishedDirection))
+    if (pacmanDirection != pacmanWishedDirection && canMoveInDirection(pacmanWishedDirection))
         pacmanDirection = pacmanWishedDirection;
 
     // Then we can choose the sprite corresponding to direction
