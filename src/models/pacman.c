@@ -27,7 +27,8 @@ Direction defaultDirection = DIRECTION_RIGHT;
 Direction pacmanDirection;
 Direction pacmanWishedDirection;
 
-// TODO : [sprite refactor] use sprite system for pacman
+int arrowOffset = (PACMAN_SIZE / 2) - (PACMAN_ARROW_SIZE / 2);
+int arrowDisplaySize = PACMAN_ARROW_SIZE * (float)CELL_SIZE / (float)PACMAN_SIZE;
 
 void spawnPacman()
 {
@@ -114,23 +115,18 @@ void drawPacmanArrow()
 
     SDL_Rect arrowSprite = getArrow(pacmanWishedDirection);
 
-    int offset = (PACMAN_SIZE / 2) - (PACMAN_ARROW_SIZE / 2);
-
     struct Position arrowPos = {
-        pacmanUIPos.x + offset,
-        pacmanUIPos.y + offset,
+        pacmanUIPos.x + arrowOffset,
+        pacmanUIPos.y + arrowOffset,
     };
 
     updatePosition(&arrowPos, pacmanWishedDirection, PACMAN_ARROW_SPACING);
 
-    float scaleRatio = (float)CELL_SIZE / (float)PACMAN_SIZE;
-    int scaledPacmanArrowSize = PACMAN_ARROW_SIZE * scaleRatio;
-
     struct SDL_Rect arrowPosSDL = {
         arrowPos.x,
         arrowPos.y,
-        scaledPacmanArrowSize,
-        scaledPacmanArrowSize,
+        arrowDisplaySize,
+        arrowDisplaySize,
     };
 
     SDL_BlitScaled(pSurfacePacmanSpriteSheet, &arrowSprite, pSurfaceWindow, &arrowPosSDL);
