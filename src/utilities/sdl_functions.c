@@ -42,3 +42,8 @@ void closeWindow()
     SDL_DestroyWindow(pWindow);
     SDL_Quit();
 }
+
+int isPositionInRect(struct Position position, SDL_Rect *rect)
+{
+    return position.x >= rect->x && position.x <= rect->x + rect->w && position.y >= rect->y && position.y <= rect->y + rect->h;
+}

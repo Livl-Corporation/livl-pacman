@@ -35,8 +35,17 @@ void startGameLoop()
         handleGameEvents();
 
         SDL_FillRect(pSurfaceWindow, 0, 0); // Clears the window's surface before drawing the new frame
-        drawHeader();
-        drawGame();
+
+        if (isGamePause)
+        {
+            drawPauseMenu();
+            handlePauseMenuEvents();
+        }
+        else
+        {
+            drawHeader();
+            drawGame();
+        }
 
         SDL_UpdateWindowSurface(pWindow);
         delayToMaintainFrameRate(before, delayInMs);
@@ -98,13 +107,6 @@ void startReadyLoop()
 
 void drawGame()
 {
-
-    if (isGamePause)
-    {
-        drawPauseMenu();
-        return;
-    }
-
     drawMaze();
     drawGhosts();
     drawPacman();

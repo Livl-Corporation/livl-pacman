@@ -29,8 +29,7 @@ extern SDL_Rect imgBlackBackground;
  * IMAGE : Play button
  **/
 extern SDL_Rect imgPlayButton;
-extern SDL_Rect imgPlayButtonZoom;
+extern SDL_Rect imgPlayButtonPosition;
 extern SDL_Rect imgPlayButtonHover;
-extern SDL_Rect imgPlayButtonHoverZoom;
 
 #endif // PACMAN_VARIABLES_H

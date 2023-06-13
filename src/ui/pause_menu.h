@@ -6,5 +6,6 @@
 #include "variables.h"
 
 void drawPauseMenu();
+void handlePauseMenuEvents();
 
 #endif
