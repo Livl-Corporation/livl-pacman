@@ -92,6 +92,16 @@ void drawCoins(int frameCount)
     }
 }
 
+void removeMazeElement(MazeElement elementToRemove)
+{
+    for (int i = 0; i < MAP_HEIGHT; i++) {
+        for (int j = 0; j < MAP_WIDTH; j++) {
+            if(gameMaze[i][j] == elementToRemove)
+                gameMaze[i][j] = EMPTY;
+        }
+    }
+}
+
 void setElementAtPositionOnMazeAs(struct Position position, MazeElement element)
 {
     if (!isInBounds(position))
