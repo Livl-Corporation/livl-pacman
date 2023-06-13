@@ -31,10 +31,10 @@ void initMaze()
         ConsoleHandlerDisplayError("while retrieving maze from file.");
         pGameQuit = true;
     }
-
 }
 
-void resetGameMaze() {
+void resetGameMaze()
+{
     copy2DArray(initialMaze, gameMaze, MAP_HEIGHT, MAP_WIDTH);
 }
 
@@ -60,7 +60,7 @@ bool retrieveMazeFromFile()
 
 void blitRectWithOffset(SDL_Rect imgRect, struct Position positionOffsetInMaze, int offsetX, int offsetY, int width, int height)
 {
-    SDL_Rect destinationRect = { positionOffsetInMaze.x + offsetX , positionOffsetInMaze.y + offsetY, width, height};
+    SDL_Rect destinationRect = {positionOffsetInMaze.x + offsetX, positionOffsetInMaze.y + offsetY, width, height};
     SDL_SetColorKey(pSurfacePacmanSpriteSheet, true, 0);
     SDL_BlitScaled(pSurfacePacmanSpriteSheet, &imgRect, pSurfaceWindow, &destinationRect);
 }
@@ -76,17 +76,17 @@ void drawCoins(int frameCount)
 
             switch (mazeElement)
             {
-                case SMALL_COIN:
-                    blitRectWithOffset(imgMazeSmallCoin, position, SMALL_COIN_OFFSET_X, SMALL_COIN_OFFSET_Y, SMALL_COIN_WIDTH, SMALL_COIN_HEIGHT);
-                    break;
+            case SMALL_COIN:
+                blitRectWithOffset(imgMazeSmallCoin, position, SMALL_COIN_OFFSET_X, SMALL_COIN_OFFSET_Y, SMALL_COIN_WIDTH, SMALL_COIN_HEIGHT);
+                break;
 
-                case BIG_COIN:
-                    if(frameCount % BIG_COIN_RATE)
-                        blitRectWithOffset(imgMazeBigCoin, position, BIG_COIN_OFFSET_X, BIG_COIN_OFFSET_Y, BIG_COIN_WIDTH, BIG_COIN_HEIGHT);
-                    break;
+            case BIG_COIN:
+                if (frameCount % BIG_COIN_RATE)
+                    blitRectWithOffset(imgMazeBigCoin, position, BIG_COIN_OFFSET_X, BIG_COIN_OFFSET_Y, BIG_COIN_WIDTH, BIG_COIN_HEIGHT);
+                break;
 
-                default:
-                    break;
+            default:
+                break;
             }
         }
     }
@@ -122,7 +122,8 @@ void displayMaze()
     }
 }
 
-struct Position getInitialPositionOfElement(MazeElement element) {
+struct Position getInitialPositionOfElement(MazeElement element)
+{
     return find2DArrayElement(initialMaze, MAP_HEIGHT, MAP_WIDTH, element);
 }
 
@@ -134,7 +135,8 @@ MazeElement getMazeElementAt(struct Position position)
     return get2DArrayElement(gameMaze, position.y, position.x);
 }
 
-struct Position getPositionOfElement(MazeElement element) {
+struct Position getPositionOfElement(MazeElement element)
+{
     return find2DArrayElement(gameMaze, MAP_HEIGHT, MAP_WIDTH, element);
 }
 
@@ -151,8 +153,27 @@ bool isObstacle(struct Position position)
     return element == WALL || element == DOOR;
 }
 
-bool isInBounds(struct Position position) {
+bool isInBounds(struct Position position)
+{
     return position.x >= 0 && position.x < MAP_WIDTH && position.y >= 0 && position.y < MAP_HEIGHT;
+}
+
+bool hasCollision(struct Position position, int hitboxSize)
+{
+
+    for (int i = 0; i <= hitboxSize; i += hitboxSize)
+    {
+        for (int j = 0; j <= hitboxSize; j += hitboxSize)
+        {
+            if (isObstacle(getUiPosToGridPos((struct Position){
+                    position.x + i,
+                    position.y + j,
+                })))
+                return true;
+        }
+    }
+
+    return false;
 }
 
 struct Position getUiPosToGridPos(struct Position posInPx)
@@ -161,10 +182,6 @@ struct Position getUiPosToGridPos(struct Position posInPx)
 
     posInPx.y -= HEADER_SCREEN_HEIGHT;
 
-    // Get the center of the cell
-    posInPx.x += (CELL_SIZE)/2;
-    posInPx.y += (CELL_SIZE)/2;
-
     // Get the position in the grid
     position.x = posInPx.x / CELL_SIZE;
     position.y = posInPx.y / CELL_SIZE;
@@ -172,7 +189,8 @@ struct Position getUiPosToGridPos(struct Position posInPx)
     return position;
 }
 
-struct Position getGridPosToUiPos(struct Position uiPos) {
+struct Position getGridPosToUiPos(struct Position uiPos)
+{
     struct Position position;
 
     position.x = uiPos.x * CELL_SIZE;
