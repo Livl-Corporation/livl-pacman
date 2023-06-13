@@ -116,4 +116,6 @@ bool retrieveMazeFromFile();
  */
 void resetGameMaze();
 
+void removeMazeElement(MazeElement elementToRemove);
+
 #endif // PACMAN_MAZE_H
