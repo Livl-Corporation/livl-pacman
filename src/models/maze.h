@@ -97,6 +97,13 @@ void blitRectWithOffset(SDL_Rect imgRect, struct Position positionOffsetInMaze, 
 bool isObstacle(struct Position position);
 
 /**
+ * Check if the provided position has a collision with an obstacle
+ * @param position
+ * @param hitboxSize
+ */
+bool hasCollision(struct Position position, int hitboxSize);
+
+/**
  * Convert a position in the grid to a position in pixels
  * @param uiPos
  * @return Position

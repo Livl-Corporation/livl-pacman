@@ -11,7 +11,8 @@
 #include "constants.h"
 #include "models/maze.h"
 
-struct Sprite {
+struct Sprite
+{
     int number;
     struct Position uiPosition;
     struct Position gridPosition;
@@ -22,4 +23,6 @@ struct Sprite {
 
 void moveSprintInDirection(struct Sprite *sprite);
 
-#endif //PACMAN_SPRITE_H
+struct Position getCellCenter(struct Position position);
+
+#endif // PACMAN_SPRITE_H
