@@ -98,15 +98,20 @@ void startReadyLoop()
 
 void drawGame()
 {
+
+    if (isGamePause)
+    {
+        drawPauseMenu();
+        return;
+    }
+
     drawMaze();
     drawGhosts();
     drawPacman();
     drawGameInfoPanel(frameCount);
     drawCoins(frameCount);
     drawPacmanArrow();
-
-    if (!isGamePause)
-        decreaseEatableGhostTimer();
+    decreaseEatableGhostTimer();
 }
 
 void drawMaze()

@@ -16,6 +16,7 @@
 #include "models/ghost.h"
 #include "ui/game_info_panel.h"
 #include "ui/menu_window.h"
+#include "ui/pause_menu.h"
 
 extern int frameCount;
 extern bool isGamePause;

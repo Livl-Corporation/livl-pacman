@@ -6,6 +6,7 @@
 #define PACMAN_VARIABLES_H
 
 #include <SDL.h>
+#include <stdbool.h>
 
 extern SDL_Window *pWindow;
 extern SDL_Surface *pSurfaceWindow;
