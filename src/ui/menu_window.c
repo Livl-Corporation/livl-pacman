@@ -14,7 +14,6 @@ SDL_Rect imgPlayButtonHoverZoom = {TOTAL_SCREEN_WIDTH/3, 400, 180, 35 };
 void startMainMenuLoop()
 {
     drawMainMenu();
-    playSound(soundMenu);
 
     while (!pMainMenuQuit)
     {
@@ -47,7 +46,6 @@ void handleMainMenuEvents()
                 break;
             case SDL_MOUSEBUTTONUP:
                 if (isPointInPlayButton(x, y)) {
-                    SDLMixer_FreeAudio(soundMenu);
                     startGameLoop();
                     pMainMenuQuit = true;
                 }

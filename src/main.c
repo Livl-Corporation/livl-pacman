@@ -4,10 +4,8 @@
 int main(void)
 {
     initSDL();
-    initSDLMixer();
 
     loadMedia();
-    loadSound();
 
     startMainMenuLoop();
 

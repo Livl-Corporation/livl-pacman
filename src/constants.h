@@ -44,9 +44,4 @@
 
 #define BIG_COIN_RATE 50 < 30
 
-/**
- * SOUNDS
-**/
-#define PATH_SOUND_WII "../assets/sounds/Menu-WiiPlay.mp3"
-
 #endif // PACMAN_CONSTANTS_H
