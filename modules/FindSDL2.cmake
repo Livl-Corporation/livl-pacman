@@ -273,9 +273,9 @@ if(SDL2_LIBRARY)
     # I think it has something to do with the CACHE STRING.
     # So I use a temporary variable until the end so I can set the
     # "real" variable in one-shot.
-    if(APPLE)
-        set(SDL2_LIBRARIES ${SDL2_LIBRARIES} -framework Cocoa)
-    endif()
+    # if(APPLE)
+    #     set(SDL2_LIBRARIES ${SDL2_LIBRARIES} -framework Cocoa)
+    # endif()
 
     # For threads, as mentioned Apple doesn't need this.
     # In fact, there seems to be a problem if I used the Threads package
