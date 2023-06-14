@@ -19,6 +19,4 @@ int getLives();
 
 void decrementLives();
 
-void drawGameInfos();
-
-#endif //PACMAN_GAME_H
+#endif // PACMAN_GAME_H

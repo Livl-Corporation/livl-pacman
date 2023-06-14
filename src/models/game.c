@@ -9,34 +9,37 @@ int score = 0;
 int high_score = 0;
 int lives = INITIAL_LIVES;
 
-int getScore() {
+int getScore()
+{
     return score;
 }
 
-int getHighScore() {
+int getHighScore()
+{
     return high_score;
 }
 
-void incrementScore(int value) {
+void incrementScore(int value)
+{
     score += value;
 
-    if (score > high_score) {
+    if (score > high_score)
+    {
         high_score = score;
     }
 }
 
-void decrementScore(int value) {
+void decrementScore(int value)
+{
     score -= value;
 }
 
-int getLives() {
+int getLives()
+{
     return lives;
 }
 
-void decrementLives() {
+void decrementLives()
+{
     lives--;
-}
-
-void drawGameInfos() {
-    // TODO : Issue #22 display informations on screen
 }
