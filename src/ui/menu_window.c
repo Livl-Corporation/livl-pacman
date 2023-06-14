@@ -32,6 +32,8 @@ void drawMainMenu()
 
     SDL_SetColorKey(pSurfacePacmanSpriteSheet, true, 0);
     SDL_BlitScaled(pSurfacePacmanSpriteSheet, &imgPlayButton, pSurfaceWindow, &imgPlayButtonPosition);
+
+    printf("truc");
 }
 
 void handleMainMenuEvents()
@@ -65,7 +67,7 @@ void handleMainMenuEvents()
         case SDL_MOUSEMOTION:
             SDL_SetColorKey(pSurfacePacmanSpriteSheet, true, 0);
 
-            SDL_Rect playButton = imgPlayButtonPosition;
+            SDL_Rect playButton = imgPlayButton;
             if (isPlayButtonHovered)
             {
                 playButton.y += playButtonHoverMargin;
