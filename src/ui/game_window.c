@@ -4,7 +4,7 @@ int frameCount = 0;
 double delayInSec = 1.0 / GAME_SPEED;
 Uint32 delayInMs = 0;
 
-bool pGameQuit = false, isGamePause = false;
+bool pGameQuit = false, isGamePause = false, isPauseMenuOpen = false;
 
 SDL_Rect imgMazeOnSprite = {201, 4, 166, 214};
 SDL_Rect imgMazeOnUi = {0, HEADER_SCREEN_HEIGHT, TOTAL_SCREEN_WIDTH, MAZE_SCREEN_HEIGHT};
@@ -37,7 +37,7 @@ void startGameLoop()
 
         SDL_FillRect(pSurfaceWindow, 0, 0); // Clears the window's surface before drawing the new frame
 
-        if (isGamePause)
+        if (isPauseMenuOpen)
         {
             drawPauseMenu();
             handlePauseMenuEvents();
@@ -149,4 +149,5 @@ void delayToMaintainFrameRate(clock_t before, Uint32 desiredDelayInMs)
 void setPause(int isPaused)
 {
     isGamePause = isPaused;
+    isPauseMenuOpen = isPaused;
 }
