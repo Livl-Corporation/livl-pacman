@@ -4,6 +4,7 @@
 #include <SDL.h>
 #include "../constants.h"
 #include "variables.h"
+#include "../utilities/sdl_functions.h"
 
 void drawPauseMenu();
 void handlePauseMenuEvents();
