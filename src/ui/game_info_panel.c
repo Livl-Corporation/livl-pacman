@@ -5,14 +5,9 @@ SDL_Rect imgNumberSprite = {4, 256, 7, 7};
 
 SDL_Rect imgPacmanLeftSprite = {56, 90, 14, 14};
 SDL_Rect imgHighScoreTextSprite = {3, 70, 80, 10};
-
 SDL_Rect imgOneUpTextSprite = {4, 81, 22, 7};
-SDL_Rect imgOneUpUi = {40, 13, 50, 18};
 
 SDL_Rect imgScoreUi = {68, 35, 20, 18};
-
-SDL_Rect imgGameOverUi = {200, 375, 125, 25};
-SDL_Rect imgGameOverSprite = {1, 4, 78, 7};
 
 int uiScoreMargin = 13;
 int uiLivesMargin = 15;
@@ -90,12 +85,8 @@ void drawLives()
 
 void drawUp()
 {
+    SDL_Rect imgOneUpUi = {40, 13, 50, 18};
     SDL_BlitScaled(pSurfacePacmanSpriteSheet, &imgOneUpTextSprite, pSurfaceWindow, &imgOneUpUi);
-}
-
-void drawGameOver()
-{
-    SDL_BlitScaled(pSurfacePacmanSpriteSheet, &imgGameOverSprite, pSurfaceWindow, &imgGameOverUi);
 }
 
 int getNumDigits(int score)
