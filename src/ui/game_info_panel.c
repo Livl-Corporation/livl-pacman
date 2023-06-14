@@ -6,9 +6,6 @@
 SDL_Rect imgNumbersSprite[10];
 SDL_Rect imgNumberSprite = {4, 256, 7, 7};
 
-#define NUMBER_SPRITES_SPACING 8
-#define NUMBER_UI_SPACING 13;
-
 SDL_Rect imgPacmanLeftSprite = {56, 90, 14, 14};
 SDL_Rect imgHighScoreTextSprite = {3, 70, 80, 10};
 SDL_Rect imgOneUpTextSprite = {140, 124, 22, 7};
@@ -19,13 +16,7 @@ SDL_Rect imgScoreUi = {68, 35, 20, 18};
  * @brief Get the img Numbers On Sprite image from number 200, 400, 800, 1600
  */
 SDL_Rect imgNumbersEatGhostSprite[GHOST_COUNT];
-#define GHOST_SCORE_W 15
-#define GHOST_SCORE_H 7
-#define GHOST_SCORE_UI_SCALE 2
-#define GHOST_SCORES_SPACING 9
 SDL_Rect imgEatGhostTextSprite = {154, 176, GHOST_SCORE_W, GHOST_SCORE_H};
-
-// TODO : #define for following values :
 
 bool isOneUpVisible = true;
 

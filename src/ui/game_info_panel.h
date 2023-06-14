@@ -9,6 +9,14 @@
 #include "models/position.h"
 #include "models/pacman.h"
 
+#define GHOST_SCORE_W 15
+#define GHOST_SCORE_H 7
+#define GHOST_SCORE_UI_SCALE 2
+#define GHOST_SCORES_SPACING 9
+
+#define NUMBER_SPRITES_SPACING 8
+#define NUMBER_UI_SPACING 13;
+
 /**
  * @brief Get the img Numbers On Sprite image from number 0 to 9
  */

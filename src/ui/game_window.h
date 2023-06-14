@@ -18,6 +18,10 @@
 #include "ui/menu_window.h"
 #include "ui/pause_menu.h"
 
+#define READY_W 46
+#define READY_H 7
+#define READY_UI_SCALE 3
+
 extern int frameCount;
 extern bool isGamePause;
 extern SDL_Rect imgMazeOnSprite;

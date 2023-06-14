@@ -12,9 +12,6 @@ SDL_Rect imgMazeOnUi = {0, HEADER_SCREEN_HEIGHT, TOTAL_SCREEN_WIDTH, MAZE_SCREEN
 SDL_Rect imgBlackHeaderOnSprite = {0, 0, 0, 0};
 SDL_Rect imgBlackHeaderOnUi = {0, 0, TOTAL_SCREEN_WIDTH, HEADER_SCREEN_HEIGHT};
 
-#define READY_W 46
-#define READY_H 7
-#define READY_UI_SCALE 3
 SDL_Rect imgReadyOnSprite = {4, 63, READY_W, READY_H};
 
 void startGameLoop()
