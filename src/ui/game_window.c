@@ -12,7 +12,10 @@ SDL_Rect imgMazeOnUi = {0, HEADER_SCREEN_HEIGHT, TOTAL_SCREEN_WIDTH, MAZE_SCREEN
 SDL_Rect imgBlackHeaderOnSprite = {0, 0, 0, 0};
 SDL_Rect imgBlackHeaderOnUi = {0, 0, TOTAL_SCREEN_WIDTH, HEADER_SCREEN_HEIGHT};
 
-SDL_Rect imgReadyOnSprite = {5, 63, 46, 7};
+#define READY_W 46
+#define READY_H 7
+#define READY_UI_SCALE 3
+SDL_Rect imgReadyOnSprite = {4, 63, READY_W, READY_H};
 
 void startGameLoop()
 {
@@ -32,11 +35,19 @@ void startGameLoop()
         clock_t before = clock();
         frameCount++;
 
-        handleGameEvents();
-
         SDL_FillRect(pSurfaceWindow, 0, 0); // Clears the window's surface before drawing the new frame
-        drawHeader();
-        drawGame();
+
+        if (isGamePause)
+        {
+            drawPauseMenu();
+            handlePauseMenuEvents();
+        }
+        else
+        {
+            drawHeader();
+            drawGame();
+            handleGameEvents();
+        }
 
         SDL_UpdateWindowSurface(pWindow);
         delayToMaintainFrameRate(before, delayInMs);
@@ -63,9 +74,7 @@ void handleGameEvents()
     }
 
     if (keys[SDL_SCANCODE_P])
-        isGamePause = true;
-    if (keys[SDL_SCANCODE_L])
-        isGamePause = false;
+        setPause(true);
     if (keys[SDL_SCANCODE_ESCAPE])
         pGameQuit = true;
 
@@ -104,9 +113,7 @@ void drawGame()
     drawGameInfoPanel(frameCount);
     drawCoins(frameCount);
     drawPacmanArrow();
-
-    if (!isGamePause)
-        decreaseEatableGhostTimer();
+    decreaseEatableGhostTimer();
 }
 
 void drawMaze()
@@ -118,8 +125,8 @@ void drawMaze()
 
 void drawReadyImg()
 {
-    struct Position position = getGridPosToUiPos((struct Position){9, 15});
-    SDL_Rect imgReadyOnUi = {position.x + 5, position.y + 7, 70, 17};
+    struct Position position = getGridPosToUiPos((struct Position){8, 15});
+    SDL_Rect imgReadyOnUi = {position.x, position.y, READY_W * READY_UI_SCALE, READY_H * READY_UI_SCALE};
     SDL_SetColorKey(pSurfacePacmanSpriteSheet, false, 0);
     SDL_BlitScaled(pSurfacePacmanSpriteSheet, &imgReadyOnSprite, pSurfaceWindow, &imgReadyOnUi);
 }
@@ -137,4 +144,9 @@ void delayToMaintainFrameRate(clock_t before, Uint32 desiredDelayInMs)
 
     if (desiredDelayInMs > milliseconds)
         SDL_Delay(desiredDelayInMs - milliseconds);
+}
+
+void setPause(int isPaused)
+{
+    isGamePause = isPaused;
 }

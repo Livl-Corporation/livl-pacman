@@ -16,6 +16,7 @@
 #include "models/ghost.h"
 #include "ui/game_info_panel.h"
 #include "ui/menu_window.h"
+#include "ui/pause_menu.h"
 
 extern int frameCount;
 extern bool isGamePause;
@@ -32,5 +33,7 @@ void drawGame();
 void drawMaze();
 void drawHeader();
 void drawReadyImg();
+
+void setPause(int isPaused);
 
 #endif // PACMAN_GAME_WINDOW_H

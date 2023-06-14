@@ -5,11 +5,11 @@
 #ifndef PACMAN_MENU_WINDOW_H
 #define PACMAN_MENU_WINDOW_H
 
+#include "../utilities/sdl_functions.h"
 #include "game_window.h"
 
 void startMainMenuLoop();
 void drawMainMenu();
 void handleMainMenuEvents();
-bool isPointInPlayButton(int x, int y);
 
-#endif //PACMAN_MENU_WINDOW_H
+#endif // PACMAN_MENU_WINDOW_H

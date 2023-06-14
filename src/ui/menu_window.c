@@ -2,14 +2,36 @@
 
 bool pMainMenuQuit = false;
 
-SDL_Rect imgPacmanTitle = {4, 4, 180, 46 };
-SDL_Rect imgPacmanTitleZoom = {13, 100, 500, 130 };
-SDL_Rect imgBlackBackground = {0, 0, 0, 0 };
+#define PACMAN_TITLE_W 180
+#define PACMAN_TITLE_H 46
+#define PACMAN_TITLE_UI_SCALE 2.75
+#define PACMAN_TITLE_UI_Y 100
 
-SDL_Rect imgPlayButton = {89, 54, 46, 7 };
-SDL_Rect imgPlayButtonZoom = {TOTAL_SCREEN_WIDTH/3, 400, 180, 35};
-SDL_Rect imgPlayButtonHover = {89, 63, 46, 7};
-SDL_Rect imgPlayButtonHoverZoom = {TOTAL_SCREEN_WIDTH/3, 400, 180, 35 };
+SDL_Rect imgPacmanTitle = {4, 4, PACMAN_TITLE_W, PACMAN_TITLE_H};
+SDL_Rect imgPacmanTitlePosition = {
+    TOTAL_SCREEN_WIDTH / 2 - PACMAN_TITLE_W * PACMAN_TITLE_UI_SCALE / 2,
+    PACMAN_TITLE_UI_Y,
+    PACMAN_TITLE_W *PACMAN_TITLE_UI_SCALE,
+    PACMAN_TITLE_H *PACMAN_TITLE_UI_SCALE,
+};
+
+#define PLAY_W 46
+#define PLAY_H 7
+#define PLAY_UI_SCALE 5
+#define PLAY_UI_Y 400
+
+SDL_Rect imgPlayButton = {89, 54, PLAY_W, PLAY_H};
+SDL_Rect imgPlayButtonPosition = {
+    TOTAL_SCREEN_WIDTH / 2 - PLAY_W * PLAY_UI_SCALE / 2,
+    PLAY_UI_Y,
+    PLAY_W *PLAY_UI_SCALE,
+    PLAY_H *PLAY_UI_SCALE,
+};
+#define PLAY_HOVER_SPACING 9;
+
+bool isPlayButtonHovered = false;
+
+SDL_Rect imgBlackBackground = {0, 0, 0, 0};
 
 void startMainMenuLoop()
 {
@@ -26,10 +48,10 @@ void drawMainMenu()
 {
     SDL_SetColorKey(pSurfacePacmanSpriteSheet, true, 0);
     SDL_BlitScaled(pSurfacePacmanSpriteSheet, &imgBlackBackground, pSurfaceWindow, &imgBlackBackground);
-    SDL_BlitScaled(pSurfacePacmanSpriteSheet, &imgPacmanTitle, pSurfaceWindow, &imgPacmanTitleZoom);
+    SDL_BlitScaled(pSurfacePacmanSpriteSheet, &imgPacmanTitle, pSurfaceWindow, &imgPacmanTitlePosition);
 
     SDL_SetColorKey(pSurfacePacmanSpriteSheet, true, 0);
-    SDL_BlitScaled(pSurfacePacmanSpriteSheet, &imgPlayButton, pSurfaceWindow, &imgPlayButtonZoom);
+    SDL_BlitScaled(pSurfacePacmanSpriteSheet, &imgPlayButton, pSurfaceWindow, &imgPlayButtonPosition);
 }
 
 void handleMainMenuEvents()
@@ -38,36 +60,42 @@ void handleMainMenuEvents()
     SDL_Event event;
     while (!pMainMenuQuit && SDL_PollEvent(&event))
     {
+
         SDL_GetMouseState(&x, &y);
+
+        isPlayButtonHovered = isPositionInRect(
+            (struct Position){
+                x,
+                y,
+            },
+            &imgPlayButtonPosition);
+
         switch (event.type)
         {
-            case SDL_QUIT:
+        case SDL_QUIT:
+            pMainMenuQuit = true;
+            break;
+        case SDL_MOUSEBUTTONUP:
+            if (isPlayButtonHovered)
+            {
+                startGameLoop();
                 pMainMenuQuit = true;
-                break;
-            case SDL_MOUSEBUTTONUP:
-                if (isPointInPlayButton(x, y)) {
-                    startGameLoop();
-                    pMainMenuQuit = true;
-                }
-                break;
-            case SDL_MOUSEMOTION:
-                SDL_SetColorKey(pSurfacePacmanSpriteSheet, true, 0);
-                if (isPointInPlayButton(x, y))
-                {
-                    SDL_BlitScaled(pSurfacePacmanSpriteSheet, &imgPlayButtonHover, pSurfaceWindow, &imgPlayButtonHoverZoom);
-                }
-                else
-                {
-                    SDL_BlitScaled(pSurfacePacmanSpriteSheet, &imgPlayButton, pSurfaceWindow, &imgPlayButtonZoom);
-                }
-                break;
-            default: break;
+            }
+            break;
+        case SDL_MOUSEMOTION:
+            SDL_SetColorKey(pSurfacePacmanSpriteSheet, true, 0);
+
+            SDL_Rect playButton = imgPlayButton;
+            if (isPlayButtonHovered)
+            {
+                playButton.y += PLAY_HOVER_SPACING;
+            }
+
+            SDL_BlitScaled(pSurfacePacmanSpriteSheet, &playButton, pSurfaceWindow, &imgPlayButtonPosition);
+
+            break;
+        default:
+            break;
         }
     }
-}
-
-bool isPointInPlayButton(int x, int y)
-{
-    return x >= imgPlayButtonZoom.x && x <= imgPlayButtonZoom.x + imgPlayButtonZoom.w
-           && y >= imgPlayButtonZoom.y && y <= imgPlayButtonZoom.y + imgPlayButtonZoom.h;
 }
