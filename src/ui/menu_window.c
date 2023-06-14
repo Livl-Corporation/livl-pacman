@@ -2,14 +2,20 @@
 
 bool pMainMenuQuit = false;
 
-SDL_Rect imgPacmanTitle = {4, 4, 180, 46};
-SDL_Rect imgPacmanTitleZoom = {13, 100, 500, 130};
+#define PACMAN_TITLE_W 180
+#define PACMAN_TITLE_H 46
+#define PACMAN_TITLE_SCALE 3
+SDL_Rect imgPacmanTitle = {4, 4, PACMAN_TITLE_W, PACMAN_TITLE_H};
+SDL_Rect imgPacmanTitlePosition = {13, 100, PACMAN_TITLE_W *PACMAN_TITLE_SCALE, PACMAN_TITLE_H *PACMAN_TITLE_SCALE};
 SDL_Rect imgBlackBackground = {0, 0, 0, 0};
 
-SDL_Rect imgPlayButton = {89, 54, 46, 7};
+#define PLAY_W 46
+#define PLAY_H 7
+#define PLAY_UI_SCALE 3
+SDL_Rect imgPlayButton = {89, 54, PLAY_W, PLAY_H};
 int playButtonHoverMargin = 9;
 
-SDL_Rect imgPlayButtonPosition = {TOTAL_SCREEN_WIDTH / 3, 400, 180, 35};
+SDL_Rect imgPlayButtonPosition = {TOTAL_SCREEN_WIDTH / 3, 400, PLAY_W *PLAY_UI_SCALE, PLAY_H *PLAY_UI_SCALE};
 
 bool isPlayButtonHovered = false;
 
@@ -28,7 +34,7 @@ void drawMainMenu()
 {
     SDL_SetColorKey(pSurfacePacmanSpriteSheet, true, 0);
     SDL_BlitScaled(pSurfacePacmanSpriteSheet, &imgBlackBackground, pSurfaceWindow, &imgBlackBackground);
-    SDL_BlitScaled(pSurfacePacmanSpriteSheet, &imgPacmanTitle, pSurfaceWindow, &imgPacmanTitleZoom);
+    SDL_BlitScaled(pSurfacePacmanSpriteSheet, &imgPacmanTitle, pSurfaceWindow, &imgPacmanTitlePosition);
 
     SDL_SetColorKey(pSurfacePacmanSpriteSheet, true, 0);
     SDL_BlitScaled(pSurfacePacmanSpriteSheet, &imgPlayButton, pSurfaceWindow, &imgPlayButtonPosition);
