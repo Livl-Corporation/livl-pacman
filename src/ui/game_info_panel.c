@@ -9,7 +9,8 @@ int spriteNumberMargin = 8;
 
 SDL_Rect imgPacmanLeftSprite = {56, 90, 14, 14};
 SDL_Rect imgHighScoreTextSprite = {3, 70, 80, 10};
-SDL_Rect imgOneUpTextSprite = {4, 81, 22, 7};
+SDL_Rect imgOneUpTextSprite = {140, 124, 22, 7};
+
 SDL_Rect imgScoreUi = {68, 35, 20, 18};
 
 /**
@@ -32,7 +33,7 @@ void initGameInfoPanel()
 
 void initImgNumbersOnSprite()
 {
-    for(int i=0; i<10; i++)
+    for (int i = 0; i < 10; i++)
     {
         imgNumbersSprite[i].x = imgNumberSprite.x;
         imgNumbersSprite[i].y = imgNumberSprite.y;
@@ -86,7 +87,7 @@ void drawScore(int score, SDL_Rect imgUi)
 
     for (int i = 0; scoreString[i] != '\0'; i++)
     {
-        int digit = scoreString[i] - '0';  // Convert character to integer
+        int digit = scoreString[i] - '0'; // Convert character to integer
 
         // Blit the number sprite onto the window surface
         SDL_BlitScaled(pSurfacePacmanSpriteSheet, &imgNumbersSprite[digit], pSurfaceWindow, &imgUi);
@@ -106,7 +107,7 @@ void drawEatGhostScore(int score, SDL_Rect imgUi)
 void drawLives()
 {
     SDL_Rect imgLivesUi = {15, TOTAL_SCREEN_HEIGHT - 33, 25, 25};
-    for (int i = 0; i < getLives()-1; i++)
+    for (int i = 0; i < getLives() - 1; i++)
     {
         // Blit the number sprite onto the window surface
         SDL_BlitScaled(pSurfacePacmanSpriteSheet, &imgPacmanLeftSprite, pSurfaceWindow, &imgLivesUi);
@@ -134,5 +135,5 @@ int getNumDigits(int score)
         count++;
     }
 
-    return count+1; // +1 for the /0
+    return count + 1; // +1 for the /0
 }

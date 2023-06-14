@@ -9,8 +9,11 @@
 #include <SDL_mixer.h>
 #include "constants.h"
 #include "console_handler.h"
+#include "../models/position.h"
 
 void SDL_ExitWithError(const char *message);
+
+int isPositionInRect(struct Position position, SDL_Rect *rect);
 
 /// TO BE REMOVED
 void initSDL();
