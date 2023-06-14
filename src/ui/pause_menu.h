@@ -5,6 +5,7 @@
 #include "../constants.h"
 #include "variables.h"
 #include "../utilities/sdl_functions.h"
+#include "game_window.h"
 
 void drawPauseMenu();
 void handlePauseMenuEvents();

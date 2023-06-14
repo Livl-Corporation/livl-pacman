@@ -34,4 +34,6 @@ void drawMaze();
 void drawHeader();
 void drawReadyImg();
 
+void setPause(int isPaused);
+
 #endif // PACMAN_GAME_WINDOW_H

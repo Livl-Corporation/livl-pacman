@@ -32,8 +32,6 @@ void drawMainMenu()
 
     SDL_SetColorKey(pSurfacePacmanSpriteSheet, true, 0);
     SDL_BlitScaled(pSurfacePacmanSpriteSheet, &imgPlayButton, pSurfaceWindow, &imgPlayButtonPosition);
-
-    printf("truc");
 }
 
 void handleMainMenuEvents()

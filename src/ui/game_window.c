@@ -32,8 +32,6 @@ void startGameLoop()
         clock_t before = clock();
         frameCount++;
 
-        handleGameEvents();
-
         SDL_FillRect(pSurfaceWindow, 0, 0); // Clears the window's surface before drawing the new frame
 
         if (isGamePause)
@@ -45,6 +43,7 @@ void startGameLoop()
         {
             drawHeader();
             drawGame();
+            handleGameEvents();
         }
 
         SDL_UpdateWindowSurface(pWindow);
@@ -72,9 +71,7 @@ void handleGameEvents()
     }
 
     if (keys[SDL_SCANCODE_P])
-        isGamePause = true;
-    if (keys[SDL_SCANCODE_L])
-        isGamePause = false;
+        setPause(true);
     if (keys[SDL_SCANCODE_ESCAPE])
         pGameQuit = true;
 
@@ -144,4 +141,9 @@ void delayToMaintainFrameRate(clock_t before, Uint32 desiredDelayInMs)
 
     if (desiredDelayInMs > milliseconds)
         SDL_Delay(desiredDelayInMs - milliseconds);
+}
+
+void setPause(int isPaused)
+{
+    isGamePause = isPaused;
 }
