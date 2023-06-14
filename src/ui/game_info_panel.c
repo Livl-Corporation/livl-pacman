@@ -5,8 +5,9 @@
  */
 SDL_Rect imgNumbersSprite[10];
 SDL_Rect imgNumberSprite = {4, 256, 7, 7};
-// TODO : #define for following values :
-int spriteNumberMargin = 8;
+
+#define NUMBER_SPRITES_SPACING 8
+#define NUMBER_UI_SPACING 13;
 
 SDL_Rect imgPacmanLeftSprite = {56, 90, 14, 14};
 SDL_Rect imgHighScoreTextSprite = {3, 70, 80, 10};
@@ -18,12 +19,13 @@ SDL_Rect imgScoreUi = {68, 35, 20, 18};
  * @brief Get the img Numbers On Sprite image from number 200, 400, 800, 1600
  */
 SDL_Rect imgNumbersEatGhostSprite[GHOST_COUNT];
-SDL_Rect imgEatGhostTextSprite = {154, 176, 15, 7};
+#define GHOST_SCORE_W 15
+#define GHOST_SCORE_H 7
+#define GHOST_SCORE_UI_SCALE 2
+#define GHOST_SCORES_SPACING 9
+SDL_Rect imgEatGhostTextSprite = {154, 176, GHOST_SCORE_W, GHOST_SCORE_H};
 
 // TODO : #define for following values :
-int spriteEatGhostMargin = 9;
-int uiScoreMargin = 13;
-int uiLivesMargin = 15;
 
 bool isOneUpVisible = true;
 
@@ -42,7 +44,7 @@ void initImgNumbersOnSprite()
         imgNumbersSprite[i].h = imgNumberSprite.h;
         imgNumbersSprite[i].w = imgNumberSprite.w;
 
-        imgNumberSprite.x += spriteNumberMargin;
+        imgNumberSprite.x += NUMBER_SPRITES_SPACING;
     }
 }
 
@@ -55,7 +57,7 @@ void initImgNumbersEatGhostSprite()
         imgNumbersEatGhostSprite[i].h = imgEatGhostTextSprite.h;
         imgNumbersEatGhostSprite[i].w = imgEatGhostTextSprite.w;
 
-        imgEatGhostTextSprite.y += spriteEatGhostMargin;
+        imgEatGhostTextSprite.y += GHOST_SCORES_SPACING;
     }
 }
 
@@ -70,8 +72,15 @@ void drawGameInfoPanel()
     if (isScoreAnimationOnGhostEaten())
     {
         decreaseScoreAnimationOnGhostEaten();
-        // TODO : fix aspectratio
-        drawEatGhostScore(getEatenGhostScore(ghostEaten), ghostEaten, (SDL_Rect){pacmanUIPos.x, pacmanUIPos.y + 3, CELL_SIZE - 5, CELL_SIZE - 5});
+        drawEatGhostScore(
+            getEatenGhostScore(ghostEaten),
+            ghostEaten,
+            (SDL_Rect){
+                pacmanUIPos.x - GHOST_SCORE_W,
+                pacmanUIPos.y + GHOST_SCORE_H,
+                GHOST_SCORE_W * GHOST_SCORE_UI_SCALE,
+                GHOST_SCORE_H * GHOST_SCORE_UI_SCALE,
+            });
     }
 }
 
@@ -97,7 +106,7 @@ void drawScore(int score, SDL_Rect imgUi)
         SDL_BlitScaled(pSurfacePacmanSpriteSheet, &imgNumbersSprite[digit], pSurfaceWindow, &imgUi);
 
         // Increment xPosition to position the next digit
-        imgUi.x += imgNumbersSprite[digit].w + uiScoreMargin;
+        imgUi.x += imgNumbersSprite[digit].w + NUMBER_UI_SPACING;
     }
 }
 
@@ -117,7 +126,7 @@ void drawLives()
         SDL_BlitScaled(pSurfacePacmanSpriteSheet, &imgPacmanLeftSprite, pSurfaceWindow, &imgLivesUi);
 
         // Increment xPosition to position the next digit
-        imgLivesUi.x += imgPacmanLeftSprite.w + uiScoreMargin;
+        imgLivesUi.x += imgPacmanLeftSprite.w + NUMBER_UI_SPACING;
     }
 }
 
