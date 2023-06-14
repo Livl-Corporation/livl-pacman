@@ -6,6 +6,7 @@
 #define PACMAN_SDL_FUNCTIONS_H
 
 #include <SDL.h>
+#include <SDL_mixer.h>
 #include "constants.h"
 #include "console_handler.h"
 
