@@ -4,20 +4,34 @@ bool pMainMenuQuit = false;
 
 #define PACMAN_TITLE_W 180
 #define PACMAN_TITLE_H 46
-#define PACMAN_TITLE_SCALE 3
+#define PACMAN_TITLE_UI_SCALE 2.75
+#define PACMAN_TITLE_UI_Y 100
+
 SDL_Rect imgPacmanTitle = {4, 4, PACMAN_TITLE_W, PACMAN_TITLE_H};
-SDL_Rect imgPacmanTitlePosition = {13, 100, PACMAN_TITLE_W *PACMAN_TITLE_SCALE, PACMAN_TITLE_H *PACMAN_TITLE_SCALE};
-SDL_Rect imgBlackBackground = {0, 0, 0, 0};
+SDL_Rect imgPacmanTitlePosition = {
+    TOTAL_SCREEN_WIDTH / 2 - PACMAN_TITLE_W * PACMAN_TITLE_UI_SCALE / 2,
+    PACMAN_TITLE_UI_Y,
+    PACMAN_TITLE_W *PACMAN_TITLE_UI_SCALE,
+    PACMAN_TITLE_H *PACMAN_TITLE_UI_SCALE,
+};
 
 #define PLAY_W 46
 #define PLAY_H 7
-#define PLAY_UI_SCALE 3
-SDL_Rect imgPlayButton = {89, 54, PLAY_W, PLAY_H};
-int playButtonHoverMargin = 9;
+#define PLAY_UI_SCALE 5
+#define PLAY_UI_Y 400
 
-SDL_Rect imgPlayButtonPosition = {TOTAL_SCREEN_WIDTH / 3, 400, PLAY_W *PLAY_UI_SCALE, PLAY_H *PLAY_UI_SCALE};
+SDL_Rect imgPlayButton = {89, 54, PLAY_W, PLAY_H};
+SDL_Rect imgPlayButtonPosition = {
+    TOTAL_SCREEN_WIDTH / 2 - PLAY_W * PLAY_UI_SCALE / 2,
+    PLAY_UI_Y,
+    PLAY_W *PLAY_UI_SCALE,
+    PLAY_H *PLAY_UI_SCALE,
+};
+#define PLAY_HOVER_SPACING 9;
 
 bool isPlayButtonHovered = false;
+
+SDL_Rect imgBlackBackground = {0, 0, 0, 0};
 
 void startMainMenuLoop()
 {
@@ -74,7 +88,7 @@ void handleMainMenuEvents()
             SDL_Rect playButton = imgPlayButton;
             if (isPlayButtonHovered)
             {
-                playButton.y += playButtonHoverMargin;
+                playButton.y += PLAY_HOVER_SPACING;
             }
 
             SDL_BlitScaled(pSurfacePacmanSpriteSheet, &playButton, pSurfaceWindow, &imgPlayButtonPosition);

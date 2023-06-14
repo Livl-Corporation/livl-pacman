@@ -24,6 +24,7 @@ SDL_Rect imgPauseTitlePosition = {
 #define MAIN_MENU_BUTTON_H 7
 
 #define BUTTONS_UI_SCALE 3
+#define BUTTONS_HOVER_SPACING 9
 
 // SPRITES
 SDL_Rect imgResumeButton = {
@@ -38,7 +39,6 @@ SDL_Rect imgMainMenuButton = {
     MAIN_MENU_BUTTON_W,
     MAIN_MENU_BUTTON_H,
 };
-int hoverImgMargin = 9;
 
 // POSITIONS
 SDL_Rect imgResumeButtonPosition = {
@@ -67,7 +67,7 @@ void drawPauseMenu()
     SDL_Rect resumeButton = imgResumeButton;
     if (isResumeButtonHovered)
     {
-        resumeButton.y += hoverImgMargin;
+        resumeButton.y += BUTTONS_HOVER_SPACING;
     }
 
     SDL_BlitScaled(pSurfacePacmanSpriteSheet, &resumeButton, pSurfaceWindow, &imgResumeButtonPosition);
@@ -76,7 +76,7 @@ void drawPauseMenu()
     SDL_Rect mainMenuButton = imgMainMenuButton;
     if (isMainMenuButtonHovered)
     {
-        mainMenuButton.y += hoverImgMargin;
+        mainMenuButton.y += BUTTONS_HOVER_SPACING;
     }
 
     SDL_BlitScaled(pSurfacePacmanSpriteSheet, &mainMenuButton, pSurfaceWindow, &imgMainMenuButtonPosition);
