@@ -16,6 +16,8 @@
 #include "models/ghost.h"
 #include "../ui/game_window.h"
 
+extern struct Position pacmanUIPos;
+
 /**
  * Initialize pacman position at his spawn point
  * <!> This function must be called at least once before any other pacman function
@@ -41,6 +43,16 @@ void drawPacmanArrow();
 struct Position onPacmanGridMove(struct Position *pacmanUiPos);
 
 struct SDL_Rect getArrow(Direction direction);
+
+void decreaseScoreAnimationOnGhostEaten();
+
+bool isScoreAnimationOnGhostEaten();
+
+/**
+ * Do the logic by checking if pacman eat a ghost either a ghost ate the pacman
+ * @param ghostElement : the ghost that enters in contact with the pacman
+ */
+void handleGhost(MazeElement ghostElement);
 
 // -- Private --
 void pacmanBlit(SDL_Rect srcRect);

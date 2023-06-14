@@ -8,6 +8,16 @@
 #include "utilities/array_utils.h"
 #include "enums/maze-element.h"
 
+#define SMALL_COIN_OFFSET_X 12
+#define SMALL_COIN_OFFSET_Y 12
+#define SMALL_COIN_WIDTH 7
+#define SMALL_COIN_HEIGHT 7
+
+#define BIG_COIN_OFFSET_X 2
+#define BIG_COIN_OFFSET_Y 3
+#define BIG_COIN_WIDTH 20
+#define BIG_COIN_HEIGHT 20
+
 extern char **initialMaze;
 extern char **gameMaze;
 extern SDL_Rect imgMazeSmallCoin;
@@ -122,5 +132,7 @@ bool retrieveMazeFromFile();
  * Reset the game maze to the initial maze
  */
 void resetGameMaze();
+
+void removeMazeElement(MazeElement elementToRemove);
 
 #endif // PACMAN_MAZE_H

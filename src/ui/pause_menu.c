@@ -1,9 +1,5 @@
 #include "pause_menu.h"
 
-#define TITLE_W 47
-#define TITLE_H 7
-#define TITLE_UI_SCALE 4
-
 SDL_Rect imgPauseMenuOnSprite = {
     4,
     81,
@@ -16,15 +12,6 @@ SDL_Rect imgPauseTitlePosition = {
     TITLE_W *TITLE_UI_SCALE,
     TITLE_H *TITLE_UI_SCALE,
 };
-
-#define RESUME_BUTTON_W 47
-#define RESUME_BUTTON_H 7
-
-#define MAIN_MENU_BUTTON_W 71
-#define MAIN_MENU_BUTTON_H 7
-
-#define BUTTONS_UI_SCALE 3
-#define BUTTONS_HOVER_SPACING 9
 
 // SPRITES
 SDL_Rect imgResumeButton = {

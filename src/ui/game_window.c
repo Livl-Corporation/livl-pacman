@@ -4,7 +4,7 @@ int frameCount = 0;
 double delayInSec = 1.0 / GAME_SPEED;
 Uint32 delayInMs = 0;
 
-bool pGameQuit = false, isGamePause = false;
+bool pGameQuit = false, isGamePause = false, isPauseMenuOpen = false;
 
 SDL_Rect imgMazeOnSprite = {201, 4, 166, 214};
 SDL_Rect imgMazeOnUi = {0, HEADER_SCREEN_HEIGHT, TOTAL_SCREEN_WIDTH, MAZE_SCREEN_HEIGHT};
@@ -12,9 +12,6 @@ SDL_Rect imgMazeOnUi = {0, HEADER_SCREEN_HEIGHT, TOTAL_SCREEN_WIDTH, MAZE_SCREEN
 SDL_Rect imgBlackHeaderOnSprite = {0, 0, 0, 0};
 SDL_Rect imgBlackHeaderOnUi = {0, 0, TOTAL_SCREEN_WIDTH, HEADER_SCREEN_HEIGHT};
 
-#define READY_W 46
-#define READY_H 7
-#define READY_UI_SCALE 3
 SDL_Rect imgReadyOnSprite = {4, 63, READY_W, READY_H};
 
 void startGameLoop()
@@ -37,7 +34,7 @@ void startGameLoop()
 
         SDL_FillRect(pSurfaceWindow, 0, 0); // Clears the window's surface before drawing the new frame
 
-        if (isGamePause)
+        if (isPauseMenuOpen)
         {
             drawPauseMenu();
             handlePauseMenuEvents();
@@ -110,7 +107,7 @@ void drawGame()
     drawMaze();
     drawGhosts();
     drawPacman();
-    drawGameInfoPanel(frameCount);
+    drawGameInfoPanel();
     drawCoins(frameCount);
     drawPacmanArrow();
     decreaseEatableGhostTimer();
@@ -149,4 +146,5 @@ void delayToMaintainFrameRate(clock_t before, Uint32 desiredDelayInMs)
 void setPause(int isPaused)
 {
     isGamePause = isPaused;
+    isPauseMenuOpen = isPaused;
 }
