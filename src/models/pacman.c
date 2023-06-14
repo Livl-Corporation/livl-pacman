@@ -64,7 +64,7 @@ void drawPacman()
 {
     if (isGamePause)
     {
-        if(!isScoreAnimationOnGhostEaten())
+        if (!isScoreAnimationOnGhostEaten())
             pacmanBlit(lastPacmanDirection);
         return;
     }
@@ -163,16 +163,16 @@ struct Position onPacmanGridMove(struct Position *pacmanUiPos)
         setElementAtPositionOnMazeAs(pacmanGridPos, PACMAN);
         break;
     case RED_GHOST:
-        pacmanAndGhostOnSamePosition(RED_GHOST);
+        handleGhost(RED_GHOST);
         break;
     case PINK_GHOST:
-        pacmanAndGhostOnSamePosition(PINK_GHOST);
+        handleGhost(PINK_GHOST);
         break;
     case BLUE_GHOST:
-        pacmanAndGhostOnSamePosition(BLUE_GHOST);
+        handleGhost(BLUE_GHOST);
         break;
     case ORANGE_GHOST:
-        pacmanAndGhostOnSamePosition(ORANGE_GHOST);
+        handleGhost(ORANGE_GHOST);
         break;
     default:
         setElementAtPositionOnMazeAs(pacmanGridPos, PACMAN);
@@ -192,31 +192,13 @@ void pacmanBlit(SDL_Rect srcRect)
 void decreaseScoreAnimationOnGhostEaten()
 {
     durationAnimationOnGhostEaten--;
-    if(durationAnimationOnGhostEaten <= 0) isGamePause = false;
+    if (durationAnimationOnGhostEaten <= 0)
+        isGamePause = false;
 }
 
 bool isScoreAnimationOnGhostEaten()
 {
     return durationAnimationOnGhostEaten > 0;
-}
-
-void pacmanAndGhostOnSamePosition(MazeElement ghostElement)
-{
-    if(isGhostEatable()) { // Pacman ate a ghost
-        removeMazeElement(ghostElement);
-        setElementAtPositionOnMazeAs(pacmanGridPos, PACMAN);
-        incrementScore(scoreTotalGhostEaten);
-
-        durationAnimationOnGhostEaten = SCORE_GHOST_EATEN_DURATION;
-        isGamePause = true;
-        ghostElementEaten = ghostElement;
-
-        incrementGhostScoreEaten();
-    }
-    else { // Pacman is eaten by a ghost
-        removeMazeElement(PACMAN);
-        decrementLives();
-    }
 }
 
 struct Position teleportPacman(MazeElement teleporter)
@@ -230,4 +212,24 @@ struct SDL_Rect getArrow(Direction direction)
     SDL_Rect arrow = arrowSprite;
     arrow.x += direction * arrow.w;
     return arrow;
+}
+
+void handleGhost(MazeElement ghostElement)
+{
+    if (isGhostEatable())
+    { // Pacman ate a ghost
+        removeMazeElement(ghostElement);
+        setElementAtPositionOnMazeAs(pacmanGridPos, PACMAN);
+        ghostEaten++;
+        incrementScore(getEatenGhostScore(ghostEaten));
+        durationAnimationOnGhostEaten = SCORE_GHOST_EATEN_DURATION;
+
+        isGamePause = true;
+        ghostElementEaten = ghostElement;
+    }
+    else
+    { // Pacman is eaten by a ghost
+        removeMazeElement(PACMAN);
+        decrementLives();
+    }
 }

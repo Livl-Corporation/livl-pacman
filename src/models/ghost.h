@@ -13,7 +13,7 @@
 #include "models/sprite.h"
 #include "../ui/game_window.h"
 
-extern int scoreTotalGhostEaten;
+extern int ghostEaten;
 /**
  * The ghost that has been eaten by pacman
  */
@@ -60,13 +60,10 @@ void decreaseEatableGhostTimer();
  */
 bool canBlitGhostInPausedGame(int ghostId);
 
-/**
- * Increment the score when a ghost is eaten by pacman (200, 400, 800, 1600)
- */
-void incrementGhostScoreEaten();
+int getEatenGhostScore(int ghostEaten);
 
 // Private
 void updateGhost(struct Sprite *sprite);
 void blitGhost(struct Sprite *sprite, SDL_Rect *spritePos);
 
-#endif //PACMAN_GHOST_H
+#endif // PACMAN_GHOST_H

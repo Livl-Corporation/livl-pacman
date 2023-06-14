@@ -5,6 +5,7 @@
  */
 SDL_Rect imgNumbersSprite[10];
 SDL_Rect imgNumberSprite = {4, 256, 7, 7};
+// TODO : #define for following values :
 int spriteNumberMargin = 8;
 
 SDL_Rect imgPacmanLeftSprite = {56, 90, 14, 14};
@@ -18,8 +19,9 @@ SDL_Rect imgScoreUi = {68, 35, 20, 18};
  */
 SDL_Rect imgNumbersEatGhostSprite[GHOST_COUNT];
 SDL_Rect imgEatGhostTextSprite = {154, 176, 15, 7};
-int spriteEatGhostMargin = 9;
 
+// TODO : #define for following values :
+int spriteEatGhostMargin = 9;
 int uiScoreMargin = 13;
 int uiLivesMargin = 15;
 
@@ -46,7 +48,7 @@ void initImgNumbersOnSprite()
 
 void initImgNumbersEatGhostSprite()
 {
-    for(int i=0; i<GHOST_COUNT; i++)
+    for (int i = 0; i < GHOST_COUNT; i++)
     {
         imgNumbersEatGhostSprite[i].x = imgEatGhostTextSprite.x;
         imgNumbersEatGhostSprite[i].y = imgEatGhostTextSprite.y;
@@ -62,12 +64,14 @@ void drawGameInfoPanel()
     drawHighScore();
     drawScore(getScore(), imgScoreUi);
     drawLives();
-    if (frameCount % TEXT_UP_RATE) drawUp();
+    if (frameCount % TEXT_UP_RATE)
+        drawUp();
 
-    if(isScoreAnimationOnGhostEaten())
+    if (isScoreAnimationOnGhostEaten())
     {
         decreaseScoreAnimationOnGhostEaten();
-        drawEatGhostScore(scoreTotalGhostEaten, (SDL_Rect){pacmanUIPos.x, pacmanUIPos.y+3, CELL_SIZE-5, CELL_SIZE-5});
+        // TODO : fix aspectratio
+        drawEatGhostScore(getEatenGhostScore(ghostEaten), ghostEaten, (SDL_Rect){pacmanUIPos.x, pacmanUIPos.y + 3, CELL_SIZE - 5, CELL_SIZE - 5});
     }
 }
 
@@ -82,7 +86,7 @@ void drawHighScore()
 void drawScore(int score, SDL_Rect imgUi)
 {
     int scoreStringLength = getNumDigits(score); // Include space for null terminator
-    char scoreString[scoreStringLength]; // String to hold the score
+    char scoreString[scoreStringLength];         // String to hold the score
     snprintf(scoreString, sizeof(scoreString), "%d", score);
 
     for (int i = 0; scoreString[i] != '\0'; i++)
@@ -97,10 +101,10 @@ void drawScore(int score, SDL_Rect imgUi)
     }
 }
 
-void drawEatGhostScore(int score, SDL_Rect imgUi)
+void drawEatGhostScore(int score, int ghostEaten, SDL_Rect imgUi)
 {
-    int scoreIndex = (int)round(log2((double)score / SCORE_GHOST_EATEN)); // Get the index of the score to display from the score array (0, 1, 2, 3 --> 200, 400, 800, 1600)
-    SDL_Rect rectScoreToDisplay = imgNumbersEatGhostSprite[scoreIndex];
+    int scoreSpriteIndex = fmin(ghostEaten, SCORE_GHOST_MAX_COMBO) - 1;
+    SDL_Rect rectScoreToDisplay = imgNumbersEatGhostSprite[scoreSpriteIndex];
     SDL_BlitScaled(pSurfacePacmanSpriteSheet, &rectScoreToDisplay, pSurfaceWindow, &imgUi);
 }
 

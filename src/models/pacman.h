@@ -44,21 +44,20 @@ struct Position onPacmanGridMove(struct Position *pacmanUiPos);
 
 struct SDL_Rect getArrow(Direction direction);
 
+void decreaseScoreAnimationOnGhostEaten();
+
+bool isScoreAnimationOnGhostEaten();
+
 /**
  * Do the logic by checking if pacman eat a ghost either a ghost ate the pacman
  * @param ghostElement : the ghost that enters in contact with the pacman
  */
-void pacmanAndGhostOnSamePosition(MazeElement ghostElement);
-
-void decreaseScoreAnimationOnGhostEaten();
-
-bool isScoreAnimationOnGhostEaten();
+void handleGhost(MazeElement ghostElement);
 
 // -- Private --
 void pacmanBlit(SDL_Rect srcRect);
 int canMoveInDirection(Direction direction);
 
 struct Position teleportPacman(MazeElement teleporter);
-
 
 #endif // PACMAN_PACMAN_H
