@@ -64,7 +64,6 @@ void drawGameInfoPanel()
     {
         decreaseScoreAnimationOnGhostEaten();
         drawEatGhostScore(
-            getEatenGhostScore(ghostEaten),
             ghostEaten,
             (SDL_Rect){
                 pacmanUIPos.x - GHOST_SCORE_W,
@@ -101,7 +100,7 @@ void drawScore(int score, SDL_Rect imgUi)
     }
 }
 
-void drawEatGhostScore(int score, int ghostEaten, SDL_Rect imgUi)
+void drawEatGhostScore(int ghostEaten, SDL_Rect imgUi)
 {
     int scoreSpriteIndex = fmin(ghostEaten, SCORE_GHOST_MAX_COMBO) - 1;
     SDL_Rect rectScoreToDisplay = imgNumbersEatGhostSprite[scoreSpriteIndex];

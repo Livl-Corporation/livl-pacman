@@ -88,7 +88,7 @@ void removeMazeElement(MazeElement elementToRemove)
     {
         for (int j = 0; j < MAP_WIDTH; j++)
         {
-            if (gameMaze[i][j] == elementToRemove)
+            if ((MazeElement) gameMaze[i][j] == elementToRemove)
                 gameMaze[i][j] = EMPTY;
         }
     }
