@@ -33,7 +33,7 @@ void drawHighScore();
 
 void drawScore(int score, SDL_Rect imgUi);
 
-void drawEatGhostScore(int ghostEaten, SDL_Rect imgUi);
+void drawEatGhostScore(SDL_Rect imgUi);
 
 void drawLives();
 

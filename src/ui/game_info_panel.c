@@ -100,7 +100,7 @@ void drawScore(int score, SDL_Rect imgUi)
     }
 }
 
-void drawEatGhostScore(int ghostEaten, SDL_Rect imgUi)
+void drawEatGhostScore(SDL_Rect imgUi)
 {
     int scoreSpriteIndex = fmin(ghostEaten, SCORE_GHOST_MAX_COMBO) - 1;
     SDL_Rect rectScoreToDisplay = imgNumbersEatGhostSprite[scoreSpriteIndex];
