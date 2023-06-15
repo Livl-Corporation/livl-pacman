@@ -28,28 +28,12 @@ void initGameInfoPanel()
 
 void initImgNumbersOnSprite()
 {
-    for (int i = 0; i < 10; i++)
-    {
-        imgNumbersSprite[i].x = imgNumberSprite.x;
-        imgNumbersSprite[i].y = imgNumberSprite.y;
-        imgNumbersSprite[i].h = imgNumberSprite.h;
-        imgNumbersSprite[i].w = imgNumberSprite.w;
-
-        imgNumberSprite.x += NUMBER_SPRITES_SPACING;
-    }
+    exportSprites(&imgNumberSprite, imgNumbersSprite, 10, NUMBER_SPRITES_SPACING, 0);
 }
 
 void initImgNumbersEatGhostSprite()
 {
-    for (int i = 0; i < GHOST_COUNT; i++)
-    {
-        imgNumbersEatGhostSprite[i].x = imgEatGhostTextSprite.x;
-        imgNumbersEatGhostSprite[i].y = imgEatGhostTextSprite.y;
-        imgNumbersEatGhostSprite[i].h = imgEatGhostTextSprite.h;
-        imgNumbersEatGhostSprite[i].w = imgEatGhostTextSprite.w;
-
-        imgEatGhostTextSprite.y += GHOST_SCORES_SPACING;
-    }
+    exportSprites(&imgEatGhostTextSprite, imgNumbersEatGhostSprite, GHOST_COUNT, 0, GHOST_SCORES_SPACING);
 }
 
 void drawGameInfoPanel()

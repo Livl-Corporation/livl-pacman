@@ -20,6 +20,8 @@ void startGameLoop()
 
     initGhostList();
 
+    initPacmanSprites();
+
     spawnPacman();
 
     initGameInfoPanel();

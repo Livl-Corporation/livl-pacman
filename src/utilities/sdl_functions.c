@@ -47,3 +47,14 @@ int isPositionInRect(struct Position position, SDL_Rect *rect)
 {
     return position.x >= rect->x && position.x <= rect->x + rect->w && position.y >= rect->y && position.y <= rect->y + rect->h;
 }
+
+void exportSprites(SDL_Rect *srcRect, SDL_Rect *destRect, int count, int xStep, int yStep)
+{
+    for (int i = 0; i < count; i++)
+    {
+        destRect[i].x = srcRect->x + i * xStep;
+        destRect[i].y = srcRect->y + i * yStep;
+        destRect[i].w = srcRect->w;
+        destRect[i].h = srcRect->h;
+    }
+}

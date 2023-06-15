@@ -20,9 +20,6 @@ int isGhostEatable()
 void initGhostList()
 {
 
-    // TODO : [sprite refactor] use this code also for pacman
-
-    // Malloc ghost list
     ghostList = malloc(sizeof(struct Sprite) * GHOST_COUNT);
 
     for (int i = 0; i < GHOST_COUNT; i++)
@@ -37,26 +34,28 @@ void initGhostList()
         // Sprites :
         ghostList[i].rects = malloc(sizeof(SDL_Rect) * DIRECTION_COUNT);
 
-        for (int j = 0; j < DIRECTION_COUNT; j++)
-        {
-            SDL_Rect rect = {0, 0, 0, 0};
+        SDL_Rect initialGhost = {
+            GHOST_INITIAL_POS_X,
+            GHOST_INITIAL_POS_Y + i * (GHOST_SIZE + GHOST_SPACING_Y),
+            GHOST_SIZE, GHOST_SIZE};
 
-            rect.x = GHOST_INITIAL_POS_X + j * 2 * (GHOST_SIZE + GHOST_SPACING_X);
-            rect.y = GHOST_INITIAL_POS_Y + i * (GHOST_SIZE + GHOST_SPACING_Y);
-            rect.w = GHOST_SIZE;
-            rect.h = GHOST_SIZE;
+        exportSprites(
+            &initialGhost,
+            ghostList[i].rects,
+            DIRECTION_COUNT,
+            2 * (GHOST_SIZE + GHOST_SPACING_X),
+            0);
 
-            ghostList[i].rects[j] = rect;
-            ghostList[i].lastRect = rect;
-        }
+        ghostList[i].lastRect = ghostList[i].rects[0];
 
         spawnGhost(i);
     }
 
-    eatableGhostRect.x = GHOST_INITIAL_POS_X;
-    eatableGhostRect.y = GHOST_INITIAL_POS_Y + 4 * (GHOST_SIZE + GHOST_SPACING_Y);
-    eatableGhostRect.w = GHOST_SIZE;
-    eatableGhostRect.h = GHOST_SIZE;
+    eatableGhostRect = (SDL_Rect){
+        GHOST_INITIAL_POS_X,
+        GHOST_INITIAL_POS_Y + 4 * (GHOST_SIZE + GHOST_SPACING_Y),
+        GHOST_SIZE,
+        GHOST_SIZE};
 }
 
 void freeGhostList()

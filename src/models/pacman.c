@@ -4,15 +4,10 @@
 
 #include "pacman.h"
 
-/**
- * IMAGE : Pacman Sprite-Sheet with 4 directions and 2 sprites per direction
- */
-SDL_Rect pacmanSprites[DIRECTION_COUNT][PACMAN_SPRITE_MOUTHS_DIRECTION] = {
-    {{4, 90, PACMAN_SIZE, PACMAN_SIZE}, {21, 90, PACMAN_SIZE, PACMAN_SIZE}, {36, 90, PACMAN_SIZE, PACMAN_SIZE}},  // full - Right1 - Right2
-    {{4, 90, PACMAN_SIZE, PACMAN_SIZE}, {56, 90, PACMAN_SIZE, PACMAN_SIZE}, {75, 90, PACMAN_SIZE, PACMAN_SIZE}},  // full - Left1 - Left2
-    {{4, 90, PACMAN_SIZE, PACMAN_SIZE}, {89, 90, PACMAN_SIZE, PACMAN_SIZE}, {106, 90, PACMAN_SIZE, PACMAN_SIZE}}, // full - Up1 - Up2
-    {{4, 90, PACMAN_SIZE, PACMAN_SIZE}, {123, 90, PACMAN_SIZE, PACMAN_SIZE}, {140, 90, PACMAN_SIZE, PACMAN_SIZE}} // full - Down1 - Down2
-};
+SDL_Rect pacmanSprites[DIRECTION_COUNT];
+SDL_Rect pacmanRoundSprite = {4, 90, PACMAN_SIZE, PACMAN_SIZE};
+
+SDL_Rect pacmanDeathAnimation[PACMAN_DEATH_ANIMATION_FRAMES];
 
 SDL_Rect arrowSprite = {4, 266, PACMAN_ARROW_SIZE, PACMAN_ARROW_SIZE};
 
@@ -32,6 +27,36 @@ int arrowDisplaySize = PACMAN_ARROW_SIZE * (float)CELL_SIZE / (float)PACMAN_SIZE
 
 int durationAnimationOnGhostEaten = 0;
 
+void initPacmanSprites()
+{
+
+    SDL_Rect initialPacmanRect = (SDL_Rect){
+        pacmanRoundSprite.x + PACMAN_SIZE + PACMAN_SPACING_X,
+        pacmanRoundSprite.y,
+        pacmanRoundSprite.w,
+        pacmanRoundSprite.h};
+
+    exportSprites(
+        &initialPacmanRect,
+        pacmanSprites,
+        DIRECTION_COUNT,
+        2 * (PACMAN_SIZE + PACMAN_SPACING_X),
+        0);
+
+    SDL_Rect initialPacmanDeathRect = (SDL_Rect){
+        pacmanRoundSprite.x + PACMAN_SIZE + PACMAN_SPACING_X,
+        pacmanRoundSprite.y + PACMAN_SIZE + PACMAN_SPACING_Y,
+        PACMAN_SIZE,
+        PACMAN_SIZE};
+
+    exportSprites(
+        &initialPacmanDeathRect,
+        pacmanDeathAnimation,
+        PACMAN_DEATH_ANIMATION_FRAMES,
+        PACMAN_SIZE + PACMAN_SPACING_X,
+        0);
+}
+
 void spawnPacman()
 {
     pacmanSpawnPos = getInitialPositionOfElement(PACMAN);
@@ -42,7 +67,7 @@ void spawnPacman()
     pacmanDirection = defaultDirection;
     pacmanWishedDirection = defaultDirection;
 
-    lastPacmanDirection = pacmanSprites[defaultDirection][0];
+    lastPacmanDirection = pacmanRoundSprite;
 }
 
 void handlePacmanEvents()
@@ -71,8 +96,6 @@ void drawPacman()
 
     SDL_Rect newPacman = {0, 0, 0, 0};
 
-    int pacmanAnimation = (frameCount / ANIMATION_SPEED) % PACMAN_SPRITE_MOUTHS_DIRECTION;
-
     // Copy pacman position to a new
     struct Position pacmanPosCopy = pacmanUIPos;
 
@@ -80,8 +103,18 @@ void drawPacman()
     if (pacmanDirection != pacmanWishedDirection && canMoveInDirection(pacmanWishedDirection))
         pacmanDirection = pacmanWishedDirection;
 
+    int pacmanAnimation = (frameCount / ANIMATION_SPEED) % PACMAN_SPRITE_MOUTHS_DIRECTION;
+
     // Then we can choose the sprite corresponding to direction
-    newPacman = pacmanSprites[pacmanDirection][pacmanAnimation];
+    if (pacmanAnimation == PACMAN_SPRITE_MOUTHS_DIRECTION - 1)
+    {
+        newPacman = pacmanRoundSprite;
+    }
+    else
+    {
+        newPacman = pacmanSprites[pacmanDirection];
+        newPacman.x += pacmanAnimation * (PACMAN_SIZE + PACMAN_SPACING_X);
+    }
 
     // Calculate the target UI position
     updatePosition(&pacmanPosCopy, pacmanDirection, 1);

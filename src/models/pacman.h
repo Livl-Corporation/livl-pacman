@@ -18,6 +18,8 @@
 
 extern struct Position pacmanUIPos;
 
+void initPacmanSprites();
+
 /**
  * Initialize pacman position at his spawn point
  * <!> This function must be called at least once before any other pacman function

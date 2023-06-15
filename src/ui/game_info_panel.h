@@ -8,6 +8,7 @@
 #include "../utilities/console_handler.h"
 #include "models/position.h"
 #include "models/pacman.h"
+#include "utilities/sdl_functions.h"
 
 #define GHOST_SCORE_W 15
 #define GHOST_SCORE_H 7
