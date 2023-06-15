@@ -68,6 +68,11 @@ void drawPacman()
             pacmanBlit(lastPacmanDirection);
         return;
     }
+    else if(isTimerGameOverImage())
+    {
+        // todo: remove pacman on maze
+        return;
+    }
 
     SDL_Rect newPacman = {0, 0, 0, 0};
 
@@ -133,6 +138,12 @@ void drawPacmanArrow()
     };
 
     SDL_BlitScaled(pSurfacePacmanSpriteSheet, &arrowSprite, pSurfaceWindow, &arrowPosSDL);
+}
+
+void drawPacmanDeathAnimation()
+{
+    // todo: #56 pacman death animation
+
 }
 
 int canMoveInDirection(Direction direction)

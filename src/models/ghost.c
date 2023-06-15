@@ -70,6 +70,8 @@ void spawnGhost(int ghostId) {
 }
 
 void drawGhosts() {
+    if(isTimerGameOverImage()) return;
+
     for (int i = 0; i < GHOST_COUNT; i++) {
         if(canBlitGhostInPausedGame(i))
             blitGhost(&ghostList[i], &ghostList[i].lastRect);
@@ -80,7 +82,7 @@ void drawGhosts() {
 
 bool canBlitGhostInPausedGame(int ghostId)
 {
-    return ((isGamePause && !isScoreAnimationOnGhostEaten()) || (isScoreAnimationOnGhostEaten() && ghostList[ghostId].ghostElement != ghostElementEaten));
+    return ((isGamePause && !isScoreAnimationOnGhostEaten() && !isTimerGameOverImage()) || (isScoreAnimationOnGhostEaten() && ghostList[ghostId].ghostElement != ghostElementEaten));
 }
 
 void updateGhost(struct Sprite *sprite) {
