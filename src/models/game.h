@@ -6,6 +6,8 @@
 #define PACMAN_GAME_H
 
 #include "constants.h"
+#include <stdbool.h>
+#include <stdio.h>
 
 int getScore();
 
@@ -20,5 +22,9 @@ int getLives();
 void decrementLives();
 
 void drawGameInfos();
+
+void decrementTimerGameOverImage();
+
+bool isTimerGameOverImage();
 
 #endif //PACMAN_GAME_H

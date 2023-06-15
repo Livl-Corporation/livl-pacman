@@ -15,6 +15,10 @@
  */
 extern SDL_Rect imgNumbersSprite[10];
 
+#define GAME_OVER_W 78
+#define GAME_OVER_H 7
+#define GAME_OVER_UI_SCALE 2
+
 void initImgNumbersOnSprite();
 void initImgNumbersEatGhostSprite();
 
@@ -31,6 +35,8 @@ void drawEatGhostScore(int score, SDL_Rect imgUi);
 void drawLives();
 
 void drawUp();
+
+void drawGameOver();
 
 int getNumDigits(int score);
 
