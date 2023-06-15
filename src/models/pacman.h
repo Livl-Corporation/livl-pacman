@@ -54,10 +54,14 @@ bool isScoreAnimationOnGhostEaten();
  * Do the logic by checking if pacman eat a ghost either a ghost ate the pacman
  * @param ghostElement : the ghost that enters in contact with the pacman
  */
-void handleGhost(MazeElement ghostElement);
+void handleGhostCollision(MazeElement ghostElement);
 
-// -- Private --
+void killPacman();
+
+void pacmanEatGhost(MazeElement ghostElement);
+
 void pacmanBlit(SDL_Rect srcRect);
+
 int canMoveInDirection(Direction direction);
 
 struct Position teleportPacman(MazeElement teleporter);

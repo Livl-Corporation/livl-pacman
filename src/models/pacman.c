@@ -196,16 +196,16 @@ struct Position onPacmanGridMove(struct Position *pacmanUiPos)
         setElementAtPositionOnMazeAs(pacmanGridPos, PACMAN);
         break;
     case RED_GHOST:
-        handleGhost(RED_GHOST);
+        handleGhostCollision(RED_GHOST);
         break;
     case PINK_GHOST:
-        handleGhost(PINK_GHOST);
+        handleGhostCollision(PINK_GHOST);
         break;
     case BLUE_GHOST:
-        handleGhost(BLUE_GHOST);
+        handleGhostCollision(BLUE_GHOST);
         break;
     case ORANGE_GHOST:
-        handleGhost(ORANGE_GHOST);
+        handleGhostCollision(ORANGE_GHOST);
         break;
     default:
         setElementAtPositionOnMazeAs(pacmanGridPos, PACMAN);
@@ -247,22 +247,39 @@ struct SDL_Rect getArrow(Direction direction)
     return arrow;
 }
 
-void handleGhost(MazeElement ghostElement)
+void handleGhostCollision(MazeElement ghostElement)
 {
     if (isGhostEatable())
-    { // Pacman ate a ghost
-        removeMazeElement(ghostElement);
-        setElementAtPositionOnMazeAs(pacmanGridPos, PACMAN);
-        ghostEaten++;
-        incrementScore(getEatenGhostScore(ghostEaten));
-        durationAnimationOnGhostEaten = SCORE_GHOST_EATEN_DURATION;
-
-        isGamePause = true;
-        ghostElementEaten = ghostElement;
+    {
+        pacmanEatGhost(ghostElement);
     }
     else
-    { // Pacman is eaten by a ghost
-        removeMazeElement(PACMAN);
-        decrementLives();
+    {
+        killPacman();
     }
+}
+
+void killPacman()
+{
+    removeMazeElement(PACMAN);
+    decrementLives();
+    isGamePause = true;
+
+    if (getLives() <= 0)
+    {
+        // TODO : Game over
+        return;
+    }
+}
+
+void pacmanEatGhost(MazeElement ghostElement)
+{
+    removeMazeElement(ghostElement);
+    setElementAtPositionOnMazeAs(pacmanGridPos, PACMAN);
+    ghostEaten++;
+    incrementScore(getEatenGhostScore(ghostEaten));
+    durationAnimationOnGhostEaten = SCORE_GHOST_EATEN_DURATION;
+
+    isGamePause = true;
+    ghostElementEaten = ghostElement;
 }

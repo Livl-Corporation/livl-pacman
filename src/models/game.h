@@ -6,6 +6,15 @@
 #define PACMAN_GAME_H
 
 #include "constants.h"
+#include "timer.h"
+
+extern struct Timer eatableGhostTimer;
+extern struct Timer readyTimer;
+extern struct Timer gameOverTimer;
+extern struct Timer eatGhostAnimationTimer;
+extern struct Timer pacmanDeathAnimationTimer;
+
+void initTimers();
 
 int getScore();
 

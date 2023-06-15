@@ -14,6 +14,7 @@
 #include "models/pacman.h"
 #include "models/position.h"
 #include "models/ghost.h"
+#include "models/game.h"
 #include "ui/game_info_panel.h"
 #include "ui/menu_window.h"
 #include "ui/pause_menu.h"

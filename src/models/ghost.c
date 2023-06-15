@@ -6,16 +6,10 @@
 
 struct Sprite *ghostList;
 
-int eatableGhostTimer = 0;
 int ghostEaten = 0;
 MazeElement ghostElementEaten = EMPTY;
 
 SDL_Rect eatableGhostRect;
-
-int isGhostEatable()
-{
-    return eatableGhostTimer > 0;
-}
 
 void initGhostList()
 {
@@ -123,19 +117,19 @@ void blitGhost(struct Sprite *sprite, SDL_Rect *spritePos)
 
 void makeGhostsEatable()
 {
-    eatableGhostTimer = EATABLE_GHOST_DURATION;
+    resetTimer(&eatableGhostTimer);
+    startTimer(&eatableGhostTimer);
     ghostEaten = 0;
 }
 
-void decreaseEatableGhostTimer()
+bool isGhostEatable()
 {
-    if (eatableGhostTimer > 0)
-        eatableGhostTimer--;
+    return eatableGhostTimer.isRunning;
 }
 
-int isGhostEatableRunningOut()
+bool isGhostEatableRunningOut()
 {
-    return eatableGhostTimer < EATABLE_GHOST_DURATION / 4;
+    return eatableGhostTimer.count < EATABLE_GHOST_DURATION / 4;
 }
 
 int getEatenGhostScore(int ghostEaten)

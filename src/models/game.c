@@ -9,6 +9,12 @@ int score = 0;
 int high_score = 0;
 int lives = INITIAL_LIVES;
 
+struct Timer eatableGhostTimer;
+struct Timer readyTimer;
+struct Timer gameOverTimer;
+struct Timer eatGhostAnimationTimer;
+struct Timer pacmanDeathAnimationTimer;
+
 int getScore()
 {
     return score;
@@ -42,4 +48,17 @@ int getLives()
 void decrementLives()
 {
     lives--;
+}
+
+void initTimers()
+{
+    initTimer(&eatableGhostTimer, EATABLE_GHOST_DURATION);
+
+    initTimer(&readyTimer, TIME_START_GAME_READY);
+
+    // TODO : initTimer(gameOverTimer, GAME_OVER_DURATION);
+
+    initTimer(&eatGhostAnimationTimer, SCORE_GHOST_EATEN_DURATION);
+
+    initTimer(&pacmanDeathAnimationTimer, PACMAN_DEATH_ANIMATION_DURATION);
 }

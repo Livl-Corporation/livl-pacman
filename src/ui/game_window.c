@@ -22,6 +22,8 @@ void startGameLoop()
 
     initPacmanSprites();
 
+    initTimers();
+
     spawnPacman();
 
     initGameInfoPanel();
@@ -112,7 +114,7 @@ void drawGame()
     drawGameInfoPanel();
     drawCoins(frameCount);
     drawPacmanArrow();
-    decreaseEatableGhostTimer();
+    updateTimers();
 }
 
 void drawMaze()
