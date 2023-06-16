@@ -112,11 +112,14 @@ void drawReady() {
 void drawGame()
 {
     drawMaze();
-    drawGhosts();
-    drawPacman();
-    drawGameInfoPanel();
     drawCoins(frameCount);
-    drawPacmanArrow();
+    drawGameInfoPanel();
+
+    if(!gameOverTimer.isRunning) {
+        drawGhosts();
+        drawPacman();
+        drawPacmanArrow();
+    }
 }
 
 void drawMaze()

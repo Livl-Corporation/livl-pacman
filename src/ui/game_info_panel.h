@@ -18,6 +18,10 @@
 #define NUMBER_SPRITES_SPACING 8
 #define NUMBER_UI_SPACING 13;
 
+#define GAME_OVER_W 78
+#define GAME_OVER_H 7
+#define GAME_OVER_UI_SCALE 2
+
 void initGameInfoPanel();
 
 void drawGameInfoPanel();
@@ -31,6 +35,8 @@ void drawEatGhostScore(int eatenGhostCount, SDL_Rect imgUi);
 void drawLives();
 
 void drawUp();
+
+void drawGameOver();
 
 int getNumDigits(int score);
 

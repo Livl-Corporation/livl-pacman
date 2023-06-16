@@ -74,6 +74,9 @@ void spawnGhost(int ghostId)
 
 void drawGhosts()
 {
+    // Don't draw ghosts during delay after Pacman death animation
+    if(pacmanDeathAnimationTimer.isRunning || (pacmanDeathAnimationTimer.isFinished && pacmanDeathAnimationDelayTimer.isRunning)) return;
+
     for (int i = 0; i < GHOST_COUNT; i++)
     {
         if (canBlitGhostInPausedGame(i))

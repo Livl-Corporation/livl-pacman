@@ -3,7 +3,6 @@
 SDL_Window *pWindow = NULL;
 SDL_Surface *pSurfaceWindow = NULL;
 SDL_Surface *pSurfacePacmanSpriteSheet = NULL;
-SDL_Surface *pSurfacePlayButton = NULL;
 
 void initSDL()
 {
@@ -37,7 +36,6 @@ void closeWindow()
 {
     ConsoleHandlerDisplayMessage("Freeing SDL Surfaces and Window.");
     SDL_FreeSurface(pSurfacePacmanSpriteSheet);
-    SDL_FreeSurface(pSurfacePlayButton);
     SDL_FreeSurface(pSurfaceWindow);
     SDL_DestroyWindow(pWindow);
     SDL_Quit();

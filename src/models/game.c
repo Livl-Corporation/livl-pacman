@@ -50,13 +50,18 @@ void decrementLives()
     lives--;
 }
 
+void afterGameOverAnimation()
+{
+    // TODO: #53 go back to main menu
+}
+
 void initTimers()
 {
     initTimer(&eatableGhostTimer, EATABLE_GHOST_DURATION);
 
     initTimer(&readyTimer, READY_DURATION);
 
-    // TODO : initTimer(gameOverTimer, GAME_OVER_DURATION);
+    initTimer(&gameOverTimer, GAME_OVER_DURATION);
 
     initTimer(&eatGhostAnimationTimer, SCORE_GHOST_EATEN_DURATION);
 
