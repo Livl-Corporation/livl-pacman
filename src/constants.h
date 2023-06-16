@@ -55,4 +55,7 @@
 #define BIG_COIN_RATE 50 < 30
 #define TEXT_UP_RATE 125 < 75
 
+#define FRUIT_SPAWN_1 70
+#define FRUIT_SPAWN_2 170
+
 #endif // PACMAN_CONSTANTS_H

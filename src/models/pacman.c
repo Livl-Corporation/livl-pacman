@@ -60,7 +60,7 @@ void spawnPacman()
     pacmanSpawnPos = getInitialPositionOfElement(PACMAN);
 
     pacmanGridPos = pacmanSpawnPos;
-    pacmanUIPos = getGridPosToUiPos(pacmanGridPos);
+    pacmanUIPos = gridPosToUiPos(pacmanGridPos);
 
     pacmanDirection = defaultDirection;
     pacmanWishedDirection = defaultDirection;
@@ -138,7 +138,7 @@ void drawPacman()
     }
 
     // Get target pacman position in grid
-    struct Position newPacmanGridPos = getUiPosToGridPos(getCellCenter(pacmanPosCopy));
+    struct Position newPacmanGridPos = uiPosToGridPos(getCellCenter(pacmanPosCopy));
 
     if (!arePositionEquals(pacmanGridPos, newPacmanGridPos))
     {
@@ -199,12 +199,14 @@ struct Position onPacmanGridMove(struct Position *pacmanUiPos)
         return teleportPacman(LEFT_TELEPORTER);
     case SMALL_COIN:
         incrementScore(10);
-            setMazeElementAt(pacmanGridPos, EMPTY);
+        setMazeElementAt(pacmanGridPos, EMPTY);
+        handleCoinCollision();
         break;
     case BIG_COIN:
         incrementScore(50);
         makeGhostsEatable();
-            setMazeElementAt(pacmanGridPos, EMPTY);
+        setMazeElementAt(pacmanGridPos, EMPTY);
+        handleCoinCollision();
         break;
     case RED_GHOST:
         handleGhostCollision(RED_GHOST);
@@ -240,7 +242,7 @@ bool isScoreAnimationOnGhostEaten()
 struct Position teleportPacman(MazeElement teleporter)
 {
     pacmanGridPos = getInitialPositionOfElement(teleporter);
-    return getGridPosToUiPos(pacmanGridPos);
+    return gridPosToUiPos(pacmanGridPos);
 }
 
 struct SDL_Rect getArrow(Direction direction)
@@ -333,5 +335,22 @@ void afterPacmanDeath() {
     spawnPacman();
     spawnGhosts();
     startReady();
+
+}
+
+void handleCoinCollision() {
+
+    incrementEatenDotsCount();
+
+    int eatenDotsCount = getEatenDotsCount();
+
+    if (eatenDotsCount == getInitialDotsCount()) {
+        nextRound();
+        refillCoins();
+    }
+
+    if (eatenDotsCount == FRUIT_SPAWN_1 || eatenDotsCount == FRUIT_SPAWN_2) {
+        // TODO : spawnFruit();
+    }
 
 }

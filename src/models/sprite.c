@@ -7,7 +7,7 @@
 void moveSprintInDirection(struct Sprite *sprite)
 {
     updatePosition(&sprite->uiPosition, sprite->direction, SPRITE_SPEED);
-    sprite->gridPosition = getUiPosToGridPos(getCellCenter(sprite->uiPosition));
+    sprite->gridPosition = uiPosToGridPos(getCellCenter(sprite->uiPosition));
 }
 
 struct Position getCellCenter(struct Position position)

@@ -69,7 +69,7 @@ void spawnGhost(int ghostId)
     ghostList[ghostId].lastRect = ghostList[ghostId].rects[0];
     ghostList[ghostId].gridPosition = getInitialPositionOfElement(ghostList[ghostId].ghostElement);
     setMazeElementAt(ghostList[ghostId].gridPosition, ghostList[ghostId].ghostElement);
-    ghostList[ghostId].uiPosition = getGridPosToUiPos(ghostList[ghostId].gridPosition);
+    ghostList[ghostId].uiPosition = gridPosToUiPos(ghostList[ghostId].gridPosition);
 }
 
 void drawGhosts()

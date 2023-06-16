@@ -2,7 +2,7 @@
 
 int frameCount = 0;
 
-bool pGameQuit = false, isGamePause = false, isPauseMenuOpen = false, isReadyDisplayed = false;
+bool pGameQuit = false, isGamePause = false, isPauseMenuOpen = false;
 
 SDL_Rect imgMazeOnSprite = {201, 4, 166, 214};
 SDL_Rect imgMazeOnUi = {0, HEADER_SCREEN_HEIGHT, TOTAL_SCREEN_WIDTH, MAZE_SCREEN_HEIGHT};
@@ -20,7 +20,9 @@ void startGame()
 
     initPacmanSprites();
 
-    initTimers();
+    initGame();
+    int dotsCount = getInitialElementAmount(BIG_COIN) + getInitialElementAmount(SMALL_COIN);
+    setInitialDotsCount(dotsCount);
 
     spawnPacman();
     spawnGhosts();
@@ -46,10 +48,11 @@ void startGame()
             drawHeader();
             drawGame();
             handleGameEvents();
-        }
 
-        if (isReadyDisplayed) {
-            drawReady();
+            if (readyTimer.isRunning) {
+                drawReady();
+            }
+
         }
 
         SDL_UpdateWindowSurface(pWindow);
@@ -66,7 +69,6 @@ void startGame()
 
 void endReady() {
     isGamePause = false;
-    isReadyDisplayed = false;
 }
 
 void handleGameEvents()
@@ -96,14 +98,13 @@ void handleGameEvents()
 void startReady()
 {
     isGamePause = true;
-    isReadyDisplayed = true;
     readyTimer.callback = endReady;
     resetTimer(&readyTimer);
     startTimer(&readyTimer);
 }
 
 void drawReady() {
-    struct Position position = getGridPosToUiPos((struct Position){8, 15});
+    struct Position position = gridPosToUiPos((struct Position) {8, 15});
     SDL_Rect imgReadyOnUi = {position.x, position.y, READY_W * READY_UI_SCALE, READY_H * READY_UI_SCALE};
     SDL_SetColorKey(pSurfacePacmanSpriteSheet, false, 0);
     SDL_BlitScaled(pSurfacePacmanSpriteSheet, &imgReadyOnSprite, pSurfaceWindow, &imgReadyOnUi);

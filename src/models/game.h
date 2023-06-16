@@ -17,6 +17,8 @@ extern struct Timer pacmanDeathAnimationDelayTimer;
 
 void initTimers();
 
+void initGame();
+
 int getScore();
 
 int getHighScore();
@@ -30,5 +32,14 @@ void afterGameOverAnimation();
 int getLives();
 
 void decrementLives();
+
+int getRound();
+void nextRound();
+
+int getEatenDotsCount();
+void incrementEatenDotsCount();
+
+int getInitialDotsCount();
+void setInitialDotsCount(int value);
 
 #endif // PACMAN_GAME_H

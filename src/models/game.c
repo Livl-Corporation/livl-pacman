@@ -8,6 +8,10 @@ int score = 0;
 int high_score = 0;
 int lives = INITIAL_LIVES;
 
+int roundNumber = 0;
+int dotsCount = 0;
+int eatenDotsCount = 0;
+
 struct Timer eatableGhostTimer;
 struct Timer readyTimer;
 struct Timer gameOverTimer;
@@ -69,3 +73,33 @@ void initTimers()
 
     initTimer(&pacmanDeathAnimationDelayTimer, PACMAN_DEATH_ANIMATION_DELAY);
 }
+
+void initGame() {
+    score = 0;
+    lives = INITIAL_LIVES;
+    roundNumber = 0;
+    eatenDotsCount = 0;
+    initTimers();
+}
+
+int getRound() {
+    return roundNumber;
+}
+void nextRound(){
+    roundNumber++;
+}
+
+int getEatenDotsCount() {
+    return eatenDotsCount;
+}
+void incrementEatenDotsCount() {
+    eatenDotsCount++;
+}
+
+int getInitialDotsCount() {
+    return dotsCount;
+}
+void setInitialDotsCount(int value) {
+    dotsCount = value;
+}
+
