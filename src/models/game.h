@@ -13,6 +13,7 @@ extern struct Timer readyTimer;
 extern struct Timer gameOverTimer;
 extern struct Timer eatGhostAnimationTimer;
 extern struct Timer pacmanDeathAnimationTimer;
+extern struct Timer pacmanDeathAnimationDelayTimer;
 
 void initTimers();
 

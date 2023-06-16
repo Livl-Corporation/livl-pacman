@@ -13,6 +13,7 @@ struct Timer readyTimer;
 struct Timer gameOverTimer;
 struct Timer eatGhostAnimationTimer;
 struct Timer pacmanDeathAnimationTimer;
+struct Timer pacmanDeathAnimationDelayTimer;
 
 int getScore()
 {
@@ -60,4 +61,6 @@ void initTimers()
     initTimer(&eatGhostAnimationTimer, SCORE_GHOST_EATEN_DURATION);
 
     initTimer(&pacmanDeathAnimationTimer, PACMAN_DEATH_ANIMATION_DURATION);
+
+    initTimer(&pacmanDeathAnimationDelayTimer, PACMAN_DEATH_ANIMATION_DELAY);
 }

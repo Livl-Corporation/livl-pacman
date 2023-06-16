@@ -68,6 +68,8 @@ struct Position teleportPacman(MazeElement teleporter);
 
 void startPacmanDeathAnimation();
 
+void endPacmanDeathDelay();
+
 void endPacmanDeathAnimation();
 
 #endif // PACMAN_PACMAN_H
