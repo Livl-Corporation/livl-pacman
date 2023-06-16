@@ -67,7 +67,7 @@ void handleMainMenuEvents()
         case SDL_MOUSEBUTTONUP:
             if (isPlayButtonHovered)
             {
-                startGameLoop();
+                startGame();
                 pMainMenuQuit = true;
             }
             break;

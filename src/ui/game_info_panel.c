@@ -18,38 +18,10 @@ SDL_Rect imgScoreUi = {68, 35, 20, 18};
 SDL_Rect imgNumbersEatGhostSprite[GHOST_COUNT];
 SDL_Rect imgEatGhostTextSprite = {154, 176, GHOST_SCORE_W, GHOST_SCORE_H};
 
-bool isOneUpVisible = true;
-
 void initGameInfoPanel()
 {
-    initImgNumbersOnSprite();
-    initImgNumbersEatGhostSprite();
-}
-
-void initImgNumbersOnSprite()
-{
-    for (int i = 0; i < 10; i++)
-    {
-        imgNumbersSprite[i].x = imgNumberSprite.x;
-        imgNumbersSprite[i].y = imgNumberSprite.y;
-        imgNumbersSprite[i].h = imgNumberSprite.h;
-        imgNumbersSprite[i].w = imgNumberSprite.w;
-
-        imgNumberSprite.x += NUMBER_SPRITES_SPACING;
-    }
-}
-
-void initImgNumbersEatGhostSprite()
-{
-    for (int i = 0; i < GHOST_COUNT; i++)
-    {
-        imgNumbersEatGhostSprite[i].x = imgEatGhostTextSprite.x;
-        imgNumbersEatGhostSprite[i].y = imgEatGhostTextSprite.y;
-        imgNumbersEatGhostSprite[i].h = imgEatGhostTextSprite.h;
-        imgNumbersEatGhostSprite[i].w = imgEatGhostTextSprite.w;
-
-        imgEatGhostTextSprite.y += GHOST_SCORES_SPACING;
-    }
+    exportSprites(&imgNumberSprite, imgNumbersSprite, 10, NUMBER_SPRITES_SPACING, 0);
+    exportSprites(&imgEatGhostTextSprite, imgNumbersEatGhostSprite, GHOST_COUNT, 0, GHOST_SCORES_SPACING);
 }
 
 void drawGameInfoPanel()
@@ -62,9 +34,7 @@ void drawGameInfoPanel()
 
     if (isScoreAnimationOnGhostEaten())
     {
-        decreaseScoreAnimationOnGhostEaten();
         drawEatGhostScore(
-            getEatenGhostScore(ghostEaten),
             ghostEaten,
             (SDL_Rect){
                 pacmanUIPos.x - GHOST_SCORE_W,
@@ -101,9 +71,9 @@ void drawScore(int score, SDL_Rect imgUi)
     }
 }
 
-void drawEatGhostScore(int score, int ghostEaten, SDL_Rect imgUi)
+void drawEatGhostScore(int eatenGhostCount, SDL_Rect imgUi)
 {
-    int scoreSpriteIndex = fmin(ghostEaten, SCORE_GHOST_MAX_COMBO) - 1;
+    int scoreSpriteIndex = fmin(eatenGhostCount, SCORE_GHOST_MAX_COMBO) - 1;
     SDL_Rect rectScoreToDisplay = imgNumbersEatGhostSprite[scoreSpriteIndex];
     SDL_BlitScaled(pSurfacePacmanSpriteSheet, &rectScoreToDisplay, pSurfaceWindow, &imgUi);
 }

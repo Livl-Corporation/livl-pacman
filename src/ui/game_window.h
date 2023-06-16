@@ -14,6 +14,7 @@
 #include "models/pacman.h"
 #include "models/position.h"
 #include "models/ghost.h"
+#include "models/game.h"
 #include "ui/game_info_panel.h"
 #include "ui/menu_window.h"
 #include "ui/pause_menu.h"
@@ -22,13 +23,18 @@
 #define READY_H 7
 #define READY_UI_SCALE 3
 
+#define DELAY_MS 1.0 / GAME_SPEED * 1000
+
 extern int frameCount;
 extern bool isGamePause;
 extern SDL_Rect imgMazeOnSprite;
 extern SDL_Rect imgMazeOnUi;
 
-void startGameLoop();
-void startReadyLoop();
+void startGame();
+
+void endReady();
+
+void startReady();
 void delayToMaintainFrameRate(clock_t before, Uint32 desiredDelayInMs);
 
 void handleGameEvents();
@@ -36,7 +42,7 @@ void handleGameEvents();
 void drawGame();
 void drawMaze();
 void drawHeader();
-void drawReadyImg();
+void drawReady();
 
 void setPause(int isPaused);
 
