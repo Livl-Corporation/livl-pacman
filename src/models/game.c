@@ -54,7 +54,7 @@ void initTimers()
 {
     initTimer(&eatableGhostTimer, EATABLE_GHOST_DURATION);
 
-    initTimer(&readyTimer, TIME_START_GAME_READY);
+    initTimer(&readyTimer, READY_DURATION);
 
     // TODO : initTimer(gameOverTimer, GAME_OVER_DURATION);
 
