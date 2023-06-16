@@ -40,7 +40,7 @@ void freeMaze();
  * @param position the position to set as one of the maze element enum
  * @param element the element to set at the position
  */
-void setElementAtPositionOnMazeAs(struct Position position, MazeElement element);
+void setMazeElementAt(struct Position position, MazeElement element);
 
 /**
  * Display maze in console

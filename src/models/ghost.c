@@ -39,10 +39,6 @@ void initGhostList()
             DIRECTION_COUNT,
             2 * (GHOST_SIZE + GHOST_SPACING_X),
             0);
-
-        ghostList[i].lastRect = ghostList[i].rects[0];
-
-        spawnGhost(i);
     }
 
     eatableGhostRect = (SDL_Rect){
@@ -50,6 +46,13 @@ void initGhostList()
         GHOST_INITIAL_POS_Y + 4 * (GHOST_SIZE + GHOST_SPACING_Y),
         GHOST_SIZE,
         GHOST_SIZE};
+}
+
+void spawnGhosts() {
+    for (int i = 0; i < GHOST_COUNT; i++)
+    {
+        spawnGhost(i);
+    }
 }
 
 void freeGhostList()
@@ -63,7 +66,9 @@ void freeGhostList()
 
 void spawnGhost(int ghostId)
 {
+    ghostList[ghostId].lastRect = ghostList[ghostId].rects[0];
     ghostList[ghostId].gridPosition = getInitialPositionOfElement(ghostList[ghostId].ghostElement);
+    setMazeElementAt(ghostList[ghostId].gridPosition, ghostList[ghostId].ghostElement);
     ghostList[ghostId].uiPosition = getGridPosToUiPos(ghostList[ghostId].gridPosition);
 }
 

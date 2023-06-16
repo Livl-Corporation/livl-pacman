@@ -23,6 +23,7 @@ void startGame()
     initTimers();
 
     spawnPacman();
+    spawnGhosts();
 
     initGameInfoPanel();
 
@@ -97,6 +98,7 @@ void startReady()
     isGamePause = true;
     isReadyDisplayed = true;
     readyTimer.callback = endReady;
+    resetTimer(&readyTimer);
     startTimer(&readyTimer);
 }
 

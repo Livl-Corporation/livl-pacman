@@ -199,12 +199,12 @@ struct Position onPacmanGridMove(struct Position *pacmanUiPos)
         return teleportPacman(LEFT_TELEPORTER);
     case SMALL_COIN:
         incrementScore(10);
-        setElementAtPositionOnMazeAs(pacmanGridPos, PACMAN);
+            setMazeElementAt(pacmanGridPos, EMPTY);
         break;
     case BIG_COIN:
         incrementScore(50);
         makeGhostsEatable();
-        setElementAtPositionOnMazeAs(pacmanGridPos, PACMAN);
+            setMazeElementAt(pacmanGridPos, EMPTY);
         break;
     case RED_GHOST:
         handleGhostCollision(RED_GHOST);
@@ -219,7 +219,6 @@ struct Position onPacmanGridMove(struct Position *pacmanUiPos)
         handleGhostCollision(ORANGE_GHOST);
         break;
     default:
-        setElementAtPositionOnMazeAs(pacmanGridPos, PACMAN);
         break;
     }
 
@@ -278,7 +277,7 @@ void killPacman()
 void pacmanEatGhost(MazeElement ghostElement)
 {
     removeMazeElement(ghostElement);
-    setElementAtPositionOnMazeAs(pacmanGridPos, PACMAN);
+    setMazeElementAt(pacmanGridPos, PACMAN);
     ghostEaten++;
 
     incrementScore(getEatenGhostScore(ghostEaten));
@@ -329,10 +328,8 @@ void afterPacmanDeath() {
         return;
     }
 
-    // TODO : teleport timer
-
-    // TODO : reset maze
-
-    // TODO : show ready state
+    spawnPacman();
+    spawnGhosts();
+    startReady();
 
 }

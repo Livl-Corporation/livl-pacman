@@ -94,7 +94,7 @@ void removeMazeElement(MazeElement elementToRemove)
     }
 }
 
-void setElementAtPositionOnMazeAs(struct Position position, MazeElement element)
+void setMazeElementAt(struct Position position, MazeElement element)
 {
     if (!isInBounds(position))
         return;

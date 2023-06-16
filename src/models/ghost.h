@@ -27,6 +27,8 @@ extern MazeElement ghostElementEaten;
  */
 void initGhostList();
 
+void spawnGhosts();
+
 /**
  * Place a ghost on his spawn point
  * @param ghostId
