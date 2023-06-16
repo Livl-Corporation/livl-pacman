@@ -7,7 +7,6 @@
 
 #include "constants.h"
 #include "timer.h"
-#include "game.h"
 
 extern struct Timer eatableGhostTimer;
 extern struct Timer readyTimer;
