@@ -64,7 +64,6 @@ void drawGameInfoPanel()
     {
         decreaseScoreAnimationOnGhostEaten();
         drawEatGhostScore(
-            ghostEaten,
             (SDL_Rect){
                 pacmanUIPos.x - GHOST_SCORE_W,
                 pacmanUIPos.y + GHOST_SCORE_H,
