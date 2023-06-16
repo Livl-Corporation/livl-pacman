@@ -25,6 +25,8 @@ void incrementScore(int value);
 
 void decrementScore(int value);
 
+void afterGameOverAnimation();
+
 int getLives();
 
 void decrementLives();

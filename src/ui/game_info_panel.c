@@ -18,6 +18,9 @@ SDL_Rect imgScoreUi = {68, 35, 20, 18};
 SDL_Rect imgNumbersEatGhostSprite[GHOST_COUNT];
 SDL_Rect imgEatGhostTextSprite = {154, 176, GHOST_SCORE_W, GHOST_SCORE_H};
 
+SDL_Rect imgGameOverUi = {185, 458, GAME_OVER_W * GAME_OVER_UI_SCALE, GAME_OVER_H*GAME_OVER_UI_SCALE};
+SDL_Rect imgGameOverSprite = {4, 54, GAME_OVER_W, GAME_OVER_H};
+
 void initGameInfoPanel()
 {
     exportSprites(&imgNumberSprite, imgNumbersSprite, 10, NUMBER_SPRITES_SPACING, 0);
@@ -43,6 +46,9 @@ void drawGameInfoPanel()
                 GHOST_SCORE_H * GHOST_SCORE_UI_SCALE,
             });
     }
+
+    if(gameOverTimer.isRunning)
+        drawGameOver();
 }
 
 void drawHighScore()
@@ -95,6 +101,11 @@ void drawUp()
 {
     SDL_Rect imgOneUpUi = {40, 13, 50, 18};
     SDL_BlitScaled(pSurfacePacmanSpriteSheet, &imgOneUpTextSprite, pSurfaceWindow, &imgOneUpUi);
+}
+
+void drawGameOver()
+{
+    SDL_BlitScaled(pSurfacePacmanSpriteSheet, &imgGameOverSprite, pSurfaceWindow, &imgGameOverUi);
 }
 
 int getNumDigits(int score)

@@ -324,7 +324,9 @@ void afterPacmanDeath() {
 
     if (getLives() <= 0)
     {
-        // TODO : Game over
+        gameOverTimer.callback = afterGameOverAnimation;
+        resetTimer(&gameOverTimer);
+        startTimer(&gameOverTimer);
         return;
     }
 
