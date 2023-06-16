@@ -66,4 +66,8 @@ int canMoveInDirection(Direction direction);
 
 struct Position teleportPacman(MazeElement teleporter);
 
+void startPacmanDeathAnimation();
+
+void endPacmanDeathAnimation();
+
 #endif // PACMAN_PACMAN_H

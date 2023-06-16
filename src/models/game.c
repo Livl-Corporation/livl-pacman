@@ -2,7 +2,6 @@
 // Created by Franck GUTMANN on 27/05/2023.
 //
 
-#include <stdio.h>
 #include "game.h"
 
 int score = 0;
