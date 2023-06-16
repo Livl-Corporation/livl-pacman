@@ -85,16 +85,16 @@ void handlePacmanEvents()
 
 void drawPacman()
 {
+    // Don't draw Pacman if he is dead and the death animation is finished
+    if(pacmanDeathAnimationTimer.isFinished && pacmanDeathAnimationDelayTimer.isRunning) return;
+
     if (isGamePause)
     {
 
         if (pacmanDeathAnimationTimer.isRunning) {
 
             int pacmanDeathAnimationIndex = (1 - ((float)pacmanDeathAnimationTimer.count / (float)pacmanDeathAnimationTimer.initialCount)) * PACMAN_DEATH_ANIMATION_FRAMES;
-
-            lastPacmanDirection = pacmanDeathAnimation[pacmanDeathAnimationIndex];
-            pacmanBlit(lastPacmanDirection);
-
+            pacmanBlit(pacmanDeathAnimation[pacmanDeathAnimationIndex]);
             return;
         }
 
