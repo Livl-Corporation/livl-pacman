@@ -220,6 +220,8 @@ struct Position onPacmanGridMove(struct Position *pacmanUiPos)
     case ORANGE_GHOST:
         handleGhostCollision(ORANGE_GHOST);
         break;
+    case FRUIT:
+        handleFruitCollision();
     default:
         break;
     }
@@ -332,6 +334,7 @@ void afterPacmanDeath() {
         return;
     }
 
+    resetFruit();
     spawnPacman();
     spawnGhosts();
     startReady();
@@ -347,10 +350,11 @@ void handleCoinCollision() {
     if (eatenDotsCount == getInitialDotsCount()) {
         nextRound();
         refillCoins();
+        resetEatenDotsCount();
     }
 
     if (eatenDotsCount == FRUIT_SPAWN_1 || eatenDotsCount == FRUIT_SPAWN_2) {
-        // TODO : spawnFruit();
+        spawnFruit();
     }
 
 }

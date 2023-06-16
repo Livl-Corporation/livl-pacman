@@ -21,6 +21,7 @@ typedef enum
     DOOR = 'd',
     LEFT_TELEPORTER = 'l',
     RIGHT_TELEPORTER = 'r',
+    FRUIT = 'f'
 } MazeElement;
 
 #endif //PACMAN_MAZE_ELEMENT_H
