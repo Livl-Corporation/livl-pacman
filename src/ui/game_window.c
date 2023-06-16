@@ -15,19 +15,18 @@ SDL_Rect imgReadyOnSprite = {4, 63, READY_W, READY_H};
 void startGame()
 {
     initMaze();
-
     initGhostList();
-
     initPacmanSprites();
-
+    initGameInfoPanel();
     initGame();
+    initFruits();
+
     int dotsCount = getInitialElementAmount(BIG_COIN) + getInitialElementAmount(SMALL_COIN);
     setInitialDotsCount(dotsCount);
 
     spawnPacman();
     spawnGhosts();
 
-    initGameInfoPanel();
 
     startReady();
 
@@ -115,6 +114,7 @@ void drawGame()
     drawMaze();
     drawCoins(frameCount);
     drawGameInfoPanel();
+    drawFruit();
 
     if(!gameOverTimer.isRunning) {
         drawGhosts();

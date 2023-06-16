@@ -8,7 +8,7 @@ int score = 0;
 int high_score = 0;
 int lives = INITIAL_LIVES;
 
-int roundNumber = 0;
+int roundNumber = 1;
 int dotsCount = 0;
 int eatenDotsCount = 0;
 
@@ -18,6 +18,8 @@ struct Timer gameOverTimer;
 struct Timer eatGhostAnimationTimer;
 struct Timer pacmanDeathAnimationTimer;
 struct Timer pacmanDeathAnimationDelayTimer;
+struct Timer fruitTimer;
+struct Timer fruitScoreAnimationTimer;
 
 int getScore()
 {
@@ -72,12 +74,17 @@ void initTimers()
     initTimer(&pacmanDeathAnimationTimer, PACMAN_DEATH_ANIMATION_DURATION);
 
     initTimer(&pacmanDeathAnimationDelayTimer, PACMAN_DEATH_ANIMATION_DELAY);
+
+    initTimer(&fruitTimer, FRUIT_APPEAR_DURATION);
+
+    initTimer(&fruitScoreAnimationTimer, FRUIT_SCORE_DISPLAY_DURATION);
+
 }
 
 void initGame() {
     score = 0;
     lives = INITIAL_LIVES;
-    roundNumber = 0;
+    roundNumber = 1;
     eatenDotsCount = 0;
     initTimers();
 }
@@ -92,8 +99,13 @@ void nextRound(){
 int getEatenDotsCount() {
     return eatenDotsCount;
 }
+
 void incrementEatenDotsCount() {
     eatenDotsCount++;
+}
+
+void resetEatenDotsCount() {
+    eatenDotsCount = 0;
 }
 
 int getInitialDotsCount() {

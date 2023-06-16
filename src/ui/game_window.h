@@ -18,6 +18,7 @@
 #include "ui/game_info_panel.h"
 #include "ui/menu_window.h"
 #include "ui/pause_menu.h"
+#include "models/fruit.h"
 
 #define READY_W 46
 #define READY_H 7
