@@ -40,18 +40,19 @@ void updateTimers()
     {
         struct Timer *timer = timers[i];
 
-        if (timer->isRunning)
+        if (!timer->isRunning)
+            continue;
+
+        timer->count--;
+
+        if (timer->count <= 0)
         {
-            timer->count--;
+            timer->isFinished = true;
+            timer->isRunning = false;
 
-            if (timer->count <= 0)
-            {
-                timer->isFinished = true;
-                timer->isRunning = false;
-
-                if (timer->callback != NULL)
-                    timer->callback();
-            }
+            if (timer->callback != NULL)
+                timer->callback();
         }
+
     }
 }
