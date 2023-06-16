@@ -72,4 +72,6 @@ void endPacmanDeathDelay();
 
 void endPacmanDeathAnimation();
 
+void afterPacmanDeath();
+
 #endif // PACMAN_PACMAN_H

@@ -98,9 +98,10 @@ void drawPacman()
             return;
         }
 
-        if (!isScoreAnimationOnGhostEaten())
-            pacmanBlit(lastPacmanDirection);
+        if (isScoreAnimationOnGhostEaten())
+            return;
 
+        pacmanBlit(lastPacmanDirection);
         return;
     }
 
@@ -292,8 +293,12 @@ void pacmanEatGhost(MazeElement ghostElement)
 }
 
 void startPacmanDeathAnimation() {
+
     pacmanDeathAnimationDelayTimer.callback = endPacmanDeathDelay;
+    pacmanDeathAnimationTimer.callback = endPacmanDeathAnimation;
+
     isGamePause = true;
+
     resetTimer(&pacmanDeathAnimationTimer);
     resetTimer(&pacmanDeathAnimationDelayTimer);
     startTimer(&pacmanDeathAnimationDelayTimer);
@@ -302,32 +307,32 @@ void startPacmanDeathAnimation() {
 void endPacmanDeathDelay() {
     if (pacmanDeathAnimationTimer.isFinished) {
         // After animation delay end
-
-        isGamePause = false;
-
-        if (getLives() <= 0)
-        {
-            // TODO : Game over
-            return;
-        }
-
-        // TODO : teleport timer
-
-        // TODO : reset maze
-
-        // TODO : show ready state
-
+        afterPacmanDeath();
 
     } else {
         // Before animation delay end
-
-        pacmanDeathAnimationTimer.callback = endPacmanDeathAnimation;
         startTimer(&pacmanDeathAnimationTimer);
-
     }
 }
 
 void endPacmanDeathAnimation() {
     resetTimer(&pacmanDeathAnimationDelayTimer);
     startTimer(&pacmanDeathAnimationDelayTimer);
+}
+
+void afterPacmanDeath() {
+    isGamePause = false;
+
+    if (getLives() <= 0)
+    {
+        // TODO : Game over
+        return;
+    }
+
+    // TODO : teleport timer
+
+    // TODO : reset maze
+
+    // TODO : show ready state
+
 }
