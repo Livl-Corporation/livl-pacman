@@ -60,7 +60,7 @@ void spawnPacman()
     pacmanSpawnPos = getInitialPositionOfElement(PACMAN);
 
     pacmanGridPos = pacmanSpawnPos;
-    pacmanUIPos = getGridPosToUiPos(pacmanGridPos);
+    pacmanUIPos = gridPosToUiPos(pacmanGridPos);
 
     pacmanDirection = defaultDirection;
     pacmanWishedDirection = defaultDirection;
@@ -138,7 +138,7 @@ void drawPacman()
     }
 
     // Get target pacman position in grid
-    struct Position newPacmanGridPos = getUiPosToGridPos(getCellCenter(pacmanPosCopy));
+    struct Position newPacmanGridPos = uiPosToGridPos(getCellCenter(pacmanPosCopy));
 
     if (!arePositionEquals(pacmanGridPos, newPacmanGridPos))
     {
@@ -242,7 +242,7 @@ bool isScoreAnimationOnGhostEaten()
 struct Position teleportPacman(MazeElement teleporter)
 {
     pacmanGridPos = getInitialPositionOfElement(teleporter);
-    return getGridPosToUiPos(pacmanGridPos);
+    return gridPosToUiPos(pacmanGridPos);
 }
 
 struct SDL_Rect getArrow(Direction direction)

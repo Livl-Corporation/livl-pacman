@@ -81,10 +81,10 @@ bool isInBounds(struct Position position);
 
 /**
  * Convert a position in pixels to a position in the grid
- * @param uiPos
+ * @param posInPx
  * @return Position
  */
-struct Position getUiPosToGridPos(struct Position uiPos);
+struct Position uiPosToGridPos(struct Position posInPx);
 
 /**
  * Fill the maze with coins
@@ -121,7 +121,7 @@ bool hasCollision(struct Position position, int hitboxSize);
  * @param gridPos
  * @return Position
  */
-struct Position getGridPosToUiPos(struct Position gridPos);
+struct Position gridPosToUiPos(struct Position gridPos);
 
 // Private
 

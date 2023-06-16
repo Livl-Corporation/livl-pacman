@@ -104,7 +104,7 @@ void startReady()
 }
 
 void drawReady() {
-    struct Position position = getGridPosToUiPos((struct Position){8, 15});
+    struct Position position = gridPosToUiPos((struct Position) {8, 15});
     SDL_Rect imgReadyOnUi = {position.x, position.y, READY_W * READY_UI_SCALE, READY_H * READY_UI_SCALE};
     SDL_SetColorKey(pSurfacePacmanSpriteSheet, false, 0);
     SDL_BlitScaled(pSurfacePacmanSpriteSheet, &imgReadyOnSprite, pSurfaceWindow, &imgReadyOnUi);

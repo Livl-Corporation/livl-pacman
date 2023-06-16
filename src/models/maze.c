@@ -62,7 +62,7 @@ void drawCoins(int frameCount)
         for (int j = 0; j < MAP_WIDTH; j++)
         {
             struct Position gridPos = {j, i};
-            struct Position uiPos = getGridPosToUiPos(gridPos);
+            struct Position uiPos = gridPosToUiPos(gridPos);
 
             MazeElement mazeElement = getMazeElementAt(gridPos);
 
@@ -167,10 +167,10 @@ bool hasCollision(struct Position position, int hitboxSize)
     {
         for (int j = 0; j <= hitboxSize; j += hitboxSize)
         {
-            if (isObstacle(getUiPosToGridPos((struct Position){
+            if (isObstacle(uiPosToGridPos((struct Position) {
                     position.x + i,
                     position.y + j,
-                })))
+            })))
                 return true;
         }
     }
@@ -178,7 +178,7 @@ bool hasCollision(struct Position position, int hitboxSize)
     return false;
 }
 
-struct Position getUiPosToGridPos(struct Position posInPx)
+struct Position uiPosToGridPos(struct Position posInPx)
 {
     struct Position position;
 
@@ -191,7 +191,7 @@ struct Position getUiPosToGridPos(struct Position posInPx)
     return position;
 }
 
-struct Position getGridPosToUiPos(struct Position gridPos)
+struct Position gridPosToUiPos(struct Position gridPos)
 {
     struct Position position;
 
