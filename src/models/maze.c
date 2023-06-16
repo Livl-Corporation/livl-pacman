@@ -61,18 +61,20 @@ void drawCoins(int frameCount)
     {
         for (int j = 0; j < MAP_WIDTH; j++)
         {
-            struct Position position = getGridPosToUiPos((struct Position){j, i});
-            MazeElement mazeElement = (unsigned char)gameMaze[i][j];
+            struct Position gridPos = {j, i};
+            struct Position uiPos = getGridPosToUiPos(gridPos);
+
+            MazeElement mazeElement = getMazeElementAt(gridPos);
 
             switch (mazeElement)
             {
             case SMALL_COIN:
-                blitRectWithOffset(imgMazeSmallCoin, position, SMALL_COIN_OFFSET_X, SMALL_COIN_OFFSET_Y, SMALL_COIN_WIDTH, SMALL_COIN_HEIGHT);
+                blitRectWithOffset(imgMazeSmallCoin, uiPos, SMALL_COIN_OFFSET_X, SMALL_COIN_OFFSET_Y, SMALL_COIN_WIDTH, SMALL_COIN_HEIGHT);
                 break;
 
             case BIG_COIN:
                 if (frameCount % BIG_COIN_RATE)
-                    blitRectWithOffset(imgMazeBigCoin, position, BIG_COIN_OFFSET_X, BIG_COIN_OFFSET_Y, BIG_COIN_WIDTH, BIG_COIN_HEIGHT);
+                    blitRectWithOffset(imgMazeBigCoin, uiPos, BIG_COIN_OFFSET_X, BIG_COIN_OFFSET_Y, BIG_COIN_WIDTH, BIG_COIN_HEIGHT);
                 break;
 
             default:
@@ -124,7 +126,15 @@ MazeElement getMazeElementAt(struct Position position)
     if (!isInBounds(position))
         return WALL;
 
-    return get2DArrayElement(gameMaze, position.y, position.x);
+    return gameMaze[position.y][position.x];
+}
+
+MazeElement getInitialMazeElementAt(struct Position position)
+{
+    if (!isInBounds(position))
+        return WALL;
+
+    return initialMaze[position.y][position.x];
 }
 
 struct Position getPositionOfElement(MazeElement element)
@@ -181,12 +191,44 @@ struct Position getUiPosToGridPos(struct Position posInPx)
     return position;
 }
 
-struct Position getGridPosToUiPos(struct Position uiPos)
+struct Position getGridPosToUiPos(struct Position gridPos)
 {
     struct Position position;
 
-    position.x = uiPos.x * CELL_SIZE;
-    position.y = uiPos.y * CELL_SIZE + HEADER_SCREEN_HEIGHT;
+    position.x = gridPos.x * CELL_SIZE;
+    position.y = gridPos.y * CELL_SIZE + HEADER_SCREEN_HEIGHT;
 
     return position;
+}
+
+int getInitialElementAmount(MazeElement element) {
+    int amount = 0;
+
+    for (int i = 0; i < MAP_HEIGHT; i++)
+    {
+        for (int j = 0; j < MAP_WIDTH; j++)
+        {
+            if (initialMaze[i][j] == element)
+                amount++;
+        }
+    }
+
+    return amount;
+}
+
+void refillCoins() {
+
+    for (int i = 0; i < MAP_HEIGHT; i++)
+    {
+        for (int j = 0; j < MAP_WIDTH; j++)
+        {
+            struct Position position = {j, i};
+            MazeElement element = getInitialMazeElementAt(position);
+
+            if (element == SMALL_COIN || element == BIG_COIN)
+                setMazeElementAt(position, element);
+        }
+
+    }
+
 }

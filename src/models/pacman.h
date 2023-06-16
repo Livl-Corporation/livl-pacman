@@ -74,4 +74,6 @@ void endPacmanDeathAnimation();
 
 void afterPacmanDeath();
 
+void handleCoinCollision();
+
 #endif // PACMAN_PACMAN_H

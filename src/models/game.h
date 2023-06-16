@@ -7,6 +7,7 @@
 
 #include "constants.h"
 #include "timer.h"
+#include "game.h"
 
 extern struct Timer eatableGhostTimer;
 extern struct Timer readyTimer;
@@ -16,6 +17,8 @@ extern struct Timer pacmanDeathAnimationTimer;
 extern struct Timer pacmanDeathAnimationDelayTimer;
 
 void initTimers();
+
+void initGame();
 
 int getScore();
 
@@ -28,5 +31,14 @@ void decrementScore(int value);
 int getLives();
 
 void decrementLives();
+
+int getRound();
+void nextRound();
+
+int getEatenDotsCount();
+void incrementEatenDotsCount();
+
+int getInitialDotsCount();
+void setInitialDotsCount(int value);
 
 #endif // PACMAN_GAME_H

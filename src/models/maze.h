@@ -55,6 +55,8 @@ void displayMaze();
  */
 MazeElement getMazeElementAt(struct Position position);
 
+MazeElement getInitialMazeElementAt(struct Position position);
+
 /**
  * Find the position of a specific maze element in the current game maze
  * @param element
@@ -68,6 +70,7 @@ struct Position getMazePositionOfElement(MazeElement element);
  * @return Position
  */
 struct Position getInitialPositionOfElement(MazeElement element);
+
 
 /**
  * Check if a position is in the maze bounds
@@ -115,10 +118,10 @@ bool hasCollision(struct Position position, int hitboxSize);
 
 /**
  * Convert a position in the grid to a position in pixels
- * @param uiPos
+ * @param gridPos
  * @return Position
  */
-struct Position getGridPosToUiPos(struct Position uiPos);
+struct Position getGridPosToUiPos(struct Position gridPos);
 
 // Private
 
@@ -134,5 +137,9 @@ bool retrieveMazeFromFile();
 void resetGameMaze();
 
 void removeMazeElement(MazeElement elementToRemove);
+
+int getInitialElementAmount(MazeElement element);
+
+void refillCoins();
 
 #endif // PACMAN_MAZE_H
