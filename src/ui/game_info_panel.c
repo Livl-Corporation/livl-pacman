@@ -18,21 +18,9 @@ SDL_Rect imgScoreUi = {68, 35, 20, 18};
 SDL_Rect imgNumbersEatGhostSprite[GHOST_COUNT];
 SDL_Rect imgEatGhostTextSprite = {154, 176, GHOST_SCORE_W, GHOST_SCORE_H};
 
-bool isOneUpVisible = true;
-
 void initGameInfoPanel()
 {
-    initImgNumbersOnSprite();
-    initImgNumbersEatGhostSprite();
-}
-
-void initImgNumbersOnSprite()
-{
     exportSprites(&imgNumberSprite, imgNumbersSprite, 10, NUMBER_SPRITES_SPACING, 0);
-}
-
-void initImgNumbersEatGhostSprite()
-{
     exportSprites(&imgEatGhostTextSprite, imgNumbersEatGhostSprite, GHOST_COUNT, 0, GHOST_SCORES_SPACING);
 }
 
@@ -46,9 +34,7 @@ void drawGameInfoPanel()
 
     if (isScoreAnimationOnGhostEaten())
     {
-        decreaseScoreAnimationOnGhostEaten();
         drawEatGhostScore(
-            getEatenGhostScore(ghostEaten),
             ghostEaten,
             (SDL_Rect){
                 pacmanUIPos.x - GHOST_SCORE_W,
@@ -85,7 +71,7 @@ void drawScore(int score, SDL_Rect imgUi)
     }
 }
 
-void drawEatGhostScore(int score, int ghostEaten, SDL_Rect imgUi)
+void drawEatGhostScore(int ghostEaten, SDL_Rect imgUi)
 {
     int scoreSpriteIndex = fmin(ghostEaten, SCORE_GHOST_MAX_COMBO) - 1;
     SDL_Rect rectScoreToDisplay = imgNumbersEatGhostSprite[scoreSpriteIndex];

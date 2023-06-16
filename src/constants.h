@@ -45,7 +45,7 @@
 
 #define EATABLE_GHOST_DURATION 1000
 
-#define SCORE_GHOST_EATEN_DURATION 200 // when pacman eat a ghost
+#define SCORE_GHOST_EATEN_DURATION 150 // when pacman eat a ghost
 #define SCORE_GHOST_MAX_COMBO 4
 
 #define INITIAL_LIVES 3

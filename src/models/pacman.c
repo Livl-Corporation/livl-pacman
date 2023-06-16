@@ -25,8 +25,6 @@ Direction pacmanWishedDirection;
 int arrowOffset = (PACMAN_SIZE / 2) - (PACMAN_ARROW_SIZE / 2);
 int arrowDisplaySize = PACMAN_ARROW_SIZE * (float)CELL_SIZE / (float)PACMAN_SIZE;
 
-int durationAnimationOnGhostEaten = 0;
-
 void initPacmanSprites()
 {
 
@@ -222,16 +220,9 @@ void pacmanBlit(SDL_Rect srcRect)
     SDL_BlitScaled(pSurfacePacmanSpriteSheet, &srcRect, pSurfaceWindow, &rect);
 }
 
-void decreaseScoreAnimationOnGhostEaten()
-{
-    durationAnimationOnGhostEaten--;
-    if (durationAnimationOnGhostEaten <= 0)
-        isGamePause = false;
-}
-
 bool isScoreAnimationOnGhostEaten()
 {
-    return durationAnimationOnGhostEaten > 0;
+    return eatGhostAnimationTimer.isRunning;
 }
 
 struct Position teleportPacman(MazeElement teleporter)
@@ -245,6 +236,10 @@ struct SDL_Rect getArrow(Direction direction)
     SDL_Rect arrow = arrowSprite;
     arrow.x += direction * arrow.w;
     return arrow;
+}
+
+void endEatGhostAnimation() {
+    isGamePause = false;
 }
 
 void handleGhostCollision(MazeElement ghostElement)
@@ -277,8 +272,13 @@ void pacmanEatGhost(MazeElement ghostElement)
     removeMazeElement(ghostElement);
     setElementAtPositionOnMazeAs(pacmanGridPos, PACMAN);
     ghostEaten++;
+
     incrementScore(getEatenGhostScore(ghostEaten));
-    durationAnimationOnGhostEaten = SCORE_GHOST_EATEN_DURATION;
+
+    eatGhostAnimationTimer.callback = endEatGhostAnimation;
+
+    resetTimer(&eatGhostAnimationTimer);
+    startTimer(&eatGhostAnimationTimer);
 
     isGamePause = true;
     ghostElementEaten = ghostElement;

@@ -38,6 +38,8 @@ void drawPacman();
 
 void drawPacmanArrow();
 
+void endEatGhostAnimation();
+
 /**
  * Perform action when pacman has moved in grid
  * @return pacman position in UI
@@ -45,8 +47,6 @@ void drawPacmanArrow();
 struct Position onPacmanGridMove(struct Position *pacmanUiPos);
 
 struct SDL_Rect getArrow(Direction direction);
-
-void decreaseScoreAnimationOnGhostEaten();
 
 bool isScoreAnimationOnGhostEaten();
 

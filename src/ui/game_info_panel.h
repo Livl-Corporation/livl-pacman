@@ -18,14 +18,6 @@
 #define NUMBER_SPRITES_SPACING 8
 #define NUMBER_UI_SPACING 13;
 
-/**
- * @brief Get the img Numbers On Sprite image from number 0 to 9
- */
-extern SDL_Rect imgNumbersSprite[10];
-
-void initImgNumbersOnSprite();
-void initImgNumbersEatGhostSprite();
-
 void initGameInfoPanel();
 
 void drawGameInfoPanel();
@@ -34,7 +26,7 @@ void drawHighScore();
 
 void drawScore(int score, SDL_Rect imgUi);
 
-void drawEatGhostScore(int score, int ghostEaten, SDL_Rect imgUi);
+void drawEatGhostScore(int ghostEaten, SDL_Rect imgUi);
 
 void drawLives();
 
