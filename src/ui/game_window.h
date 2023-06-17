@@ -33,6 +33,8 @@ extern SDL_Rect imgMazeOnUi;
 
 void startGame();
 
+void resetGameWindow();
+
 void endReady();
 
 void startReady();
