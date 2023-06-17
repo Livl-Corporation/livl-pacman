@@ -15,8 +15,11 @@
 #include "models/game.h"
 #include "models/ghost.h"
 #include "../ui/game_window.h"
+#include "models/fruit.h"
 
 extern struct Position pacmanUIPos;
+
+void initPacmanSprites();
 
 /**
  * Initialize pacman position at his spawn point
@@ -36,6 +39,8 @@ void drawPacman();
 
 void drawPacmanArrow();
 
+void endEatGhostAnimation();
+
 /**
  * Perform action when pacman has moved in grid
  * @return pacman position in UI
@@ -44,20 +49,32 @@ struct Position onPacmanGridMove(struct Position *pacmanUiPos);
 
 struct SDL_Rect getArrow(Direction direction);
 
-void decreaseScoreAnimationOnGhostEaten();
-
 bool isScoreAnimationOnGhostEaten();
 
 /**
  * Do the logic by checking if pacman eat a ghost either a ghost ate the pacman
  * @param ghostElement : the ghost that enters in contact with the pacman
  */
-void handleGhost(MazeElement ghostElement);
+void handleGhostCollision(MazeElement ghostElement);
 
-// -- Private --
+void killPacman();
+
+void pacmanEatGhost(MazeElement ghostElement);
+
 void pacmanBlit(SDL_Rect srcRect);
+
 int canMoveInDirection(Direction direction);
 
 struct Position teleportPacman(MazeElement teleporter);
+
+void startPacmanDeathAnimation();
+
+void endPacmanDeathDelay();
+
+void endPacmanDeathAnimation();
+
+void afterPacmanDeath();
+
+void handleCoinCollision();
 
 #endif // PACMAN_PACMAN_H

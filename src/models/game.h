@@ -6,6 +6,20 @@
 #define PACMAN_GAME_H
 
 #include "constants.h"
+#include "timer.h"
+
+extern struct Timer eatableGhostTimer;
+extern struct Timer readyTimer;
+extern struct Timer gameOverTimer;
+extern struct Timer eatGhostAnimationTimer;
+extern struct Timer pacmanDeathAnimationTimer;
+extern struct Timer pacmanDeathAnimationDelayTimer;
+extern struct Timer fruitTimer;
+extern struct Timer fruitScoreAnimationTimer;
+
+void initTimers();
+
+void initGame();
 
 int getScore();
 
@@ -15,8 +29,20 @@ void incrementScore(int value);
 
 void decrementScore(int value);
 
+void afterGameOverAnimation();
+
 int getLives();
 
 void decrementLives();
+
+int getRound();
+void nextRound();
+
+int getEatenDotsCount();
+void incrementEatenDotsCount();
+void resetEatenDotsCount();
+
+int getInitialDotsCount();
+void setInitialDotsCount(int value);
 
 #endif // PACMAN_GAME_H

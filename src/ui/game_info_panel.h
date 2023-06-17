@@ -8,6 +8,7 @@
 #include "../utilities/console_handler.h"
 #include "models/position.h"
 #include "models/pacman.h"
+#include "utilities/sdl_functions.h"
 
 #define GHOST_SCORE_W 15
 #define GHOST_SCORE_H 7
@@ -17,13 +18,9 @@
 #define NUMBER_SPRITES_SPACING 8
 #define NUMBER_UI_SPACING 13;
 
-/**
- * @brief Get the img Numbers On Sprite image from number 0 to 9
- */
-extern SDL_Rect imgNumbersSprite[10];
-
-void initImgNumbersOnSprite();
-void initImgNumbersEatGhostSprite();
+#define GAME_OVER_W 78
+#define GAME_OVER_H 7
+#define GAME_OVER_UI_SCALE 2
 
 void initGameInfoPanel();
 
@@ -33,11 +30,13 @@ void drawHighScore();
 
 void drawScore(int score, SDL_Rect imgUi);
 
-void drawEatGhostScore(SDL_Rect imgUi);
+void drawEatGhostScore(int eatenGhostCount, SDL_Rect imgUi);
 
 void drawLives();
 
 void drawUp();
+
+void drawGameOver();
 
 int getNumDigits(int score);
 

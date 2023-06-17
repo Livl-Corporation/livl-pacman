@@ -11,6 +11,8 @@
 #include "constants.h"
 #include "maze.h"
 #include "models/sprite.h"
+#include "models/game.h"
+#include "models/timer.h"
 #include "../ui/game_window.h"
 
 extern int ghostEaten;
@@ -24,6 +26,8 @@ extern MazeElement ghostElementEaten;
  * <!> Must be called before any other ghost function
  */
 void initGhostList();
+
+void spawnGhosts();
 
 /**
  * Place a ghost on his spawn point
@@ -47,11 +51,9 @@ void freeGhostList();
  */
 void makeGhostsEatable();
 
-int isGhostEatable();
+bool isGhostEatable();
 
-int isGhostEatableRunningOut();
-
-void decreaseEatableGhostTimer();
+bool isGhostEatableRunningOut();
 
 /**
  * Check if the ghost can be blit in paused game and when a pacman is eaten we only blit all the ghosts except the one who ate the pacman

@@ -1,8 +1,6 @@
 #include "game_window.h"
 
 int frameCount = 0;
-double delayInSec = 1.0 / GAME_SPEED;
-Uint32 delayInMs = 0;
 
 bool pGameQuit = false, isGamePause = false, isPauseMenuOpen = false;
 
@@ -14,18 +12,23 @@ SDL_Rect imgBlackHeaderOnUi = {0, 0, TOTAL_SCREEN_WIDTH, HEADER_SCREEN_HEIGHT};
 
 SDL_Rect imgReadyOnSprite = {4, 63, READY_W, READY_H};
 
-void startGameLoop()
+void startGame()
 {
     initMaze();
-
     initGhostList();
+    initPacmanSprites();
+    initGameInfoPanel();
+    initGame();
+    initFruits();
+
+    int dotsCount = getInitialElementAmount(BIG_COIN) + getInitialElementAmount(SMALL_COIN);
+    setInitialDotsCount(dotsCount);
 
     spawnPacman();
+    spawnGhosts();
 
-    initGameInfoPanel();
 
-    delayInMs = (Uint32)(delayInSec * 1000);
-    startReadyLoop();
+    startReady();
 
     while (!pGameQuit)
     {
@@ -44,14 +47,27 @@ void startGameLoop()
             drawHeader();
             drawGame();
             handleGameEvents();
+
+            if (readyTimer.isRunning) {
+                drawReady();
+            }
+
         }
 
         SDL_UpdateWindowSurface(pWindow);
-        delayToMaintainFrameRate(before, delayInMs);
+
+        updateTimers();
+
+        delayToMaintainFrameRate(before, DELAY_MS);
     }
 
     freeMaze();
     freeGhostList();
+
+}
+
+void endReady() {
+    isGamePause = false;
 }
 
 void handleGameEvents()
@@ -78,39 +94,33 @@ void handleGameEvents()
     handlePacmanEvents();
 }
 
-void startReadyLoop()
+void startReady()
 {
     isGamePause = true;
+    readyTimer.callback = endReady;
+    resetTimer(&readyTimer);
+    startTimer(&readyTimer);
+}
 
-    Uint32 startTime = SDL_GetTicks();
-
-    while (SDL_GetTicks() - startTime < TIME_START_GAME_READY)
-    {
-        clock_t before = clock();
-        frameCount++;
-
-        SDL_FillRect(pSurfaceWindow, 0, 0);
-
-        drawGame();
-        drawReadyImg();
-
-        SDL_UpdateWindowSurface(pWindow);
-
-        delayToMaintainFrameRate(before, delayInMs);
-    }
-
-    isGamePause = false;
+void drawReady() {
+    struct Position position = gridPosToUiPos((struct Position) {8, 15});
+    SDL_Rect imgReadyOnUi = {position.x, position.y, READY_W * READY_UI_SCALE, READY_H * READY_UI_SCALE};
+    SDL_SetColorKey(pSurfacePacmanSpriteSheet, false, 0);
+    SDL_BlitScaled(pSurfacePacmanSpriteSheet, &imgReadyOnSprite, pSurfaceWindow, &imgReadyOnUi);
 }
 
 void drawGame()
 {
     drawMaze();
-    drawGhosts();
-    drawPacman();
-    drawGameInfoPanel();
     drawCoins(frameCount);
-    drawPacmanArrow();
-    decreaseEatableGhostTimer();
+    drawGameInfoPanel();
+    drawFruit();
+
+    if(!gameOverTimer.isRunning) {
+        drawGhosts();
+        drawPacman();
+        drawPacmanArrow();
+    }
 }
 
 void drawMaze()
@@ -118,14 +128,6 @@ void drawMaze()
     // TODO : Move maze display to maze file
     SDL_SetColorKey(pSurfacePacmanSpriteSheet, false, 0);
     SDL_BlitScaled(pSurfacePacmanSpriteSheet, &imgMazeOnSprite, pSurfaceWindow, &imgMazeOnUi);
-}
-
-void drawReadyImg()
-{
-    struct Position position = getGridPosToUiPos((struct Position){8, 15});
-    SDL_Rect imgReadyOnUi = {position.x, position.y, READY_W * READY_UI_SCALE, READY_H * READY_UI_SCALE};
-    SDL_SetColorKey(pSurfacePacmanSpriteSheet, false, 0);
-    SDL_BlitScaled(pSurfacePacmanSpriteSheet, &imgReadyOnSprite, pSurfaceWindow, &imgReadyOnUi);
 }
 
 void drawHeader()

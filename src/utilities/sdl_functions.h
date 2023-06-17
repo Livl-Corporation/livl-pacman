@@ -15,6 +15,8 @@ void SDL_ExitWithError(const char *message);
 
 int isPositionInRect(struct Position position, SDL_Rect *rect);
 
+void exportSprites(SDL_Rect *srcRect, SDL_Rect *destRect, int count, int xStep, int yStep);
+
 /// TO BE REMOVED
 void initSDL();
 void loadMedia();

@@ -6,23 +6,14 @@
 
 struct Sprite *ghostList;
 
-int eatableGhostTimer = 0;
 int ghostEaten = 0;
 MazeElement ghostElementEaten = EMPTY;
 
 SDL_Rect eatableGhostRect;
 
-int isGhostEatable()
-{
-    return eatableGhostTimer > 0;
-}
-
 void initGhostList()
 {
 
-    // TODO : [sprite refactor] use this code also for pacman
-
-    // Malloc ghost list
     ghostList = malloc(sizeof(struct Sprite) * GHOST_COUNT);
 
     for (int i = 0; i < GHOST_COUNT; i++)
@@ -37,26 +28,31 @@ void initGhostList()
         // Sprites :
         ghostList[i].rects = malloc(sizeof(SDL_Rect) * DIRECTION_COUNT);
 
-        for (int j = 0; j < DIRECTION_COUNT; j++)
-        {
-            SDL_Rect rect = {0, 0, 0, 0};
+        SDL_Rect initialGhost = {
+            GHOST_INITIAL_POS_X,
+            GHOST_INITIAL_POS_Y + i * (GHOST_SIZE + GHOST_SPACING_Y),
+            GHOST_SIZE, GHOST_SIZE};
 
-            rect.x = GHOST_INITIAL_POS_X + j * 2 * (GHOST_SIZE + GHOST_SPACING_X);
-            rect.y = GHOST_INITIAL_POS_Y + i * (GHOST_SIZE + GHOST_SPACING_Y);
-            rect.w = GHOST_SIZE;
-            rect.h = GHOST_SIZE;
-
-            ghostList[i].rects[j] = rect;
-            ghostList[i].lastRect = rect;
-        }
-
-        spawnGhost(i);
+        exportSprites(
+            &initialGhost,
+            ghostList[i].rects,
+            DIRECTION_COUNT,
+            2 * (GHOST_SIZE + GHOST_SPACING_X),
+            0);
     }
 
-    eatableGhostRect.x = GHOST_INITIAL_POS_X;
-    eatableGhostRect.y = GHOST_INITIAL_POS_Y + 4 * (GHOST_SIZE + GHOST_SPACING_Y);
-    eatableGhostRect.w = GHOST_SIZE;
-    eatableGhostRect.h = GHOST_SIZE;
+    eatableGhostRect = (SDL_Rect){
+        GHOST_INITIAL_POS_X,
+        GHOST_INITIAL_POS_Y + 4 * (GHOST_SIZE + GHOST_SPACING_Y),
+        GHOST_SIZE,
+        GHOST_SIZE};
+}
+
+void spawnGhosts() {
+    for (int i = 0; i < GHOST_COUNT; i++)
+    {
+        spawnGhost(i);
+    }
 }
 
 void freeGhostList()
@@ -70,12 +66,17 @@ void freeGhostList()
 
 void spawnGhost(int ghostId)
 {
+    ghostList[ghostId].lastRect = ghostList[ghostId].rects[0];
     ghostList[ghostId].gridPosition = getInitialPositionOfElement(ghostList[ghostId].ghostElement);
-    ghostList[ghostId].uiPosition = getGridPosToUiPos(ghostList[ghostId].gridPosition);
+    setMazeElementAt(ghostList[ghostId].gridPosition, ghostList[ghostId].ghostElement);
+    ghostList[ghostId].uiPosition = gridPosToUiPos(ghostList[ghostId].gridPosition);
 }
 
 void drawGhosts()
 {
+    // Don't draw ghosts during delay after Pacman death animation
+    if(pacmanDeathAnimationTimer.isRunning || (pacmanDeathAnimationTimer.isFinished && pacmanDeathAnimationDelayTimer.isRunning)) return;
+
     for (int i = 0; i < GHOST_COUNT; i++)
     {
         if (canBlitGhostInPausedGame(i))
@@ -124,19 +125,19 @@ void blitGhost(struct Sprite *sprite, SDL_Rect *spritePos)
 
 void makeGhostsEatable()
 {
-    eatableGhostTimer = EATABLE_GHOST_DURATION;
+    resetTimer(&eatableGhostTimer);
+    startTimer(&eatableGhostTimer);
     ghostEaten = 0;
 }
 
-void decreaseEatableGhostTimer()
+bool isGhostEatable()
 {
-    if (eatableGhostTimer > 0)
-        eatableGhostTimer--;
+    return eatableGhostTimer.isRunning;
 }
 
-int isGhostEatableRunningOut()
+bool isGhostEatableRunningOut()
 {
-    return eatableGhostTimer < EATABLE_GHOST_DURATION / 4;
+    return eatableGhostTimer.count < EATABLE_GHOST_DURATION / 4;
 }
 
 int getEatenGhostScore(int ghostEaten)

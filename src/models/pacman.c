@@ -4,15 +4,10 @@
 
 #include "pacman.h"
 
-/**
- * IMAGE : Pacman Sprite-Sheet with 4 directions and 2 sprites per direction
- */
-SDL_Rect pacmanSprites[DIRECTION_COUNT][PACMAN_SPRITE_MOUTHS_DIRECTION] = {
-    {{4, 90, PACMAN_SIZE, PACMAN_SIZE}, {21, 90, PACMAN_SIZE, PACMAN_SIZE}, {36, 90, PACMAN_SIZE, PACMAN_SIZE}},  // full - Right1 - Right2
-    {{4, 90, PACMAN_SIZE, PACMAN_SIZE}, {56, 90, PACMAN_SIZE, PACMAN_SIZE}, {75, 90, PACMAN_SIZE, PACMAN_SIZE}},  // full - Left1 - Left2
-    {{4, 90, PACMAN_SIZE, PACMAN_SIZE}, {89, 90, PACMAN_SIZE, PACMAN_SIZE}, {106, 90, PACMAN_SIZE, PACMAN_SIZE}}, // full - Up1 - Up2
-    {{4, 90, PACMAN_SIZE, PACMAN_SIZE}, {123, 90, PACMAN_SIZE, PACMAN_SIZE}, {140, 90, PACMAN_SIZE, PACMAN_SIZE}} // full - Down1 - Down2
-};
+SDL_Rect pacmanSprites[DIRECTION_COUNT];
+SDL_Rect pacmanRoundSprite = {4, 90, PACMAN_SIZE, PACMAN_SIZE};
+
+SDL_Rect pacmanDeathAnimation[PACMAN_DEATH_ANIMATION_FRAMES];
 
 SDL_Rect arrowSprite = {4, 266, PACMAN_ARROW_SIZE, PACMAN_ARROW_SIZE};
 
@@ -30,19 +25,47 @@ Direction pacmanWishedDirection;
 int arrowOffset = (PACMAN_SIZE / 2) - (PACMAN_ARROW_SIZE / 2);
 int arrowDisplaySize = PACMAN_ARROW_SIZE * (float)CELL_SIZE / (float)PACMAN_SIZE;
 
-int durationAnimationOnGhostEaten = 0;
+void initPacmanSprites()
+{
+
+    SDL_Rect initialPacmanRect = (SDL_Rect){
+        pacmanRoundSprite.x + PACMAN_SIZE + PACMAN_SPACING_X,
+        pacmanRoundSprite.y,
+        pacmanRoundSprite.w,
+        pacmanRoundSprite.h};
+
+    exportSprites(
+        &initialPacmanRect,
+        pacmanSprites,
+        DIRECTION_COUNT,
+        2 * (PACMAN_SIZE + PACMAN_SPACING_X),
+        0);
+
+    SDL_Rect initialPacmanDeathRect = (SDL_Rect){
+        pacmanRoundSprite.x + PACMAN_SIZE + PACMAN_SPACING_X,
+        pacmanRoundSprite.y + PACMAN_SIZE + PACMAN_SPACING_Y,
+        PACMAN_SIZE,
+        PACMAN_SIZE};
+
+    exportSprites(
+        &initialPacmanDeathRect,
+        pacmanDeathAnimation,
+        PACMAN_DEATH_ANIMATION_FRAMES,
+        PACMAN_SIZE + PACMAN_SPACING_X,
+        0);
+}
 
 void spawnPacman()
 {
     pacmanSpawnPos = getInitialPositionOfElement(PACMAN);
 
     pacmanGridPos = pacmanSpawnPos;
-    pacmanUIPos = getGridPosToUiPos(pacmanGridPos);
+    pacmanUIPos = gridPosToUiPos(pacmanGridPos);
 
     pacmanDirection = defaultDirection;
     pacmanWishedDirection = defaultDirection;
 
-    lastPacmanDirection = pacmanSprites[defaultDirection][0];
+    lastPacmanDirection = pacmanRoundSprite;
 }
 
 void handlePacmanEvents()
@@ -62,16 +85,27 @@ void handlePacmanEvents()
 
 void drawPacman()
 {
+    // Don't draw Pacman if he is dead and the death animation is finished
+    if(pacmanDeathAnimationTimer.isFinished && pacmanDeathAnimationDelayTimer.isRunning) return;
+
     if (isGamePause)
     {
-        if (!isScoreAnimationOnGhostEaten())
-            pacmanBlit(lastPacmanDirection);
+
+        if (pacmanDeathAnimationTimer.isRunning) {
+
+            int pacmanDeathAnimationIndex = (1 - ((float)pacmanDeathAnimationTimer.count / (float)pacmanDeathAnimationTimer.initialCount)) * PACMAN_DEATH_ANIMATION_FRAMES;
+            pacmanBlit(pacmanDeathAnimation[pacmanDeathAnimationIndex]);
+            return;
+        }
+
+        if (isScoreAnimationOnGhostEaten())
+            return;
+
+        pacmanBlit(lastPacmanDirection);
         return;
     }
 
     SDL_Rect newPacman = {0, 0, 0, 0};
-
-    int pacmanAnimation = (frameCount / ANIMATION_SPEED) % PACMAN_SPRITE_MOUTHS_DIRECTION;
 
     // Copy pacman position to a new
     struct Position pacmanPosCopy = pacmanUIPos;
@@ -80,8 +114,18 @@ void drawPacman()
     if (pacmanDirection != pacmanWishedDirection && canMoveInDirection(pacmanWishedDirection))
         pacmanDirection = pacmanWishedDirection;
 
+    int pacmanAnimation = (frameCount / ANIMATION_SPEED) % PACMAN_SPRITE_MOUTHS_DIRECTION;
+
     // Then we can choose the sprite corresponding to direction
-    newPacman = pacmanSprites[pacmanDirection][pacmanAnimation];
+    if (pacmanAnimation == PACMAN_SPRITE_MOUTHS_DIRECTION - 1)
+    {
+        newPacman = pacmanRoundSprite;
+    }
+    else
+    {
+        newPacman = pacmanSprites[pacmanDirection];
+        newPacman.x += pacmanAnimation * (PACMAN_SIZE + PACMAN_SPACING_X);
+    }
 
     // Calculate the target UI position
     updatePosition(&pacmanPosCopy, pacmanDirection, 1);
@@ -94,7 +138,7 @@ void drawPacman()
     }
 
     // Get target pacman position in grid
-    struct Position newPacmanGridPos = getUiPosToGridPos(getCellCenter(pacmanPosCopy));
+    struct Position newPacmanGridPos = uiPosToGridPos(getCellCenter(pacmanPosCopy));
 
     if (!arePositionEquals(pacmanGridPos, newPacmanGridPos))
     {
@@ -155,27 +199,30 @@ struct Position onPacmanGridMove(struct Position *pacmanUiPos)
         return teleportPacman(LEFT_TELEPORTER);
     case SMALL_COIN:
         incrementScore(10);
-        setElementAtPositionOnMazeAs(pacmanGridPos, PACMAN);
+        setMazeElementAt(pacmanGridPos, EMPTY);
+        handleCoinCollision();
         break;
     case BIG_COIN:
         incrementScore(50);
         makeGhostsEatable();
-        setElementAtPositionOnMazeAs(pacmanGridPos, PACMAN);
+        setMazeElementAt(pacmanGridPos, EMPTY);
+        handleCoinCollision();
         break;
     case RED_GHOST:
-        handleGhost(RED_GHOST);
+        handleGhostCollision(RED_GHOST);
         break;
     case PINK_GHOST:
-        handleGhost(PINK_GHOST);
+        handleGhostCollision(PINK_GHOST);
         break;
     case BLUE_GHOST:
-        handleGhost(BLUE_GHOST);
+        handleGhostCollision(BLUE_GHOST);
         break;
     case ORANGE_GHOST:
-        handleGhost(ORANGE_GHOST);
+        handleGhostCollision(ORANGE_GHOST);
         break;
+    case FRUIT:
+        handleFruitCollision();
     default:
-        setElementAtPositionOnMazeAs(pacmanGridPos, PACMAN);
         break;
     }
 
@@ -189,22 +236,15 @@ void pacmanBlit(SDL_Rect srcRect)
     SDL_BlitScaled(pSurfacePacmanSpriteSheet, &srcRect, pSurfaceWindow, &rect);
 }
 
-void decreaseScoreAnimationOnGhostEaten()
-{
-    durationAnimationOnGhostEaten--;
-    if (durationAnimationOnGhostEaten <= 0)
-        isGamePause = false;
-}
-
 bool isScoreAnimationOnGhostEaten()
 {
-    return durationAnimationOnGhostEaten > 0;
+    return eatGhostAnimationTimer.isRunning;
 }
 
 struct Position teleportPacman(MazeElement teleporter)
 {
     pacmanGridPos = getInitialPositionOfElement(teleporter);
-    return getGridPosToUiPos(pacmanGridPos);
+    return gridPosToUiPos(pacmanGridPos);
 }
 
 struct SDL_Rect getArrow(Direction direction)
@@ -214,22 +254,107 @@ struct SDL_Rect getArrow(Direction direction)
     return arrow;
 }
 
-void handleGhost(MazeElement ghostElement)
+void endEatGhostAnimation() {
+    isGamePause = false;
+}
+
+void handleGhostCollision(MazeElement ghostElement)
 {
     if (isGhostEatable())
-    { // Pacman ate a ghost
-        removeMazeElement(ghostElement);
-        setElementAtPositionOnMazeAs(pacmanGridPos, PACMAN);
-        ghostEaten++;
-        incrementScore(getEatenGhostScore(ghostEaten));
-        durationAnimationOnGhostEaten = SCORE_GHOST_EATEN_DURATION;
-
-        isGamePause = true;
-        ghostElementEaten = ghostElement;
+    {
+        pacmanEatGhost(ghostElement);
     }
     else
-    { // Pacman is eaten by a ghost
-        removeMazeElement(PACMAN);
-        decrementLives();
+    {
+        killPacman();
     }
+}
+
+void killPacman()
+{
+    removeMazeElement(PACMAN);
+    decrementLives();
+    isGamePause = true;
+    startPacmanDeathAnimation();
+}
+
+void pacmanEatGhost(MazeElement ghostElement)
+{
+    removeMazeElement(ghostElement);
+    setMazeElementAt(pacmanGridPos, PACMAN);
+    ghostEaten++;
+
+    incrementScore(getEatenGhostScore(ghostEaten));
+
+    eatGhostAnimationTimer.callback = endEatGhostAnimation;
+
+    resetTimer(&eatGhostAnimationTimer);
+    startTimer(&eatGhostAnimationTimer);
+
+    isGamePause = true;
+    ghostElementEaten = ghostElement;
+}
+
+void startPacmanDeathAnimation() {
+
+    pacmanDeathAnimationDelayTimer.callback = endPacmanDeathDelay;
+    pacmanDeathAnimationTimer.callback = endPacmanDeathAnimation;
+
+    isGamePause = true;
+
+    resetTimer(&pacmanDeathAnimationTimer);
+    resetTimer(&pacmanDeathAnimationDelayTimer);
+    startTimer(&pacmanDeathAnimationDelayTimer);
+}
+
+void endPacmanDeathDelay() {
+    if (pacmanDeathAnimationTimer.isFinished) {
+        // After animation delay end
+        afterPacmanDeath();
+
+    } else {
+        // Before animation delay end
+        startTimer(&pacmanDeathAnimationTimer);
+    }
+}
+
+void endPacmanDeathAnimation() {
+    resetTimer(&pacmanDeathAnimationDelayTimer);
+    startTimer(&pacmanDeathAnimationDelayTimer);
+}
+
+void afterPacmanDeath() {
+    isGamePause = false;
+
+    if (getLives() <= 0)
+    {
+        gameOverTimer.callback = afterGameOverAnimation;
+        resetTimer(&gameOverTimer);
+        startTimer(&gameOverTimer);
+        return;
+    }
+
+    resetFruit();
+    spawnPacman();
+    spawnGhosts();
+    startReady();
+
+}
+
+void handleCoinCollision() {
+
+    incrementEatenDotsCount();
+
+    int eatenDotsCount = getEatenDotsCount();
+
+    if (eatenDotsCount == getInitialDotsCount()) {
+        nextRound();
+        refillCoins();
+        resetEatenDotsCount();
+    }
+
+    if (eatenDotsCount == FRUIT_SPAWN_1 || eatenDotsCount == FRUIT_SPAWN_2) {
+        spawnFruit();
+    }
+
 }
