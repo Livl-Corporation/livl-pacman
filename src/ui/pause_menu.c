@@ -111,7 +111,7 @@ void handlePauseMenuEvents()
 
             if (isMainMenuButtonHovered)
             {
-
+                goBackToMenu();
                 return;
             }
 

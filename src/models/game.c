@@ -53,8 +53,7 @@ void decrementLives()
 
 void afterGameOverAnimation()
 {
-    freeGame();
-    startMenu();
+    goBackToMenu();
 }
 
 void initTimers()
@@ -117,4 +116,10 @@ void freeGame()
     resetTimers();
     freeMaze();
     freeGhosts();
+}
+
+void goBackToMenu()
+{
+    freeGame();
+    startMenu();
 }
