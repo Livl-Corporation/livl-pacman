@@ -61,9 +61,15 @@ void startGame()
         delayToMaintainFrameRate(before, DELAY_MS);
     }
 
-    freeMaze();
-    freeGhostList();
+    freeGame();
+}
 
+void resetGameWindow()
+{
+    pGameQuit = false;
+    isGamePause = false;
+    isPauseMenuOpen = false;
+    frameCount = 0;
 }
 
 void endReady() {
