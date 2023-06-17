@@ -8,14 +8,6 @@ SDL_Rect imgMazeBigCoin = {177, 93, 7, 7};
 
 void initMaze()
 {
-
-    if (initialMaze != NULL)
-    {
-        // TODO: segmentation fault here in the copy2DArray function when we restart a new game
-        resetGameMaze();
-        return;
-    }
-
     if (!retrieveMazeFromFile())
     {
         ConsoleHandlerDisplayError("while retrieving maze from file.");
