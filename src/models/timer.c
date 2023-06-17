@@ -56,3 +56,13 @@ void updateTimers()
 
     }
 }
+
+void resetTimers()
+{
+    for (int i = 0; i < timerCount; i++)
+    {
+        timers[i] = NULL;
+    }
+
+    timerCount = 0;
+}
