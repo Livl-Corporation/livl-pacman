@@ -1,25 +1,30 @@
 #include "game_info_panel.h"
 
+SDL_Rect imgPacmanLeftSprite = {56, 90, 14, 14};
+SDL_Rect imgHighScoreTextSprite = {3, 70, 80, 10};
+SDL_Rect imgOneUpTextSprite = {140, 124, 22, 7};
+
+SDL_Rect imgGameOverUi = {185, 458, GAME_OVER_W * GAME_OVER_UI_SCALE, GAME_OVER_H*GAME_OVER_UI_SCALE};
+SDL_Rect imgGameOverSprite = {4, 54, GAME_OVER_W, GAME_OVER_H};
+
+SDL_Rect imgReadyOnSprite = {4, 63, READY_W, READY_H};
+
 /**
  * @brief Get the img Numbers On Sprite image from number 0 to 9
  */
 SDL_Rect imgNumbersSprite[10];
 SDL_Rect imgNumberSprite = {4, 256, 7, 7};
 
-SDL_Rect imgPacmanLeftSprite = {56, 90, 14, 14};
-SDL_Rect imgHighScoreTextSprite = {3, 70, 80, 10};
-SDL_Rect imgOneUpTextSprite = {140, 124, 22, 7};
-
+/**
+ * @brief Place where the main score is displayed on the UI
+ */
 SDL_Rect imgScoreUi = {68, 35, 20, 18};
 
 /**
- * @brief Get the img Numbers On Sprite image from number 200, 400, 800, 1600
+ * @brief Ghost score numbers on sprite (200, 400, 800, 1600)
  */
 SDL_Rect imgNumbersEatGhostSprite[GHOST_COUNT];
 SDL_Rect imgEatGhostTextSprite = {154, 176, GHOST_SCORE_W, GHOST_SCORE_H};
-
-SDL_Rect imgGameOverUi = {185, 458, GAME_OVER_W * GAME_OVER_UI_SCALE, GAME_OVER_H*GAME_OVER_UI_SCALE};
-SDL_Rect imgGameOverSprite = {4, 54, GAME_OVER_W, GAME_OVER_H};
 
 void initGameInfoPanel()
 {
@@ -106,6 +111,13 @@ void drawUp()
 void drawGameOver()
 {
     SDL_BlitScaled(pSurfacePacmanSpriteSheet, &imgGameOverSprite, pSurfaceWindow, &imgGameOverUi);
+}
+
+void drawReady() {
+    struct Position position = gridPosToUiPos((struct Position) {8, 15});
+    SDL_Rect imgReadyOnUi = {position.x, position.y, READY_W * READY_UI_SCALE, READY_H * READY_UI_SCALE};
+    SDL_SetColorKey(pSurfacePacmanSpriteSheet, false, 0);
+    SDL_BlitScaled(pSurfacePacmanSpriteSheet, &imgReadyOnSprite, pSurfaceWindow, &imgReadyOnUi);
 }
 
 int getNumDigits(int score)

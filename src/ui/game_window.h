@@ -38,14 +38,14 @@ void resetGameWindow();
 void endReady();
 
 void startReady();
+
 void delayToMaintainFrameRate(clock_t before, Uint32 desiredDelayInMs);
 
 void handleGameEvents();
 
 void drawGame();
-void drawMaze();
+
 void drawHeader();
-void drawReady();
 
 void setPause(int isPaused);
 

@@ -6,6 +6,9 @@ char **gameMaze = NULL;
 SDL_Rect imgMazeSmallCoin = {163, 96, 2, 2};
 SDL_Rect imgMazeBigCoin = {177, 93, 7, 7};
 
+SDL_Rect imgMazeOnSprite = {201, 4, 166, 214};
+SDL_Rect imgMazeOnUi = {0, HEADER_SCREEN_HEIGHT, TOTAL_SCREEN_WIDTH, MAZE_SCREEN_HEIGHT};
+
 void initMaze()
 {
     if (!retrieveMazeFromFile())
@@ -74,6 +77,12 @@ void drawCoins(int frameCount)
             }
         }
     }
+}
+
+void drawMaze()
+{
+    SDL_SetColorKey(pSurfacePacmanSpriteSheet, false, 0);
+    SDL_BlitScaled(pSurfacePacmanSpriteSheet, &imgMazeOnSprite, pSurfaceWindow, &imgMazeOnUi);
 }
 
 void removeMazeElement(MazeElement elementToRemove)
