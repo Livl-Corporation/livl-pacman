@@ -55,7 +55,7 @@ void spawnGhosts() {
     }
 }
 
-void freeGhostList()
+void freeGhosts()
 {
     for (int i = 0; i < GHOST_COUNT; i++)
     {
