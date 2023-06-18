@@ -142,4 +142,8 @@ void setPause(int isPaused)
 {
     isGamePause = isPaused;
     isPauseMenuOpen = isPaused;
+    if (isPaused)
+        playAudioWithChannelLoop(audioPauseBeat, CHANNEL_PAUSE_BEAT, LOOP_INFINITE);
+    else
+        stopAudio(CHANNEL_PAUSE_BEAT);
 }

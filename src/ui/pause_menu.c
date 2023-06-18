@@ -111,6 +111,7 @@ void handlePauseMenuEvents()
 
             if (isMainMenuButtonHovered)
             {
+                stopAudio(CHANNEL_PAUSE_BEAT);
                 goBackToMenu();
                 return;
             }
