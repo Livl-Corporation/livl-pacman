@@ -137,13 +137,3 @@ void delayToMaintainFrameRate(clock_t before, Uint32 desiredDelayInMs)
     if (desiredDelayInMs > milliseconds)
         SDL_Delay(desiredDelayInMs - milliseconds);
 }
-
-void setPause(int isPaused)
-{
-    isGamePause = isPaused;
-    isPauseMenuOpen = isPaused;
-    if (isPaused)
-        playAudioWithChannelLoop(audioPauseBeat, CHANNEL_PAUSE_BEAT, LOOP_INFINITE);
-    else
-        stopAudio(CHANNEL_PAUSE_BEAT);
-}

@@ -49,6 +49,4 @@ void drawGame();
 
 void drawHeader();
 
-void setPause(int isPaused);
-
 #endif // PACMAN_GAME_WINDOW_H
