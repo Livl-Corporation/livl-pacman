@@ -18,10 +18,11 @@
 #define BIG_COIN_WIDTH 20
 #define BIG_COIN_HEIGHT 20
 
+#define BLUE_MAZE_X 201
+#define WHITE_MAZE_OFFSET_X 169
+
 extern char **initialMaze;
 extern char **gameMaze;
-extern SDL_Rect imgMazeSmallCoin;
-extern SDL_Rect imgMazeBigCoin;
 
 /**
  * Initialize maze
@@ -91,7 +92,11 @@ struct Position uiPosToGridPos(struct Position posInPx);
  */
 void drawCoins(int frameCount);
 
-void drawMaze();
+/**
+ * Draw the maze
+ * @param applyWhiteMazeOffset : if true, the maze will be drawn with an offset to display the white maze
+ */
+void drawMaze(bool applyWhiteMazeOffset);
 
 /**
  * Blit a rect with an offset

@@ -347,15 +347,6 @@ void handleCoinCollision() {
     incrementEatenDotsCount();
 
     int eatenDotsCount = getEatenDotsCount();
-
-    if (eatenDotsCount == getInitialDotsCount()) {
-        nextRound();
-        refillCoins();
-        resetEatenDotsCount();
-    }
-
-    if (eatenDotsCount == FRUIT_SPAWN_1 || eatenDotsCount == FRUIT_SPAWN_2) {
-        spawnFruit();
-    }
-
+    if (eatenDotsCount == getInitialDotsCount()) nextRound();
+    if (eatenDotsCount == FRUIT_SPAWN_1 || eatenDotsCount == FRUIT_SPAWN_2) spawnFruit();
 }

@@ -3,11 +3,11 @@
 char **initialMaze = NULL;
 char **gameMaze = NULL;
 
-SDL_Rect imgMazeSmallCoin = {163, 96, 2, 2};
-SDL_Rect imgMazeBigCoin = {177, 93, 7, 7};
+SDL_Rect imgSmallCoinSprite = {163, 96, 2, 2};
+SDL_Rect imgBigCoinSprite = {177, 93, 7, 7};
 
-SDL_Rect imgMazeOnSprite = {201, 4, 166, 214};
-SDL_Rect imgMazeOnUi = {0, HEADER_SCREEN_HEIGHT, TOTAL_SCREEN_WIDTH, MAZE_SCREEN_HEIGHT};
+SDL_Rect imgMazeSprite = {BLUE_MAZE_X, 4, 166, 214};
+SDL_Rect mazeUi = {0, HEADER_SCREEN_HEIGHT, TOTAL_SCREEN_WIDTH, MAZE_SCREEN_HEIGHT};
 
 void initMaze()
 {
@@ -64,12 +64,12 @@ void drawCoins(int frameCount)
             switch (mazeElement)
             {
             case SMALL_COIN:
-                blitRectWithOffset(imgMazeSmallCoin, uiPos, SMALL_COIN_OFFSET_X, SMALL_COIN_OFFSET_Y, SMALL_COIN_WIDTH, SMALL_COIN_HEIGHT);
+                blitRectWithOffset(imgSmallCoinSprite, uiPos, SMALL_COIN_OFFSET_X, SMALL_COIN_OFFSET_Y, SMALL_COIN_WIDTH, SMALL_COIN_HEIGHT);
                 break;
 
             case BIG_COIN:
                 if (frameCount % BIG_COIN_RATE)
-                    blitRectWithOffset(imgMazeBigCoin, uiPos, BIG_COIN_OFFSET_X, BIG_COIN_OFFSET_Y, BIG_COIN_WIDTH, BIG_COIN_HEIGHT);
+                    blitRectWithOffset(imgBigCoinSprite, uiPos, BIG_COIN_OFFSET_X, BIG_COIN_OFFSET_Y, BIG_COIN_WIDTH, BIG_COIN_HEIGHT);
                 break;
 
             default:
@@ -79,10 +79,13 @@ void drawCoins(int frameCount)
     }
 }
 
-void drawMaze()
+void drawMaze(bool applyWhiteMazeOffset)
 {
+    if(applyWhiteMazeOffset) imgMazeSprite.x = BLUE_MAZE_X+WHITE_MAZE_OFFSET_X;
+    else imgMazeSprite.x = BLUE_MAZE_X;
     SDL_SetColorKey(pSurfacePacmanSpriteSheet, false, 0);
-    SDL_BlitScaled(pSurfacePacmanSpriteSheet, &imgMazeOnSprite, pSurfaceWindow, &imgMazeOnUi);
+    SDL_BlitScaled(pSurfacePacmanSpriteSheet, &imgMazeSprite, pSurfaceWindow, &mazeUi);
+
 }
 
 void removeMazeElement(MazeElement elementToRemove)
