@@ -22,8 +22,7 @@ void startGame()
     spawnPacman();
     spawnGhosts();
 
-
-    startReady();
+    startReady(GAME_START_DURATION);
 
     while (!pGameQuit)
     {
@@ -69,6 +68,7 @@ void resetGameWindow()
 
 void endReady() {
     isGamePause = false;
+    stopAudio(CHANNEL_GAME_START);
 }
 
 void handleGameEvents()
@@ -95,9 +95,12 @@ void handleGameEvents()
     handlePacmanEvents();
 }
 
-void startReady()
+void startReady(int initialCount)
 {
     isGamePause = true;
+    readyTimer.initialCount = initialCount;
+    if(readyTimer.initialCount == GAME_START_DURATION)
+        playAudioWithChannel(audioGameStart, CHANNEL_GAME_START);
     readyTimer.callback = endReady;
     resetTimer(&readyTimer);
     startTimer(&readyTimer);
