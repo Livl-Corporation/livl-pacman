@@ -4,6 +4,7 @@
 
 #include "audio.h"
 
+Mix_Chunk *audioDeath = NULL;
 Mix_Chunk *audioDotOne = NULL;
 Mix_Chunk *audioDotTwo = NULL;
 Mix_Chunk *audioGameStart = NULL;
@@ -18,7 +19,7 @@ bool isSirenPlaying = false;
 
 void initAudio()
 {
-    //loadSound(AUDIO_DEATH);
+    loadSound(&audioDeath, AUDIO_DEATH);
     loadSound(&audioDotOne, AUDIO_DOT_1);
     loadSound(&audioDotTwo, AUDIO_DOT_2);
     //loadSound(AUDIO_EAT_GHOST);

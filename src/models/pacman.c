@@ -301,6 +301,8 @@ void startPacmanDeathAnimation() {
     pacmanDeathAnimationDelayTimer.callback = endPacmanDeathDelay;
     pacmanDeathAnimationTimer.callback = endPacmanDeathAnimation;
 
+    playAudioWithChannel(audioDeath, CHANNEL_DEFAULT);
+
     isGamePause = true;
 
     resetTimer(&pacmanDeathAnimationTimer);

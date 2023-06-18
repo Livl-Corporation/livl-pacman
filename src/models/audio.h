@@ -34,6 +34,7 @@
 #define LOOP_DEFAULT 0
 #define LOOP_INFINITE (-1)
 
+extern Mix_Chunk *audioDeath;
 extern Mix_Chunk *audioDotOne;
 extern Mix_Chunk *audioDotTwo;
 extern Mix_Chunk *audioGameStart;
