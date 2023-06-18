@@ -19,6 +19,7 @@ extern struct Timer pacmanDeathAnimationTimer;
 extern struct Timer pacmanDeathAnimationDelayTimer;
 extern struct Timer fruitTimer;
 extern struct Timer fruitScoreAnimationTimer;
+extern struct Timer nextRoundAnimationTimer;
 
 void initTimers();
 
@@ -38,6 +39,8 @@ void decrementLives();
 
 int getRound();
 void nextRound();
+void startNextRoundAnimation();
+void endNextRoundAnimation();
 
 int getEatenDotsCount();
 void incrementEatenDotsCount();
