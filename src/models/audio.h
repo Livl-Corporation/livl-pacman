@@ -23,6 +23,7 @@
 #define AUDIO_SIREN_1 "../assets/sounds/siren_1.wav"
 
 #define CHANNEL_DEFAULT (-1)
+#define MAX_CHANNELS 12
 #define CHANNEL_PACMAN_DRILL 1
 #define CHANNEL_GAME_START 2
 #define CHANNEL_DOT 3
@@ -30,6 +31,10 @@
 #define CHANNEL_POWER_UP 5
 #define CHANNEL_PAUSE_BEAT 6
 #define CHANNEL_PAUSE 7
+#define CHANNEL_EAT_GHOST 8
+#define CHANNEL_EYES 9
+#define CHANNEL_FRUIT 10
+#define CHANNEL_DEATH 11
 
 #define LOOP_DEFAULT 0
 #define LOOP_INFINITE (-1)
@@ -37,6 +42,9 @@
 extern Mix_Chunk *audioDeath;
 extern Mix_Chunk *audioDotOne;
 extern Mix_Chunk *audioDotTwo;
+extern Mix_Chunk *audioEatGhost;
+extern Mix_Chunk *audioEyes;
+extern Mix_Chunk *audioFruit;
 extern Mix_Chunk *audioGameStart;
 extern Mix_Chunk *audioPacmanDrill;
 extern Mix_Chunk *audioPause;

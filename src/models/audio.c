@@ -7,6 +7,9 @@
 Mix_Chunk *audioDeath = NULL;
 Mix_Chunk *audioDotOne = NULL;
 Mix_Chunk *audioDotTwo = NULL;
+Mix_Chunk *audioEatGhost = NULL;
+Mix_Chunk *audioEyes = NULL;
+Mix_Chunk *audioFruit = NULL;
 Mix_Chunk *audioGameStart = NULL;
 Mix_Chunk *audioPacmanDrill = NULL;
 Mix_Chunk *audioPause = NULL;
@@ -19,12 +22,14 @@ bool isSirenPlaying = false;
 
 void initAudio()
 {
+    Mix_AllocateChannels(MAX_CHANNELS);
+
     loadSound(&audioDeath, AUDIO_DEATH);
     loadSound(&audioDotOne, AUDIO_DOT_1);
     loadSound(&audioDotTwo, AUDIO_DOT_2);
-    //loadSound(AUDIO_EAT_GHOST);
-    //loadSound(AUDIO_EYES);
-    //loadSound(AUDIO_FRUIT);
+    loadSound(&audioEatGhost, AUDIO_EAT_GHOST);
+    loadSound(&audioEyes, AUDIO_EYES);
+    loadSound(&audioFruit, AUDIO_FRUIT);
     loadSound(&audioGameStart, AUDIO_GAME_START);
     loadSound(&audioPacmanDrill, AUDIO_PACMAN_DRILL);
     loadSound(&audioPause, AUDIO_PAUSE);
@@ -51,6 +56,12 @@ void stopSirenOrPowerUpSound()
 
 void playSirenOrPowerUpSound()
 {
+    if((pacmanDeathAnimationDelayTimer.isRunning || pacmanDeathAnimationTimer.isRunning)
+        || nextRoundAnimationTimer.isRunning || readyTimer.isRunning || gameOverTimer.isRunning) {
+        stopSirenOrPowerUpSound();
+        return;
+    }
+
     if (isGhostEatable()) {
         if (!isPowerUpPlaying) {
             playAudioWithChannelLoop(audioPowerUp, CHANNEL_POWER_UP, LOOP_INFINITE);

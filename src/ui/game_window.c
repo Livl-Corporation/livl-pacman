@@ -22,6 +22,7 @@ void startGame()
     spawnPacman();
     spawnGhosts();
 
+    playAudioWithChannel(audioGameStart, CHANNEL_GAME_START);
     startReady(GAME_START_DURATION);
 
     while (!pGameQuit)
@@ -44,8 +45,8 @@ void startGame()
             handleGameEvents();
 
             if (readyTimer.isRunning) drawReady();
-            else if(!pacmanDeathAnimationDelayTimer.isRunning
-                &&!pacmanDeathAnimationTimer.isRunning) playSirenOrPowerUpSound();
+
+            playSirenOrPowerUpSound();
         }
 
         SDL_UpdateWindowSurface(pWindow);
@@ -101,8 +102,6 @@ void startReady(int initialCount)
     readyTimer.initialCount = initialCount;
     readyTimer.callback = endReady;
     resetTimer(&readyTimer);
-    if(readyTimer.initialCount == GAME_START_DURATION)
-        playAudioWithChannel(audioGameStart, CHANNEL_GAME_START);
     startTimer(&readyTimer);
 }
 

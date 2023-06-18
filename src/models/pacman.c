@@ -261,14 +261,8 @@ void endEatGhostAnimation() {
 
 void handleGhostCollision(MazeElement ghostElement)
 {
-    if (isGhostEatable())
-    {
-        pacmanEatGhost(ghostElement);
-    }
-    else
-    {
-        killPacman();
-    }
+    if (isGhostEatable()) pacmanEatGhost(ghostElement);
+    else killPacman();
 }
 
 void killPacman()
@@ -284,6 +278,8 @@ void pacmanEatGhost(MazeElement ghostElement)
     removeMazeElement(ghostElement);
     setMazeElementAt(pacmanGridPos, PACMAN);
     ghostEaten++;
+
+    playAudioWithChannel(audioEatGhost, CHANNEL_EAT_GHOST);
 
     incrementScore(getEatenGhostScore(ghostEaten));
 
@@ -302,7 +298,7 @@ void startPacmanDeathAnimation() {
     pacmanDeathAnimationTimer.callback = endPacmanDeathAnimation;
 
     stopSirenOrPowerUpSound();
-    playAudioWithChannel(audioDeath, CHANNEL_DEFAULT);
+    playAudioWithChannel(audioDeath, CHANNEL_DEATH);
 
     isGamePause = true;
 
