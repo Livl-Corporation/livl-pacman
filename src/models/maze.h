@@ -7,6 +7,7 @@
 #include "ui/variables.h"
 #include "utilities/array_utils.h"
 #include "enums/maze-element.h"
+#include "game.h"
 
 #define SMALL_COIN_OFFSET_X 12
 #define SMALL_COIN_OFFSET_Y 12
@@ -91,7 +92,8 @@ struct Position uiPosToGridPos(struct Position posInPx);
  */
 void drawCoins(int frameCount);
 
-void drawMaze();
+void drawMazeBlue();
+void drawMazeWhite();
 
 /**
  * Blit a rect with an offset

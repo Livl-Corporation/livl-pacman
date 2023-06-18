@@ -82,10 +82,17 @@ void drawCoins(int frameCount)
     }
 }
 
-void drawMaze()
+void drawMazeBlue()
 {
     SDL_SetColorKey(pSurfacePacmanSpriteSheet, false, 0);
     SDL_BlitScaled(pSurfacePacmanSpriteSheet, &imgMazeBlueSprite, pSurfaceWindow, &imgMazeBlueUi);
+
+}
+
+void drawMazeWhite()
+{
+    SDL_SetColorKey(pSurfacePacmanSpriteSheet, false, 0);
+    SDL_BlitScaled(pSurfacePacmanSpriteSheet, &imgMazeWhiteSprite, pSurfaceWindow, &imgMazeWhiteUi);
 }
 
 void removeMazeElement(MazeElement elementToRemove)
