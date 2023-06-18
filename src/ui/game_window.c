@@ -105,9 +105,19 @@ void startReady()
 
 void drawGame()
 {
-    drawMaze();
-    drawCoins(frameCount);
     drawGameInfoPanel();
+
+    if(nextRoundAnimationTimer.isRunning && nextRoundAnimationTimer.count < NEXT_ROUND_ANIMATION_DURATION/2)
+    {
+        if (nextRoundAnimationTimer.count % MAZE_BLINK_WHITE_BLUE_RATE) drawMazeWhite();
+        else drawMazeBlue();
+
+        drawPacman();
+        return;
+    }
+
+    drawMazeBlue();
+    drawCoins(frameCount);
     drawFruit();
 
     if(!gameOverTimer.isRunning) {
