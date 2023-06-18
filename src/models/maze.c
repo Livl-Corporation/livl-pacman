@@ -6,11 +6,8 @@ char **gameMaze = NULL;
 SDL_Rect imgSmallCoinSprite = {163, 96, 2, 2};
 SDL_Rect imgBigCoinSprite = {177, 93, 7, 7};
 
-SDL_Rect imgMazeBlueSprite = {201, 4, 166, 214};
-SDL_Rect imgMazeBlueUi = {0, HEADER_SCREEN_HEIGHT, TOTAL_SCREEN_WIDTH, MAZE_SCREEN_HEIGHT};
-
-SDL_Rect imgMazeWhiteSprite = {370, 4, 166, 214};
-SDL_Rect imgMazeWhiteUi = {0, HEADER_SCREEN_HEIGHT, TOTAL_SCREEN_WIDTH, MAZE_SCREEN_HEIGHT};
+SDL_Rect imgMazeSprite = {BLUE_MAZE_X, 4, 166, 214};
+SDL_Rect mazeUi = {0, HEADER_SCREEN_HEIGHT, TOTAL_SCREEN_WIDTH, MAZE_SCREEN_HEIGHT};
 
 void initMaze()
 {
@@ -82,17 +79,13 @@ void drawCoins(int frameCount)
     }
 }
 
-void drawMazeBlue()
+void drawMaze(bool applyWhiteMazeOffset)
 {
+    if(applyWhiteMazeOffset) imgMazeSprite.x = BLUE_MAZE_X+WHITE_MAZE_OFFSET_X;
+    else imgMazeSprite.x = BLUE_MAZE_X;
     SDL_SetColorKey(pSurfacePacmanSpriteSheet, false, 0);
-    SDL_BlitScaled(pSurfacePacmanSpriteSheet, &imgMazeBlueSprite, pSurfaceWindow, &imgMazeBlueUi);
+    SDL_BlitScaled(pSurfacePacmanSpriteSheet, &imgMazeSprite, pSurfaceWindow, &mazeUi);
 
-}
-
-void drawMazeWhite()
-{
-    SDL_SetColorKey(pSurfacePacmanSpriteSheet, false, 0);
-    SDL_BlitScaled(pSurfacePacmanSpriteSheet, &imgMazeWhiteSprite, pSurfaceWindow, &imgMazeWhiteUi);
 }
 
 void removeMazeElement(MazeElement elementToRemove)

@@ -109,14 +109,14 @@ void drawGame()
 
     if(nextRoundAnimationTimer.isRunning && nextRoundAnimationTimer.count < NEXT_ROUND_ANIMATION_DURATION/2)
     {
-        if (nextRoundAnimationTimer.count % MAZE_BLINK_WHITE_BLUE_RATE) drawMazeWhite();
-        else drawMazeBlue();
+        if (nextRoundAnimationTimer.count % MAZE_BLINK_WHITE_BLUE_RATE) drawMaze(true);
+        else drawMaze(false);
 
         drawPacman();
         return;
     }
 
-    drawMazeBlue();
+    drawMaze(false);
     drawCoins(frameCount);
     drawFruit();
 
