@@ -40,10 +40,14 @@ void initAudio()
 
 void playDotSound()
 {
-    if (getEatenDotsCount() % 2 == 0)
+    if (getEatenDotsCount() % 2 == 0) {
+        stopAudio(CHANNEL_DOT_2);
         playAudioWithChannel(audioDotOne, CHANNEL_DOT);
-    else
-        playAudioWithChannel(audioDotTwo, CHANNEL_DOT);
+    }
+    else {
+        stopAudio(CHANNEL_DOT);
+        playAudioWithChannel(audioDotTwo, CHANNEL_DOT_2);
+    }
 }
 
 void stopSirenOrPowerUpSound()
@@ -103,10 +107,18 @@ void stopAudio(int channel) {
     Mix_HaltChannel(channel);
 }
 
-void freeAudio()
+void freeAudios()
 {
     freeSound(audioDotOne);
     freeSound(audioDotTwo);
     freeSound(audioGameStart);
     freeSound(audioPacmanDrill);
+    freeSound(audioPause);
+    freeSound(audioPauseBeat);
+    freeSound(audioPowerUp);
+    freeSound(audioSirenOne);
+    freeSound(audioDeath);
+    freeSound(audioEatGhost);
+    freeSound(audioEyes);
+    freeSound(audioFruit);
 }

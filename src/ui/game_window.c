@@ -57,6 +57,7 @@ void startGame()
     }
 
     freeGame();
+    freeAudios();
 }
 
 void resetGameWindow()
@@ -69,7 +70,6 @@ void resetGameWindow()
 
 void endReady() {
     isGamePause = false;
-    stopAudio(CHANNEL_GAME_START);
 }
 
 void handleGameEvents()

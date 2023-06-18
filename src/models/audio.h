@@ -23,7 +23,7 @@
 #define AUDIO_SIREN_1 "../assets/sounds/siren_1.wav"
 
 #define CHANNEL_DEFAULT (-1)
-#define MAX_CHANNELS 12
+#define MAX_CHANNELS 13
 #define CHANNEL_PACMAN_DRILL 1
 #define CHANNEL_GAME_START 2
 #define CHANNEL_DOT 3
@@ -35,6 +35,7 @@
 #define CHANNEL_EYES 9
 #define CHANNEL_FRUIT 10
 #define CHANNEL_DEATH 11
+#define CHANNEL_DOT_2 12
 
 #define LOOP_DEFAULT 0
 #define LOOP_INFINITE (-1)
@@ -60,5 +61,6 @@ void playDotSound();
 void playSirenOrPowerUpSound();
 void stopSirenOrPowerUpSound();
 void stopAudio(int channel);
+void freeAudios();
 
 #endif //PACMAN_AUDIO_H

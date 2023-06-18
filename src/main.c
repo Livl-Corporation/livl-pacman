@@ -7,8 +7,8 @@ int main(void)
     initSDL();
     initSDL_Mixer();
 
-    loadMedia();
     initAudio();
+    loadMedia();
 
     startMenu();
 
