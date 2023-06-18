@@ -22,12 +22,13 @@
 #define AUDIO_POWER_UP "../assets/sounds/power_up.wav"
 #define AUDIO_SIREN_1 "../assets/sounds/siren_1.wav"
 
-#define CHANNEL_DEFAULT -1
+#define CHANNEL_DEFAULT (-1)
 #define CHANNEL_PACMAN_DRILL 1
 #define CHANNEL_GAME_START 2
+#define CHANNEL_DOT 3
 
 #define LOOP_DEFAULT 0
-#define LOOP_INFINITE -1
+#define LOOP_INFINITE (-1)
 
 extern Mix_Chunk *audioDotOne;
 extern Mix_Chunk *audioDotTwo;

@@ -28,9 +28,9 @@ void initAudio()
 void playDotSound()
 {
     if (getEatenDotsCount() % 2 == 0)
-        playAudio(audioDotOne);
+        playAudioWithChannel(audioDotOne, CHANNEL_DOT);
     else
-        playAudio(audioDotTwo);
+        playAudioWithChannel(audioDotTwo, CHANNEL_DOT);
 }
 
 void playAudio(Mix_Chunk *sound)
