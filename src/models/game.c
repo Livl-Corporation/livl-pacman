@@ -113,7 +113,7 @@ void setInitialDotsCount(int value) {
 void freeGame()
 {
     resetGameWindow();
-    resetTimers();
+    clearTimers();
     freeMaze();
     freeGhosts();
 }

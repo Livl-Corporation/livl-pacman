@@ -57,7 +57,7 @@ void updateTimers()
     }
 }
 
-void resetTimers()
+void clearTimers()
 {
     for (int i = 0; i < timerCount; i++)
     {
