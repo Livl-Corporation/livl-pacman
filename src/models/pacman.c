@@ -198,6 +198,7 @@ struct Position onPacmanGridMove(struct Position *pacmanUiPos)
     case RIGHT_TELEPORTER:
         return teleportPacman(LEFT_TELEPORTER);
     case SMALL_COIN:
+        playDotSound();
         incrementScore(10);
         setMazeElementAt(pacmanGridPos, EMPTY);
         handleCoinCollision();
