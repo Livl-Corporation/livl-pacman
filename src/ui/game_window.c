@@ -35,15 +35,18 @@ void startGame()
         {
             drawPauseMenu();
             handlePauseMenuEvents();
+            stopSirenOrPowerUpSound();
         }
         else
         {
             drawHeader();
             drawGame();
             handleGameEvents();
+            playSirenOrPowerUpSound();
 
             if (readyTimer.isRunning) {
                 drawReady();
+                stopSirenOrPowerUpSound();
             }
 
         }

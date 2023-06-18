@@ -29,6 +29,7 @@
 
 extern int frameCount;
 extern bool isGamePause;
+extern bool isPauseMenuOpen;
 extern SDL_Rect imgMazeOnSprite;
 extern SDL_Rect imgMazeOnUi;
 

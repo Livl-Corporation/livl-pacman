@@ -26,6 +26,8 @@
 #define CHANNEL_PACMAN_DRILL 1
 #define CHANNEL_GAME_START 2
 #define CHANNEL_DOT 3
+#define CHANNEL_SIREN 4
+#define CHANNEL_POWER_UP 5
 
 #define LOOP_DEFAULT 0
 #define LOOP_INFINITE (-1)
@@ -34,13 +36,16 @@ extern Mix_Chunk *audioDotOne;
 extern Mix_Chunk *audioDotTwo;
 extern Mix_Chunk *audioGameStart;
 extern Mix_Chunk *audioPacmanDrill;
+extern Mix_Chunk *audioPowerUp;
+extern Mix_Chunk *audioSirenOne;
 
 void initAudio();
 void playAudioWithChannelLoop(Mix_Chunk *sound, int channel, int loops);
 void playAudioWithChannel(Mix_Chunk *sound, int channel);
 void volumeAudio(Mix_Chunk *sound, int volume);
-void playAudio(Mix_Chunk *sound);
 void playDotSound();
+void playSirenOrPowerUpSound();
+void stopSirenOrPowerUpSound();
 void stopAudio(int channel);
 
 #endif //PACMAN_AUDIO_H

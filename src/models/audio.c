@@ -8,6 +8,11 @@ Mix_Chunk *audioDotOne = NULL;
 Mix_Chunk *audioDotTwo = NULL;
 Mix_Chunk *audioGameStart = NULL;
 Mix_Chunk *audioPacmanDrill = NULL;
+Mix_Chunk *audioPowerUp = NULL;
+Mix_Chunk *audioSirenOne = NULL;
+
+bool isPowerUpPlaying = false;
+bool isSirenPlaying = false;
 
 void initAudio()
 {
@@ -21,8 +26,8 @@ void initAudio()
     loadSound(&audioPacmanDrill, AUDIO_PACMAN_DRILL);
     //loadSound(AUDIO_PAUSE);
     //loadSound(AUDIO_PAUSE_BEAT);
-    //loadSound(AUDIO_POWER_UP);
-    //loadSound(AUDIO_SIREN_1);
+    loadSound(&audioPowerUp, AUDIO_POWER_UP);
+    loadSound(&audioSirenOne, AUDIO_SIREN_1);
 }
 
 void playDotSound()
@@ -33,9 +38,35 @@ void playDotSound()
         playAudioWithChannel(audioDotTwo, CHANNEL_DOT);
 }
 
-void playAudio(Mix_Chunk *sound)
+void stopSirenOrPowerUpSound()
 {
-    playAudioWithChannelLoop(sound, CHANNEL_DEFAULT, LOOP_DEFAULT);
+    stopAudio(CHANNEL_SIREN);
+    stopAudio(CHANNEL_POWER_UP);
+    isSirenPlaying = false;
+    isPowerUpPlaying = false;
+}
+
+void playSirenOrPowerUpSound()
+{
+    if (isGhostEatable()) {
+        if (!isPowerUpPlaying) {
+            playAudioWithChannelLoop(audioPowerUp, CHANNEL_POWER_UP, LOOP_INFINITE);
+            isPowerUpPlaying = true;
+        }
+        if (isSirenPlaying) {
+            stopAudio(CHANNEL_SIREN);
+            isSirenPlaying = false;
+        }
+    } else {
+        if (!isSirenPlaying) {
+            playAudioWithChannelLoop(audioSirenOne, CHANNEL_SIREN, LOOP_INFINITE);
+            isSirenPlaying = true;
+        }
+        if (isPowerUpPlaying) {
+            stopAudio(CHANNEL_POWER_UP);
+            isPowerUpPlaying = false;
+        }
+    }
 }
 
 void playAudioWithChannel(Mix_Chunk *sound, int channel)

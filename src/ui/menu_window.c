@@ -72,7 +72,6 @@ void handleMainMenuEvents()
             if (isPlayButtonHovered)
             {
                 stopAudio(CHANNEL_PACMAN_DRILL);
-                SDL_Delay(100);
                 startGame();
                 pMainMenuQuit = true;
             }
