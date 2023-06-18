@@ -41,11 +41,6 @@ void incrementScore(int value)
     }
 }
 
-void decrementScore(int value)
-{
-    score -= value;
-}
-
 int getLives()
 {
     return lives;
@@ -58,7 +53,7 @@ void decrementLives()
 
 void afterGameOverAnimation()
 {
-    // TODO: #53 go back to main menu
+    goBackToMenu();
 }
 
 void initTimers()
@@ -115,3 +110,16 @@ void setInitialDotsCount(int value) {
     dotsCount = value;
 }
 
+void freeGame()
+{
+    resetGameWindow();
+    clearTimers();
+    freeMaze();
+    freeGhosts();
+}
+
+void goBackToMenu()
+{
+    freeGame();
+    startMenu();
+}

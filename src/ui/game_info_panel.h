@@ -36,6 +36,8 @@ void drawLives();
 
 void drawUp();
 
+void drawReady();
+
 void drawGameOver();
 
 int getNumDigits(int score);

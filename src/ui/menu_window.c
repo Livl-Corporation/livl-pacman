@@ -22,8 +22,9 @@ bool isPlayButtonHovered = false;
 
 SDL_Rect imgBlackBackground = {0, 0, 0, 0};
 
-void startMainMenuLoop()
+void startMenu()
 {
+    SDL_FillRect(pSurfaceWindow, 0, 0); // Clears the window's surface before drawing the new frame
     drawMainMenu();
 
     while (!pMainMenuQuit)

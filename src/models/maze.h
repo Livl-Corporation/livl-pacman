@@ -91,6 +91,8 @@ struct Position uiPosToGridPos(struct Position posInPx);
  */
 void drawCoins(int frameCount);
 
+void drawMaze();
+
 /**
  * Blit a rect with an offset
  * @param imgRect : the image rect to display

@@ -27,4 +27,6 @@ void resetTimer(struct Timer *timer);
 
 void updateTimers();
 
+void clearTimers();
+
 #endif // TIMER_H

@@ -44,7 +44,7 @@ void drawGhosts();
  * Free the ghost list
  * <!> Must be called at the end of the game
  */
-void freeGhostList();
+void freeGhosts();
 
 /**
  * Make all ghost eatable

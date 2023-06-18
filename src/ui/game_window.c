@@ -4,13 +4,8 @@ int frameCount = 0;
 
 bool pGameQuit = false, isGamePause = false, isPauseMenuOpen = false;
 
-SDL_Rect imgMazeOnSprite = {201, 4, 166, 214};
-SDL_Rect imgMazeOnUi = {0, HEADER_SCREEN_HEIGHT, TOTAL_SCREEN_WIDTH, MAZE_SCREEN_HEIGHT};
-
 SDL_Rect imgBlackHeaderOnSprite = {0, 0, 0, 0};
 SDL_Rect imgBlackHeaderOnUi = {0, 0, TOTAL_SCREEN_WIDTH, HEADER_SCREEN_HEIGHT};
-
-SDL_Rect imgReadyOnSprite = {4, 63, READY_W, READY_H};
 
 void startGame()
 {
@@ -61,9 +56,15 @@ void startGame()
         delayToMaintainFrameRate(before, DELAY_MS);
     }
 
-    freeMaze();
-    freeGhostList();
+    freeGame();
+}
 
+void resetGameWindow()
+{
+    pGameQuit = false;
+    isGamePause = false;
+    isPauseMenuOpen = false;
+    frameCount = 0;
 }
 
 void endReady() {
@@ -102,13 +103,6 @@ void startReady()
     startTimer(&readyTimer);
 }
 
-void drawReady() {
-    struct Position position = gridPosToUiPos((struct Position) {8, 15});
-    SDL_Rect imgReadyOnUi = {position.x, position.y, READY_W * READY_UI_SCALE, READY_H * READY_UI_SCALE};
-    SDL_SetColorKey(pSurfacePacmanSpriteSheet, false, 0);
-    SDL_BlitScaled(pSurfacePacmanSpriteSheet, &imgReadyOnSprite, pSurfaceWindow, &imgReadyOnUi);
-}
-
 void drawGame()
 {
     drawMaze();
@@ -121,13 +115,6 @@ void drawGame()
         drawPacman();
         drawPacmanArrow();
     }
-}
-
-void drawMaze()
-{
-    // TODO : Move maze display to maze file
-    SDL_SetColorKey(pSurfacePacmanSpriteSheet, false, 0);
-    SDL_BlitScaled(pSurfacePacmanSpriteSheet, &imgMazeOnSprite, pSurfaceWindow, &imgMazeOnUi);
 }
 
 void drawHeader()

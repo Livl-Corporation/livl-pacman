@@ -19,7 +19,7 @@
 #define PLAY_UI_SCALE 5
 #define PLAY_UI_Y 400
 
-void startMainMenuLoop();
+void startMenu();
 void drawMainMenu();
 void handleMainMenuEvents();
 
