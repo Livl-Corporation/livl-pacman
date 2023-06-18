@@ -42,13 +42,10 @@ void startGame()
             drawHeader();
             drawGame();
             handleGameEvents();
-            playSirenOrPowerUpSound();
 
-            if (readyTimer.isRunning) {
-                drawReady();
-                stopSirenOrPowerUpSound();
-            }
-
+            if (readyTimer.isRunning) drawReady();
+            else if(!pacmanDeathAnimationDelayTimer.isRunning
+                &&!pacmanDeathAnimationTimer.isRunning) playSirenOrPowerUpSound();
         }
 
         SDL_UpdateWindowSurface(pWindow);
@@ -102,10 +99,10 @@ void startReady(int initialCount)
 {
     isGamePause = true;
     readyTimer.initialCount = initialCount;
-    if(readyTimer.initialCount == GAME_START_DURATION)
-        playAudioWithChannel(audioGameStart, CHANNEL_GAME_START);
     readyTimer.callback = endReady;
     resetTimer(&readyTimer);
+    if(readyTimer.initialCount == GAME_START_DURATION)
+        playAudioWithChannel(audioGameStart, CHANNEL_GAME_START);
     startTimer(&readyTimer);
 }
 
