@@ -29,6 +29,7 @@
 #define CHANNEL_SIREN 4
 #define CHANNEL_POWER_UP 5
 #define CHANNEL_PAUSE_BEAT 6
+#define CHANNEL_PAUSE 7
 
 #define LOOP_DEFAULT 0
 #define LOOP_INFINITE (-1)
@@ -37,6 +38,7 @@ extern Mix_Chunk *audioDotOne;
 extern Mix_Chunk *audioDotTwo;
 extern Mix_Chunk *audioGameStart;
 extern Mix_Chunk *audioPacmanDrill;
+extern Mix_Chunk *audioPause;
 extern Mix_Chunk *audioPauseBeat;
 extern Mix_Chunk *audioPowerUp;
 extern Mix_Chunk *audioSirenOne;

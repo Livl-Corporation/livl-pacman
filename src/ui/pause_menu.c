@@ -122,3 +122,15 @@ void handlePauseMenuEvents()
         }
     }
 }
+
+void setPause(int isPaused)
+{
+    isGamePause = isPaused;
+    isPauseMenuOpen = isPaused;
+    if (isPaused) {
+        playAudioWithChannel(audioPause, CHANNEL_PAUSE);
+        playAudioWithChannelLoop(audioPauseBeat, CHANNEL_PAUSE_BEAT, LOOP_INFINITE);
+    }
+    else
+        stopAudio(CHANNEL_PAUSE_BEAT);
+}

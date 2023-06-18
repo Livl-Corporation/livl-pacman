@@ -8,6 +8,7 @@ Mix_Chunk *audioDotOne = NULL;
 Mix_Chunk *audioDotTwo = NULL;
 Mix_Chunk *audioGameStart = NULL;
 Mix_Chunk *audioPacmanDrill = NULL;
+Mix_Chunk *audioPause = NULL;
 Mix_Chunk *audioPauseBeat = NULL;
 Mix_Chunk *audioPowerUp = NULL;
 Mix_Chunk *audioSirenOne = NULL;
@@ -25,7 +26,7 @@ void initAudio()
     //loadSound(AUDIO_FRUIT);
     loadSound(&audioGameStart, AUDIO_GAME_START);
     loadSound(&audioPacmanDrill, AUDIO_PACMAN_DRILL);
-    //loadSound(AUDIO_PAUSE);
+    loadSound(&audioPause, AUDIO_PAUSE);
     loadSound(&audioPauseBeat, AUDIO_PAUSE_BEAT);
     loadSound(&audioPowerUp, AUDIO_POWER_UP);
     loadSound(&audioSirenOne, AUDIO_SIREN_1);
