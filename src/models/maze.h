@@ -20,8 +20,6 @@
 
 extern char **initialMaze;
 extern char **gameMaze;
-extern SDL_Rect imgSmallCoinSprite;
-extern SDL_Rect imgBigCoinSprite;
 
 /**
  * Initialize maze

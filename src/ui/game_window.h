@@ -28,8 +28,6 @@
 
 extern int frameCount;
 extern bool isGamePause;
-extern SDL_Rect imgMazeBlueSprite;
-extern SDL_Rect imgMazeBlueUi;
 
 void startGame();
 
