@@ -20,6 +20,7 @@ struct Timer pacmanDeathAnimationTimer;
 struct Timer pacmanDeathAnimationDelayTimer;
 struct Timer fruitTimer;
 struct Timer fruitScoreAnimationTimer;
+struct Timer nextRoundAnimationTimer;
 
 int getScore()
 {
@@ -74,6 +75,7 @@ void initTimers()
 
     initTimer(&fruitScoreAnimationTimer, FRUIT_SCORE_DISPLAY_DURATION);
 
+    initTimer(&nextRoundAnimationTimer, NEXT_ROUND_ANIMATION_DURATION);
 }
 
 void initGame() {
@@ -89,6 +91,23 @@ int getRound() {
 }
 void nextRound(){
     roundNumber++;
+    startNextRoundAnimation();
+}
+
+void startNextRoundAnimation()
+{
+    isGamePause = true;
+    nextRoundAnimationTimer.callback = &endNextRoundAnimation;
+    resetTimer(&nextRoundAnimationTimer);
+    startTimer(&nextRoundAnimationTimer);
+}
+
+void endNextRoundAnimation()
+{
+    spawnPacman();
+    refillCoins();
+    resetEatenDotsCount();
+    startReady();
 }
 
 int getEatenDotsCount() {
