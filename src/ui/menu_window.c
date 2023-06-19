@@ -28,7 +28,7 @@ void startMenu()
     drawMainMenu();
 
     volumeAudio(audioPacmanDrill, SDL_MIX_MAXVOLUME/4);
-    playAudioWithChannelLoop(audioPacmanDrill, CHANNEL_PACMAN_DRILL, LOOP_INFINITE);
+    playAudioWithChannelLoop(audioPacmanDrill, CHANNEL_PACMAN_DRILL);
 
     while (!pMainMenuQuit)
     {

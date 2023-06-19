@@ -54,7 +54,7 @@ extern Mix_Chunk *audioPowerUp;
 extern Mix_Chunk *audioSirenOne;
 
 void initAudio();
-void playAudioWithChannelLoop(Mix_Chunk *sound, int channel, int loops);
+void playAudioWithChannelLoop(Mix_Chunk *sound, int channel);
 void playAudioWithChannel(Mix_Chunk *sound, int channel);
 void volumeAudio(Mix_Chunk *sound, int volume);
 void playDotSound();

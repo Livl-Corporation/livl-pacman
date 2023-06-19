@@ -68,7 +68,7 @@ void playSirenOrPowerUpSound()
 
     if (isGhostEatable()) {
         if (!isPowerUpPlaying) {
-            playAudioWithChannelLoop(audioPowerUp, CHANNEL_POWER_UP, LOOP_INFINITE);
+            playAudioWithChannelLoop(audioPowerUp, CHANNEL_POWER_UP);
             isPowerUpPlaying = true;
         }
         if (isSirenPlaying) {
@@ -77,7 +77,7 @@ void playSirenOrPowerUpSound()
         }
     } else {
         if (!isSirenPlaying) {
-            playAudioWithChannelLoop(audioSirenOne, CHANNEL_SIREN, LOOP_INFINITE);
+            playAudioWithChannelLoop(audioSirenOne, CHANNEL_SIREN);
             isSirenPlaying = true;
         }
         if (isPowerUpPlaying) {
@@ -89,12 +89,12 @@ void playSirenOrPowerUpSound()
 
 void playAudioWithChannel(Mix_Chunk *sound, int channel)
 {
-    playAudioWithChannelLoop(sound, channel, NO_LOOP);
+    Mix_PlayChannel(channel, sound, NO_LOOP);
 }
 
-void playAudioWithChannelLoop(Mix_Chunk *sound, int channel, int loops)
+void playAudioWithChannelLoop(Mix_Chunk *sound, int channel)
 {
-    Mix_PlayChannel(channel, sound, loops);
+    Mix_PlayChannel(channel, sound, LOOP_INFINITE);
 }
 
 void volumeAudio(Mix_Chunk *sound, int volume)

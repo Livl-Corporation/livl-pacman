@@ -129,7 +129,7 @@ void setPause(int isPaused)
     isPauseMenuOpen = isPaused;
     if (isPaused) {
         playAudioWithChannel(audioPause, CHANNEL_PAUSE);
-        playAudioWithChannelLoop(audioPauseBeat, CHANNEL_PAUSE_BEAT, LOOP_INFINITE);
+        playAudioWithChannelLoop(audioPauseBeat, CHANNEL_PAUSE_BEAT);
     }
     else
         stopAudio(CHANNEL_PAUSE_BEAT);
