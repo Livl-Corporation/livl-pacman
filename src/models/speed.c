@@ -39,7 +39,7 @@ float getPacmanSpeed(struct Position pacmanGridPos)
     if (isGhostEatable()) pacmanSpeed = PACMAN_FRIGHT_SPEED;
 
     int round = getRound();
-    float speed = PACMAN_DEFAULT_SPEED;
+    float speedPercentage = PACMAN_DEFAULT_SPEED;
 
     for (int i = 0; i < sizeof(pacmanSpeedLevels) / sizeof(PacmanSpeedLevel); i++)
     {
@@ -48,29 +48,29 @@ float getPacmanSpeed(struct Position pacmanGridPos)
             switch (pacmanSpeed)
             {
                 case PACMAN_NORM_SPEED:
-                    speed = pacmanSpeedLevels[i].normSpeed;
+                    speedPercentage = pacmanSpeedLevels[i].normSpeed;
                     break;
                 case PACMAN_NORM_DOTS_SPEED:
-                    speed = pacmanSpeedLevels[i].normDotsSpeed;
+                    speedPercentage = pacmanSpeedLevels[i].normDotsSpeed;
                     break;
                 case PACMAN_FRIGHT_SPEED:
-                    speed = pacmanSpeedLevels[i].frightSpeed;
+                    speedPercentage = pacmanSpeedLevels[i].frightSpeed;
                     break;
                 case PACMAN_FRIGHT_DOTS_SPEED:
-                    speed = pacmanSpeedLevels[i].frightDotsSpeed;
+                    speedPercentage = pacmanSpeedLevels[i].frightDotsSpeed;
                     break;
             }
             break;
         }
     }
 
-    return PACMAN_DEFAULT_SPEED*speed;
+    return PACMAN_DEFAULT_SPEED * speedPercentage;
 }
 
 float getGhostSpeed(struct Position ghostGridPos)
 {
     int round = getRound();
-    float speed = PACMAN_DEFAULT_SPEED;
+    float speedPercentage = PACMAN_DEFAULT_SPEED;
 
     for (int i = 0; i < sizeof(ghostSpeedLevels) / sizeof(GhostSpeedLevel); i++)
     {
@@ -79,19 +79,19 @@ float getGhostSpeed(struct Position ghostGridPos)
             // TODO: check if ghost is in Tunnel
             //if (isGhostInTunnel(ghostGridPos))
             //{
-            //    speed = ghostSpeedLevels[i].tunnelSpeed;
+            //    speedPercentage = ghostSpeedLevels[i].tunnelSpeed;
             //}
             if (isGhostEatable())
             {
-                speed = ghostSpeedLevels[i].frightSpeed;
+                speedPercentage = ghostSpeedLevels[i].frightSpeed;
             }
             else
             {
-                speed = ghostSpeedLevels[i].normSpeed;
+                speedPercentage = ghostSpeedLevels[i].normSpeed;
             }
             break;
         }
     }
 
-    return GHOST_DEFAULT_SPEED*speed;
+    return GHOST_DEFAULT_SPEED * speedPercentage;
 }
