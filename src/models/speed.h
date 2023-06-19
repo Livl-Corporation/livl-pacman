@@ -42,7 +42,8 @@ typedef struct
     float tunnelSpeed;
 } GhostSpeedLevel;
 
-#define DEFAULT_SPEED 1.0
+#define PACMAN_DEFAULT_SPEED 1.0
+#define GHOST_DEFAULT_SPEED 1.0
 
 /*
  * PACMAN SPEED

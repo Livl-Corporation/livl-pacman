@@ -39,7 +39,7 @@ float getPacmanSpeed(struct Position pacmanGridPos)
     if (isGhostEatable()) pacmanSpeed = PACMAN_FRIGHT_SPEED;
 
     int round = getRound();
-    float speed = DEFAULT_SPEED;
+    float speed = PACMAN_DEFAULT_SPEED;
 
     for (int i = 0; i < sizeof(pacmanSpeedLevels) / sizeof(PacmanSpeedLevel); i++)
     {
@@ -64,13 +64,13 @@ float getPacmanSpeed(struct Position pacmanGridPos)
         }
     }
 
-    return speed;
+    return PACMAN_DEFAULT_SPEED*speed;
 }
 
 float getGhostSpeed(struct Position ghostGridPos)
 {
     int round = getRound();
-    float speed = DEFAULT_SPEED;
+    float speed = PACMAN_DEFAULT_SPEED;
 
     for (int i = 0; i < sizeof(ghostSpeedLevels) / sizeof(GhostSpeedLevel); i++)
     {
@@ -93,5 +93,5 @@ float getGhostSpeed(struct Position ghostGridPos)
         }
     }
 
-    return speed;
+    return GHOST_DEFAULT_SPEED*speed;
 }
