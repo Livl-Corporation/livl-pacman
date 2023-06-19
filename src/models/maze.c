@@ -94,7 +94,8 @@ void removeMazeElement(MazeElement elementToRemove)
     {
         for (int j = 0; j < MAP_WIDTH; j++)
         {
-            if (gameMaze[i][j] == elementToRemove)
+            struct Position gridPos = {j, i};
+            if (getMazeElementAt(gridPos) == elementToRemove)
                 gameMaze[i][j] = EMPTY;
         }
     }
@@ -106,18 +107,6 @@ void setMazeElementAt(struct Position position, MazeElement element)
         return;
 
     gameMaze[position.y][position.x] = element;
-}
-
-void displayMaze()
-{
-    for (int i = 0; i < MAP_HEIGHT; i++)
-    {
-        for (int j = 0; j < MAP_WIDTH; j++)
-        {
-            ConsoleHandlerDisplayMessage("%c", gameMaze[i][j]);
-        }
-        ConsoleHandlerDisplayMessage("\n");
-    }
 }
 
 struct Position getInitialPositionOfElement(MazeElement element)
@@ -212,7 +201,8 @@ int getInitialElementAmount(MazeElement element) {
     {
         for (int j = 0; j < MAP_WIDTH; j++)
         {
-            if (initialMaze[i][j] == element)
+            struct Position gridPos = {j, i};
+            if (getMazeElementAt(gridPos) == element)
                 amount++;
         }
     }

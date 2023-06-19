@@ -44,12 +44,6 @@ void freeMaze();
 void setMazeElementAt(struct Position position, MazeElement element);
 
 /**
- * Display maze in console
- * For debug usage only
- */
-void displayMaze();
-
-/**
  * Get maze element at position in the current game maze
  * @param position
  * @return MazeElement
