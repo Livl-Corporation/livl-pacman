@@ -18,48 +18,55 @@ int fruitLevel = 0;
 SDL_Rect fruitUiPos;
 SDL_Rect fruitScoreUiPos;
 
-void initFruits() {
+void initFruits()
+{
     exportSprites(
-            &initialFruitPos,
-            fruitsRects,
-            FRUIT_COUNTS,
-            FRUIT_SIZE + FRUIT_X_SPACING,
-            0);
+        &initialFruitPos,
+        fruitsRects,
+        FRUIT_COUNTS,
+        FRUIT_SIZE + FRUIT_X_SPACING,
+        0);
 
     exportSprites(
-            &initialFruitScorePos,
-            fruitScoresRects,
-            FRUIT_COUNTS,
-            0,
-            FRUIT_SCORE_H + FRUIT_SCORE_Y_SPACING);
+        &initialFruitScorePos,
+        fruitScoresRects,
+        FRUIT_COUNTS,
+        0,
+        FRUIT_SCORE_H + FRUIT_SCORE_Y_SPACING);
     struct Position gridPos = getInitialPositionOfElement(FRUIT);
     struct Position uiPos = gridPosToUiPos(gridPos);
-    fruitUiPos = (SDL_Rect) {
-            uiPos.x,
-            uiPos.y,
-            CELL_SIZE,
-            CELL_SIZE
-    };
-    fruitScoreUiPos = (SDL_Rect) {
-            uiPos.x - CELL_SIZE / 2 + FRUIT_SCORE_W / 2,
-            uiPos.y + CELL_SIZE / 2 - FRUIT_SCORE_H,
-            FRUIT_SCORE_W * FRUIT_SCORE_UI_SCALE,
-            FRUIT_SCORE_H * FRUIT_SCORE_UI_SCALE
-    };
+    fruitUiPos = (SDL_Rect){
+        uiPos.x,
+        uiPos.y,
+        CELL_SIZE,
+        CELL_SIZE};
+    fruitScoreUiPos = (SDL_Rect){
+        uiPos.x - CELL_SIZE / 2 + FRUIT_SCORE_W / 2,
+        uiPos.y + CELL_SIZE / 2 - FRUIT_SCORE_H,
+        FRUIT_SCORE_W * FRUIT_SCORE_UI_SCALE,
+        FRUIT_SCORE_H * FRUIT_SCORE_UI_SCALE};
 }
 
-int getFruitLevel() {
+int getFruitLevel()
+{
     int round = getRound();
     int level = 0;
-    for (int i = 0; i < FRUIT_COUNTS; i++) {
-        if (round >= fruitLevels[i]) {
+    for (int i = 0; i < FRUIT_COUNTS; i++)
+    {
+        if (round >= fruitLevels[i])
+        {
             level = i;
         }
     }
     return level;
 }
 
-void handleFruitCollision() {
+void handleFruitCollision()
+{
+
+    if (!fruitTimer.isRunning)
+        return;
+
     stopTimer(&fruitTimer);
     incrementScore(fruitPoints[fruitLevel]);
 
@@ -67,14 +74,17 @@ void handleFruitCollision() {
     startTimer(&fruitScoreAnimationTimer);
 }
 
-void spawnFruit() {
+void spawnFruit()
+{
     fruitLevel = getFruitLevel();
     resetTimer(&fruitTimer);
     startTimer(&fruitTimer);
 }
 
-void drawFruit() {
-    if (fruitTimer.isRunning) {
+void drawFruit()
+{
+    if (fruitTimer.isRunning)
+    {
 
         SDL_BlitScaled(
             pSurfacePacmanSpriteSheet,
@@ -83,7 +93,8 @@ void drawFruit() {
             &fruitUiPos);
     }
 
-    if (fruitScoreAnimationTimer.isRunning) {
+    if (fruitScoreAnimationTimer.isRunning)
+    {
         SDL_BlitScaled(
             pSurfacePacmanSpriteSheet,
             &fruitScoresRects[fruitLevel],
@@ -92,6 +103,7 @@ void drawFruit() {
     }
 }
 
-void resetFruit() {
+void resetFruit()
+{
     stopTimer(&fruitTimer);
 }
