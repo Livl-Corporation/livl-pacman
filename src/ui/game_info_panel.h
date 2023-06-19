@@ -8,6 +8,7 @@
 #include "../utilities/console_handler.h"
 #include "models/position.h"
 #include "models/pacman.h"
+#include "models/fruit.h"
 #include "utilities/sdl_functions.h"
 
 #define GHOST_SCORE_W 15
@@ -21,6 +22,13 @@
 #define GAME_OVER_W 78
 #define GAME_OVER_H 7
 #define GAME_OVER_UI_SCALE 2
+
+#define FRUIT_BAR_MAX_FRUITS 7
+#define FRUIT_BAR_SPACING 3
+#define FRUIT_BAR_UI_SCALE 2
+#define FRUIT_BAR_RIGHT_MARGIN 200
+
+#define BOTTOM_BAR_SPACING 33
 
 void initGameInfoPanel();
 
@@ -41,5 +49,7 @@ void drawReady();
 void drawGameOver();
 
 int getNumDigits(int score);
+
+void drawFruitBar();
 
 #endif // PACMAN_GAME_INFO_PANEL_H
