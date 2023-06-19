@@ -89,7 +89,7 @@ void playSirenOrPowerUpSound()
 
 void playAudioWithChannel(Mix_Chunk *sound, int channel)
 {
-    playAudioWithChannelLoop(sound, channel, LOOP_DEFAULT);
+    playAudioWithChannelLoop(sound, channel, NO_LOOP);
 }
 
 void playAudioWithChannelLoop(Mix_Chunk *sound, int channel, int loops)

@@ -37,7 +37,7 @@
 #define CHANNEL_DEATH 11
 #define CHANNEL_DOT_2 12
 
-#define LOOP_DEFAULT 0
+#define NO_LOOP 0
 #define LOOP_INFINITE (-1)
 
 extern Mix_Chunk *audioDeath;
