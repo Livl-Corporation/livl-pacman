@@ -37,7 +37,7 @@ void resetGameWindow();
 
 void endReady();
 
-void startReady(int initialCount);
+void startReady(int duration);
 
 void delayToMaintainFrameRate(clock_t before, Uint32 desiredDelayInMs);
 

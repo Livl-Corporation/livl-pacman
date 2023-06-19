@@ -57,6 +57,16 @@ void updateTimers()
     }
 }
 
+void setTimerInitialCount(struct Timer *timer, int duration)
+{
+    timer->initialCount = duration;
+}
+
+void setTimerCallback(struct Timer *timer, TimerCallback callback)
+{
+    timer->callback = callback;
+}
+
 void clearTimers()
 {
     for (int i = 0; i < timerCount; i++)

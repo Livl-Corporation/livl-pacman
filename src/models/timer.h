@@ -25,6 +25,10 @@ void stopTimer(struct Timer *timer);
 
 void resetTimer(struct Timer *timer);
 
+void setTimerInitialCount(struct Timer *timer, int duration);
+
+void setTimerCallback(struct Timer *timer, TimerCallback callback);
+
 void updateTimers();
 
 void clearTimers();

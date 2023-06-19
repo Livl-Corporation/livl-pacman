@@ -96,11 +96,11 @@ void handleGameEvents()
     handlePacmanEvents();
 }
 
-void startReady(int initialCount)
+void startReady(int duration)
 {
     isGamePause = true;
-    readyTimer.initialCount = initialCount;
-    readyTimer.callback = endReady;
+    setTimerInitialCount(&readyTimer, duration);
+    setTimerCallback(&readyTimer, endReady);
     resetTimer(&readyTimer);
     startTimer(&readyTimer);
 }

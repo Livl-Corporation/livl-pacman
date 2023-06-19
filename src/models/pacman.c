@@ -283,7 +283,7 @@ void pacmanEatGhost(MazeElement ghostElement)
 
     incrementScore(getEatenGhostScore(ghostEaten));
 
-    eatGhostAnimationTimer.callback = endEatGhostAnimation;
+    setTimerCallback(&eatGhostAnimationTimer, endEatGhostAnimation);
 
     resetTimer(&eatGhostAnimationTimer);
     startTimer(&eatGhostAnimationTimer);
@@ -294,8 +294,8 @@ void pacmanEatGhost(MazeElement ghostElement)
 
 void startPacmanDeathAnimation() {
 
-    pacmanDeathAnimationDelayTimer.callback = endPacmanDeathDelay;
-    pacmanDeathAnimationTimer.callback = endPacmanDeathAnimation;
+    setTimerCallback(&pacmanDeathAnimationDelayTimer, endPacmanDeathDelay);
+    setTimerCallback(&pacmanDeathAnimationTimer, endPacmanDeathAnimation);
 
     stopSirenOrPowerUpSound();
     playAudioWithChannel(audioDeath, CHANNEL_DEATH);
@@ -328,7 +328,7 @@ void afterPacmanDeath() {
 
     if (getLives() <= 0)
     {
-        gameOverTimer.callback = afterGameOverAnimation;
+        setTimerCallback(&gameOverTimer, afterGameOverAnimation);
         resetTimer(&gameOverTimer);
         startTimer(&gameOverTimer);
         return;
