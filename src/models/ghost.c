@@ -24,6 +24,7 @@ void initGhostList()
         ghostList[i].gridPosition.x = 0;
         ghostList[i].gridPosition.y = 0;
         ghostList[i].ghostElement = i + '0';
+        ghostList[i].direction = DIRECTION_RIGHT;
 
         // Sprites :
         ghostList[i].rects = malloc(sizeof(SDL_Rect) * DIRECTION_COUNT);

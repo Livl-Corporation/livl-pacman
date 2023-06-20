@@ -19,6 +19,7 @@
 #include "ui/menu_window.h"
 #include "ui/pause_menu.h"
 #include "models/fruit.h"
+#include "models/audio.h"
 
 #define READY_W 46
 #define READY_H 7
@@ -28,6 +29,7 @@
 
 extern int frameCount;
 extern bool isGamePause;
+extern bool isPauseMenuOpen;
 
 void startGame();
 
@@ -35,7 +37,7 @@ void resetGameWindow();
 
 void endReady();
 
-void startReady();
+void startReady(int duration);
 
 void delayToMaintainFrameRate(clock_t before, Uint32 desiredDelayInMs);
 
@@ -44,7 +46,5 @@ void handleGameEvents();
 void drawGame();
 
 void drawHeader();
-
-void setPause(int isPaused);
 
 #endif // PACMAN_GAME_WINDOW_H
