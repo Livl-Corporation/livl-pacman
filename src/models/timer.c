@@ -57,7 +57,7 @@ void updateTimers()
     }
 }
 
-void setTimerInitialCount(struct Timer *timer, int duration)
+void setDuration(struct Timer *timer, int duration)
 {
     timer->initialCount = duration;
 }

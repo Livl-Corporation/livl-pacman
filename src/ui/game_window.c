@@ -99,7 +99,7 @@ void handleGameEvents()
 void startReady(int duration)
 {
     isGamePause = true;
-    setTimerInitialCount(&readyTimer, duration);
+    setDuration(&readyTimer, duration);
     setTimerCallback(&readyTimer, endReady);
     resetTimer(&readyTimer);
     startTimer(&readyTimer);
