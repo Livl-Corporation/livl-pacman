@@ -110,6 +110,7 @@ void drawGame()
         if (nextRoundAnimationTimer.count % MAZE_BLINK_WHITE_BLUE_RATE) drawMaze(true);
         else drawMaze(false);
 
+        drawGameInfoPanel();
         drawPacman();
         return;
     }
