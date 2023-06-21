@@ -45,7 +45,7 @@ bool retrieveMazeFromFile()
 
 void blitRectWithOffset(SDL_Rect imgRect, struct Position positionOffsetInMaze, int offsetX, int offsetY, int width, int height)
 {
-    SDL_Rect destinationRect = {positionOffsetInMaze.x + offsetX, positionOffsetInMaze.y + offsetY, width, height};
+    SDL_Rect destinationRect = {(int)positionOffsetInMaze.x + offsetX, (int)positionOffsetInMaze.y + offsetY, width, height};
     SDL_SetColorKey(pSurfacePacmanSpriteSheet, true, 0);
     SDL_BlitScaled(pSurfacePacmanSpriteSheet, &imgRect, pSurfaceWindow, &destinationRect);
 }
@@ -102,10 +102,8 @@ void removeMazeElement(MazeElement elementToRemove)
 
 void setMazeElementAt(struct Position position, MazeElement element)
 {
-    if (!isInBounds(position))
-        return;
-
-    gameMaze[position.y][position.x] = element;
+    if (!isInBounds(position)) return;
+    gameMaze[(int)position.y][(int)position.x] = element;
 }
 
 void displayMaze()
@@ -127,18 +125,14 @@ struct Position getInitialPositionOfElement(MazeElement element)
 
 MazeElement getMazeElementAt(struct Position position)
 {
-    if (!isInBounds(position))
-        return WALL;
-
-    return gameMaze[position.y][position.x];
+    if (!isInBounds(position)) return WALL;
+    return gameMaze[(int)position.y][(int)position.x];
 }
 
 MazeElement getInitialMazeElementAt(struct Position position)
 {
-    if (!isInBounds(position))
-        return WALL;
-
-    return initialMaze[position.y][position.x];
+    if (!isInBounds(position)) return WALL;
+    return initialMaze[(int)position.y][(int)position.x];
 }
 
 struct Position getPositionOfElement(MazeElement element)
