@@ -39,6 +39,26 @@ void handlePacmanEvents();
  */
 void drawPacman();
 
+bool shouldSkipPacmanDrawOnGamePause();
+
+void drawPacmanDeathAnimation();
+
+bool shouldSkipPacmanDrawOnDeathTimer();
+
+bool shouldChangeDirection();
+
+int getPacmanAnimation();
+
+SDL_Rect getPacmanSprite(int pacmanAnimation);
+
+struct Position calculateTargetPosition(struct Position pacmanPosCopy);
+
+bool hasPacmanMoved(struct Position newPacmanGridPos);
+
+void pacmanBlit(SDL_Rect srcRect);
+
+int calculatePacmanDeathAnimationIndex();
+
 void drawPacmanArrow();
 
 void endEatGhostAnimation();
