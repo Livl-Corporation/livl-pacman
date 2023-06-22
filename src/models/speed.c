@@ -41,7 +41,7 @@ float getPacmanSpeed(struct Position pacmanGridPos)
     int round = getRound();
     float speedPercentage = PACMAN_DEFAULT_SPEED;
 
-    for (int i = 0; i < sizeof(pacmanSpeedLevels) / sizeof(PacmanSpeedLevel); i++)
+    for (size_t i = 0; i < sizeof(pacmanSpeedLevels) / sizeof(PacmanSpeedLevel); i++)
     {
         if (round >= pacmanSpeedLevels[i].minRound && round <= pacmanSpeedLevels[i].maxRound)
         {
@@ -67,12 +67,12 @@ float getPacmanSpeed(struct Position pacmanGridPos)
     return PACMAN_DEFAULT_SPEED * speedPercentage;
 }
 
-float getGhostSpeed(struct Position ghostGridPos)
+float getGhostSpeed(struct Position ghostGridPos __attribute__((unused)))
 {
     int round = getRound();
     float speedPercentage = PACMAN_DEFAULT_SPEED;
 
-    for (int i = 0; i < sizeof(ghostSpeedLevels) / sizeof(GhostSpeedLevel); i++)
+    for (size_t i = 0; i < sizeof(ghostSpeedLevels) / sizeof(GhostSpeedLevel); i++)
     {
         if (round >= ghostSpeedLevels[i].minRound && round <= ghostSpeedLevels[i].maxRound)
         {
