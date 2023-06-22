@@ -201,6 +201,7 @@ struct Position onPacmanGridMove(struct Position *pacmanUiPos)
     case RIGHT_TELEPORTER:
         return teleportPacman(LEFT_TELEPORTER);
     case SMALL_COIN:
+        playDotSound();
         incrementScore(10);
         setMazeElementAt(pacmanGridPos, EMPTY);
         handleCoinCollision();
@@ -263,14 +264,8 @@ void endEatGhostAnimation() {
 
 void handleGhostCollision(MazeElement ghostElement)
 {
-    if (isGhostEatable())
-    {
-        pacmanEatGhost(ghostElement);
-    }
-    else
-    {
-        killPacman();
-    }
+    if (isGhostEatable()) pacmanEatGhost(ghostElement);
+    else killPacman();
 }
 
 void killPacman()
@@ -287,9 +282,11 @@ void pacmanEatGhost(MazeElement ghostElement)
     setMazeElementAt(pacmanGridPos, PACMAN);
     ghostEaten++;
 
+    playAudioWithChannel(audioEatGhost, CHANNEL_EAT_GHOST);
+
     incrementScore(getEatenGhostScore(ghostEaten));
 
-    eatGhostAnimationTimer.callback = endEatGhostAnimation;
+    setTimerCallback(&eatGhostAnimationTimer, endEatGhostAnimation);
 
     resetTimer(&eatGhostAnimationTimer);
     startTimer(&eatGhostAnimationTimer);
@@ -300,8 +297,11 @@ void pacmanEatGhost(MazeElement ghostElement)
 
 void startPacmanDeathAnimation() {
 
-    pacmanDeathAnimationDelayTimer.callback = endPacmanDeathDelay;
-    pacmanDeathAnimationTimer.callback = endPacmanDeathAnimation;
+    setTimerCallback(&pacmanDeathAnimationDelayTimer, endPacmanDeathDelay);
+    setTimerCallback(&pacmanDeathAnimationTimer, endPacmanDeathAnimation);
+
+    stopSirenOrPowerUpSound();
+    playAudioWithChannel(audioDeath, CHANNEL_DEATH);
 
     isGamePause = true;
 
@@ -331,7 +331,7 @@ void afterPacmanDeath() {
 
     if (getLives() <= 0)
     {
-        gameOverTimer.callback = afterGameOverAnimation;
+        setTimerCallback(&gameOverTimer, afterGameOverAnimation);
         resetTimer(&gameOverTimer);
         startTimer(&gameOverTimer);
         return;
@@ -340,7 +340,7 @@ void afterPacmanDeath() {
     resetFruit();
     spawnPacman();
     spawnGhosts();
-    startReady();
+    startReady(READY_DURATION);
 
 }
 

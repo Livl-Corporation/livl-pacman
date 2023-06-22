@@ -111,6 +111,7 @@ void handlePauseMenuEvents()
 
             if (isMainMenuButtonHovered)
             {
+                stopAudio(CHANNEL_PAUSE_BEAT);
                 goBackToMenu();
                 return;
             }
@@ -120,4 +121,16 @@ void handlePauseMenuEvents()
             break;
         }
     }
+}
+
+void setPause(int isPaused)
+{
+    isGamePause = isPaused;
+    isPauseMenuOpen = isPaused;
+    if (isPaused) {
+        playAudioWithChannel(audioPause, CHANNEL_PAUSE);
+        playAudioWithChannelLoop(audioPauseBeat, CHANNEL_PAUSE_BEAT);
+    }
+    else
+        stopAudio(CHANNEL_PAUSE_BEAT);
 }

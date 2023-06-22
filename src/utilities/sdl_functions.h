@@ -17,9 +17,14 @@ int isPositionInRect(struct Position position, SDL_Rect *rect);
 
 void exportSprites(SDL_Rect *srcRect, SDL_Rect *destRect, int count, int xStep, int yStep);
 
-/// TO BE REMOVED
+void initSDL_Mixer();
+void loadSound(Mix_Chunk **audio, char *path);
+void freeSound(Mix_Chunk *audio);
+void closeSDL_Mixer();
+
 void initSDL();
 void loadMedia();
 void closeWindow();
+
 
 #endif // PACMAN_SDL_FUNCTIONS_H

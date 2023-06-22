@@ -97,7 +97,7 @@ void nextRound(){
 void startNextRoundAnimation()
 {
     isGamePause = true;
-    nextRoundAnimationTimer.callback = &endNextRoundAnimation;
+    setTimerCallback(&nextRoundAnimationTimer, endNextRoundAnimation);
     resetTimer(&nextRoundAnimationTimer);
     startTimer(&nextRoundAnimationTimer);
 }
@@ -107,7 +107,7 @@ void endNextRoundAnimation()
     spawnPacman();
     refillCoins();
     resetEatenDotsCount();
-    startReady();
+    startReady(READY_DURATION);
 }
 
 int getEatenDotsCount() {
