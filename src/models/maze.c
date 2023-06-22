@@ -182,9 +182,9 @@ struct Position uiPosToGridPos(struct Position posInPx)
 
     posInPx.y -= HEADER_SCREEN_HEIGHT;
 
-    // Get the position in the grid
-    position.x = posInPx.x / CELL_SIZE;
-    position.y = posInPx.y / CELL_SIZE;
+    // Get position in the grid
+    position.x = (int)posInPx.x / CELL_SIZE;
+    position.y = (int)posInPx.y / CELL_SIZE;
 
     return position;
 }
