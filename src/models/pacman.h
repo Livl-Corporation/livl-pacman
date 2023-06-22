@@ -16,6 +16,7 @@
 #include "models/ghost.h"
 #include "../ui/game_window.h"
 #include "models/fruit.h"
+#include "speed.h"
 
 extern struct Position pacmanUIPos;
 
