@@ -159,7 +159,7 @@ void drawFruitBar()
         int fruitLevel = getFruitLevel(getRound() - i);
 
         SDL_Rect fruitUiPos = {
-            fruitBarPos.x + (i * (FRUIT_SIZE * FRUIT_BAR_UI_SCALE) + FRUIT_BAR_SPACING),
+            fruitBarPos.x - (i * (FRUIT_SIZE * FRUIT_BAR_UI_SCALE) + FRUIT_BAR_SPACING),
             fruitBarPos.y,
             fruitBarPos.w,
             fruitBarPos.h,
