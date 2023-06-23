@@ -27,6 +27,9 @@ void startMenu()
     SDL_FillRect(pSurfaceWindow, 0, 0); // Clears the window's surface before drawing the new frame
     drawMainMenu();
 
+    volumeAudio(audioPacmanDrill, SDL_MIX_MAXVOLUME/4);
+    playAudioWithChannelLoop(audioPacmanDrill, CHANNEL_PACMAN_DRILL);
+
     while (!pMainMenuQuit)
     {
         handleMainMenuEvents();
@@ -68,6 +71,7 @@ void handleMainMenuEvents()
         case SDL_MOUSEBUTTONUP:
             if (isPlayButtonHovered)
             {
+                stopAudio(CHANNEL_PACMAN_DRILL);
                 startGame();
                 pMainMenuQuit = true;
             }

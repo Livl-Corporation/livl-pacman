@@ -62,7 +62,13 @@ int getFruitLevel(int round)
 
 void handleFruitCollision()
 {
+
+    if (!fruitTimer.isRunning)
+        return;
+
     stopTimer(&fruitTimer);
+
+    playAudioWithChannel(audioFruit, CHANNEL_FRUIT);
     incrementScore(fruitPoints[fruitLevel]);
 
     resetTimer(&fruitScoreAnimationTimer);

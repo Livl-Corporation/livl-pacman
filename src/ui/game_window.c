@@ -22,8 +22,8 @@ void startGame()
     spawnPacman();
     spawnGhosts();
 
-
-    startReady();
+    playAudioWithChannel(audioGameStart, CHANNEL_GAME_START);
+    startReady(GAME_START_DURATION);
 
     while (!pGameQuit)
     {
@@ -36,6 +36,7 @@ void startGame()
         {
             drawPauseMenu();
             handlePauseMenuEvents();
+            stopSirenOrPowerUpSound();
         }
         else
         {
@@ -43,10 +44,9 @@ void startGame()
             drawGame();
             handleGameEvents();
 
-            if (readyTimer.isRunning) {
-                drawReady();
-            }
+            if (readyTimer.isRunning) drawReady();
 
+            playSirenOrPowerUpSound();
         }
 
         SDL_UpdateWindowSurface(pWindow);
@@ -57,6 +57,7 @@ void startGame()
     }
 
     freeGame();
+    freeAudios();
 }
 
 void resetGameWindow()
@@ -95,10 +96,11 @@ void handleGameEvents()
     handlePacmanEvents();
 }
 
-void startReady()
+void startReady(int duration)
 {
     isGamePause = true;
-    readyTimer.callback = endReady;
+    setDuration(&readyTimer, duration);
+    setTimerCallback(&readyTimer, endReady);
     resetTimer(&readyTimer);
     startTimer(&readyTimer);
 }
@@ -141,10 +143,4 @@ void delayToMaintainFrameRate(clock_t before, Uint32 desiredDelayInMs)
 
     if (desiredDelayInMs > milliseconds)
         SDL_Delay(desiredDelayInMs - milliseconds);
-}
-
-void setPause(int isPaused)
-{
-    isGamePause = isPaused;
-    isPauseMenuOpen = isPaused;
 }

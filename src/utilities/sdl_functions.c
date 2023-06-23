@@ -18,6 +18,32 @@ void initSDL()
         SDL_ExitWithError("Creation of the SDL window surface");
 }
 
+void initSDL_Mixer()
+{
+    // Initialize SDL_mixer with desired audio settings
+    int audioFlags = MIX_INIT_MP3 ;  // Choose the audio format you want to use (e.g., OGG)
+
+    // Initialize SDL_mixer
+    if (Mix_Init(audioFlags) != audioFlags)
+    {
+        printf("Failed to initialize SDL_mixer: %s\n", Mix_GetError());
+    }
+
+    // Open the audio device
+    if (Mix_OpenAudio(MIX_DEFAULT_FREQUENCY, MIX_DEFAULT_FORMAT, MIX_DEFAULT_CHANNELS, 1024) != 0)
+    {
+        printf("Failed to open audio: %s\n", Mix_GetError());
+    }
+}
+
+void loadSound(Mix_Chunk **audio, char *path)
+{
+    *audio = Mix_LoadWAV(path);
+    if (*audio == NULL)
+        SDL_ExitWithError("Loading sound file");
+}
+
+
 void loadMedia()
 {
     pSurfacePacmanSpriteSheet = SDL_LoadBMP(PATH_SPRITE_SHEET_PACMAN);
@@ -39,6 +65,18 @@ void closeWindow()
     SDL_FreeSurface(pSurfaceWindow);
     SDL_DestroyWindow(pWindow);
     SDL_Quit();
+}
+
+void freeSound(Mix_Chunk *audio)
+{
+    Mix_FreeChunk(audio);
+    audio = NULL;
+}
+
+void closeSDL_Mixer()
+{
+    Mix_CloseAudio();
+    Mix_Quit();
 }
 
 int isPositionInRect(struct Position position, SDL_Rect *rect)

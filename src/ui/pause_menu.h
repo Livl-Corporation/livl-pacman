@@ -22,5 +22,6 @@
 
 void drawPauseMenu();
 void handlePauseMenuEvents();
+void setPause(int isPaused);
 
 #endif
