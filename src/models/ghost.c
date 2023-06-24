@@ -162,7 +162,11 @@ void moveGhost(struct Ghost *sprite)
 
 void onGhostGridPositionChanged(struct Ghost *sprite)
 {
+    // Todo : change direction when possible without collision
+    //sprite->direction = sprite->nextDirection;
+    selectNextGhostDirection(sprite);
 
+    // TODO : ghost will turn instantly but will go through walls. We should implement ghost whished direction + obstacle detection like for pacman
 }
 
 void setGhostTargetTile(struct Ghost *sprite, struct Position targetTile)
