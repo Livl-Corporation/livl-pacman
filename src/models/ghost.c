@@ -146,8 +146,97 @@ int getEatenGhostScore(int ghostEaten)
     return pow(2, ghostEaten) * 100;
 }
 
-void moveGhostInDirection(struct Ghost *sprite)
+void moveGhost(struct Ghost *sprite)
 {
     updatePosition(&sprite->uiPosition, sprite->direction, SPRITE_SPEED);
-    sprite->gridPosition = uiPosToGridPos(getCellCenter(sprite->uiPosition));
+
+    struct Position updatedGridPos = uiPosToGridPos(getCellCenter(sprite->uiPosition));
+
+    if (arePositionEquals(sprite->gridPosition, updatedGridPos))
+        return;
+
+    sprite->gridPosition = updatedGridPos;
+    onGhostGridPositionChanged(sprite);
+
+}
+
+void onGhostGridPositionChanged(struct Ghost *sprite)
+{
+
+}
+
+void setGhostTargetTile(struct Ghost *sprite, struct Position targetTile)
+{
+    sprite->targetTile = targetTile;
+}
+
+void selectNextGhostDirection(struct Ghost *sprite)
+{
+    struct Position nextPosition = sprite->gridPosition;
+    updatePosition(&nextPosition, sprite->direction, 1);
+
+    // Get possible directions
+    Direction possibleDirections[DIRECTION_COUNT-1];
+    int possibleDirectionsCount = 0;
+
+    for (int i = 0; i < DIRECTION_COUNT; i++)
+    {
+        Direction direction = i;
+
+        // if is opposite direction don't att
+        if (direction == getOppositeDirection(sprite->direction))
+            continue;
+
+        struct Position cell = sprite->gridPosition;
+        updatePosition(&cell, direction, 1);
+        // if is obstacle don't add
+        if (isObstacle(cell))
+            continue;
+
+        // add direction if previous conditions passed
+        possibleDirections[possibleDirectionsCount] = direction;
+        possibleDirectionsCount++;
+    }
+
+    // if 1 direction possible, select it
+    if (possibleDirectionsCount == 1)
+    {
+        sprite->nextDirection = possibleDirections[0];
+        return;
+    }
+
+    // else if 2 directions possible, select the one that is the closest to the target tile
+    int minimumDistance = 1000000;
+    for (int i = 0; i < possibleDirectionsCount; i++)
+    {
+        struct Position cell = sprite->gridPosition;
+        updatePosition(&cell, possibleDirections[i], 1);
+        int distance = getDistance(cell, sprite->targetTile);
+        if (distance < minimumDistance)
+        {
+            minimumDistance = distance;
+            sprite->nextDirection = possibleDirections[i];
+        }
+    }
+
+}
+
+Direction getOppositeDirection(Direction direction) {
+    switch (direction) {
+        case DIRECTION_UP:
+            return DIRECTION_DOWN;
+        case DIRECTION_DOWN:
+            return DIRECTION_UP;
+        case DIRECTION_LEFT:
+            return DIRECTION_RIGHT;
+        case DIRECTION_RIGHT:
+            return DIRECTION_LEFT;
+        default:
+            return DIRECTION_UP;
+    }
+}
+
+int getDistance(struct Position pos1, struct Position pos2)
+{
+    return abs(pos1.x - pos2.x) + abs(pos1.y - pos2.y);
 }

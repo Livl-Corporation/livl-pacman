@@ -26,13 +26,14 @@ struct Ghost
     struct Position uiPosition;
     struct Position gridPosition;
     Direction direction;
+    Direction nextDirection;
     SDL_Rect *rects;
     SDL_Rect lastRect;
     MazeElement ghostElement;
+    struct Position targetTile;
 };
 
-void moveGhostInDirection(struct Ghost *sprite);
-
+void moveGhost(struct Ghost *sprite);
 
 /**
  * Initialize the ghost list
@@ -77,8 +78,18 @@ bool canBlitGhostInPausedGame(int ghostId);
 
 int getEatenGhostScore(int ghostEaten);
 
-// Private
 void updateGhost(struct Ghost *sprite);
+
 void blitGhost(struct Ghost *sprite, SDL_Rect *spritePos);
+
+void onGhostGridPositionChanged(struct Ghost *sprite);
+
+void setGhostTargetTile(struct Ghost *sprite, struct Position targetTile);
+
+void selectNextGhostDirection(struct Ghost *sprite);
+
+Direction getOppositeDirection(Direction direction);
+
+int getDistance(struct Position pos1, struct Position pos2);
 
 #endif // PACMAN_GHOST_H
