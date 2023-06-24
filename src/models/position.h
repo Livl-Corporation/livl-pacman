@@ -3,6 +3,7 @@
 
 #include <stdbool.h>
 #include "enums/direction.h"
+#include "constants.h"
 
 struct Position
 {
@@ -25,5 +26,7 @@ bool arePositionEquals(struct Position position1, struct Position position2);
  * @param step
  */
 void updatePosition(struct Position *position, Direction direction, int step);
+
+struct Position getCellCenter(struct Position position);
 
 #endif

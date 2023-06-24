@@ -10,7 +10,6 @@
 #include "enums/direction.h"
 #include "constants.h"
 #include "maze.h"
-#include "models/sprite.h"
 #include "models/game.h"
 #include "models/timer.h"
 #include "../ui/game_window.h"
@@ -20,6 +19,20 @@ extern int ghostEaten;
  * The ghost that has been eaten by pacman
  */
 extern MazeElement ghostElementEaten;
+
+struct Ghost
+{
+    int number;
+    struct Position uiPosition;
+    struct Position gridPosition;
+    Direction direction;
+    SDL_Rect *rects;
+    SDL_Rect lastRect;
+    MazeElement ghostElement;
+};
+
+void moveGhostInDirection(struct Ghost *sprite);
+
 
 /**
  * Initialize the ghost list
@@ -65,7 +78,7 @@ bool canBlitGhostInPausedGame(int ghostId);
 int getEatenGhostScore(int ghostEaten);
 
 // Private
-void updateGhost(struct Sprite *sprite);
-void blitGhost(struct Sprite *sprite, SDL_Rect *spritePos);
+void updateGhost(struct Ghost *sprite);
+void blitGhost(struct Ghost *sprite, SDL_Rect *spritePos);
 
 #endif // PACMAN_GHOST_H

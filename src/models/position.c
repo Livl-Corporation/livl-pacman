@@ -27,3 +27,12 @@ void updatePosition(struct Position *position, Direction direction, int step)
         break;
     }
 }
+
+struct Position getCellCenter(struct Position position)
+{
+    struct Position center = {
+            position.x + CELL_SIZE / 2,
+            position.y + CELL_SIZE / 2,
+    };
+    return center;
+}

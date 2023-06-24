@@ -4,7 +4,7 @@
 
 #include "ghost.h"
 
-struct Sprite *ghostList;
+struct Ghost *ghostList;
 
 int ghostEaten = 0;
 MazeElement ghostElementEaten = EMPTY;
@@ -14,7 +14,7 @@ SDL_Rect eatableGhostRect;
 void initGhostList()
 {
 
-    ghostList = malloc(sizeof(struct Sprite) * GHOST_COUNT);
+    ghostList = malloc(sizeof(struct Ghost) * GHOST_COUNT);
 
     for (int i = 0; i < GHOST_COUNT; i++)
     {
@@ -92,7 +92,7 @@ bool canBlitGhostInPausedGame(int ghostId)
     return ((isGamePause && !isScoreAnimationOnGhostEaten()) || (isScoreAnimationOnGhostEaten() && ghostList[ghostId].ghostElement != ghostElementEaten));
 }
 
-void updateGhost(struct Sprite *sprite)
+void updateGhost(struct Ghost *sprite)
 {
     SDL_Rect ghost_in2;
 
@@ -117,7 +117,7 @@ void updateGhost(struct Sprite *sprite)
     blitGhost(sprite, &ghost_in2);
 }
 
-void blitGhost(struct Sprite *sprite, SDL_Rect *spritePos)
+void blitGhost(struct Ghost *sprite, SDL_Rect *spritePos)
 {
     SDL_Rect rect = {sprite->uiPosition.x, sprite->uiPosition.y, CELL_SIZE, CELL_SIZE};
     SDL_SetColorKey(pSurfacePacmanSpriteSheet, 1, 0);
@@ -144,4 +144,10 @@ bool isGhostEatableRunningOut()
 int getEatenGhostScore(int ghostEaten)
 {
     return pow(2, ghostEaten) * 100;
+}
+
+void moveGhostInDirection(struct Ghost *sprite)
+{
+    updatePosition(&sprite->uiPosition, sprite->direction, SPRITE_SPEED);
+    sprite->gridPosition = uiPosToGridPos(getCellCenter(sprite->uiPosition));
 }
