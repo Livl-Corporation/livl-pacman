@@ -152,17 +152,15 @@ int getNumDigits(int score)
 
 void drawFruitBar()
 {
-    int displayedFruits = fmin(getRound(), FRUIT_BAR_MAX_FRUITS);
-    for (int i = 0; i < displayedFruits; i++)
+    int displayedFruits = (int) fmin(getRound(), FRUIT_BAR_MAX_FRUITS);
+    for (int descendingFruitIndex = displayedFruits-1, ascendingFruitIndex = 0; descendingFruitIndex >= 0; descendingFruitIndex--, ascendingFruitIndex++)
     {
-
-        int fruitLevel = getFruitLevel(getRound() - i);
-
+        int fruitLevel = getFruitLevel(getRound() - descendingFruitIndex);
         SDL_Rect fruitUiPos = {
-            fruitBarPos.x - (i * (FRUIT_SIZE * FRUIT_BAR_UI_SCALE) + FRUIT_BAR_SPACING),
-            fruitBarPos.y,
-            fruitBarPos.w,
-            fruitBarPos.h,
+                fruitBarPos.x - (ascendingFruitIndex * (FRUIT_SIZE * FRUIT_BAR_UI_SCALE) - FRUIT_BAR_SPACING),
+                fruitBarPos.y,
+                fruitBarPos.w,
+                fruitBarPos.h,
         };
         SDL_BlitScaled(pSurfacePacmanSpriteSheet, &fruitsRects[fruitLevel], pSurfaceWindow, &fruitUiPos);
     }
