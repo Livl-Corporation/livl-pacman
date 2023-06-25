@@ -11,9 +11,6 @@ MazeElement ghostElementEaten = EMPTY;
 
 SDL_Rect eatableGhostRect;
 
-GhostMode previousGhostMode = CHASE;
-GhostMode ghostMode = CHASE;
-
 void initGhostList()
 {
 
@@ -291,25 +288,6 @@ void teleportGhost(struct Ghost *sprite, MazeElement destination)
     sprite->gridPosition = teleporterPosition;
 }
 
-void onGhostEatableTimerEnds()
-{
-    setGhostMode(previousGhostMode);
-}
-
-void setGhostMode(GhostMode mode) {
-    ghostMode = mode;
-
-    if (mode == FRIGHTENED) {
-        resetTimer(&eatableGhostTimer);
-        setTimerCallback(&eatableGhostTimer, &onGhostEatableTimerEnds);
-        startTimer(&eatableGhostTimer);
-        ghostEaten = 0;
-        return;
-    }
-
-    previousGhostMode = ghostMode;
-}
-
 void eatGhost(MazeElement ghostElement) {
     ghostEaten++;
     removeMazeElement(ghostElement, entityMaze);
@@ -330,6 +308,6 @@ int getGhostEatenCount() {
     return ghostEaten;
 }
 
-GhostMode getGhostMode() {
-    return ghostMode;
+void resetGhostEatenCount() {
+    ghostEaten = 0;
 }

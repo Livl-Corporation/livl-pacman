@@ -85,10 +85,12 @@ void setGhostMode(GhostMode mode);
 
 GhostMode getGhostMode();
 
+void onGhostEatableTimerEnds();
+
 void eatGhost(MazeElement ghostElement);
 
 int getGhostEatenCount();
 
-void onGhostEatableTimerEnds();
+void resetGhostEatenCount();
 
 #endif // PACMAN_GHOST_H

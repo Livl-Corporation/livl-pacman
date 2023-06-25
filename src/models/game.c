@@ -12,6 +12,9 @@ int roundNumber = 1;
 int dotsCount = 0;
 int eatenDotsCount = 0;
 
+GhostMode previousGhostMode = CHASE;
+GhostMode ghostMode = CHASE;
+
 struct Timer eatableGhostTimer;
 struct Timer readyTimer;
 struct Timer gameOverTimer;
@@ -141,4 +144,27 @@ void goBackToMenu()
 {
     freeGame();
     startMenu();
+}
+
+GhostMode getGhostMode() {
+    return ghostMode;
+}
+
+void onGhostEatableTimerEnds()
+{
+    setGhostMode(previousGhostMode);
+}
+
+void setGhostMode(GhostMode mode) {
+    ghostMode = mode;
+
+    if (mode == FRIGHTENED) {
+        resetTimer(&eatableGhostTimer);
+        setTimerCallback(&eatableGhostTimer, &onGhostEatableTimerEnds);
+        startTimer(&eatableGhostTimer);
+        resetGhostEatenCount();
+        return;
+    }
+
+    previousGhostMode = ghostMode;
 }

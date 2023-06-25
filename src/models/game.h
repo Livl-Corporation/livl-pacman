@@ -53,4 +53,8 @@ void freeGame();
 
 void goBackToMenu();
 
+void setGhostMode(GhostMode mode);
+GhostMode getGhostMode();
+void onGhostEatableTimerEnds();
+
 #endif // PACMAN_GAME_H
