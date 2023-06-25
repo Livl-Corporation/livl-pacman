@@ -62,6 +62,12 @@ void onGhostEatableTimerEnds()
 }
 
 void setGhostMode(GhostMode mode) {
+
+    if (ghostMode != FRIGHTENED) {
+        // Ghost reverse direction when mode changes except when coming from frightened mode
+        reverseGhostsDirections();
+    }
+
     ghostMode = mode;
 
     printf("mode change : %d\n", mode);

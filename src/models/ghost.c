@@ -311,3 +311,10 @@ int getGhostEatenCount() {
 void resetGhostEatenCount() {
     ghostEaten = 0;
 }
+
+void reverseGhostsDirections() {
+    for (int i = 0; i < GHOST_COUNT; i++) {
+        struct Ghost *ghost = &ghostList[i];
+        ghost->nextDirection = getOppositeDirection(ghost->direction);
+    }
+}
