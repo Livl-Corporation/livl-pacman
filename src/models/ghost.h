@@ -92,4 +92,6 @@ Direction getOppositeDirection(Direction direction);
 
 int getDistance(struct Position pos1, struct Position pos2);
 
+void teleportGhost(struct Ghost *sprite, MazeElement destination);
+
 #endif // PACMAN_GHOST_H

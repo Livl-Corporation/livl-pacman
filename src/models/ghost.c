@@ -153,14 +153,9 @@ void moveGhost(struct Ghost *sprite)
 
     float speed = SPRITE_SPEED;
 
-    // calculate next ghost position for his wished direction
-    struct Position ghostUiPos = sprite->uiPosition;
-
     // check if next position will cause collision
     if (sprite->nextDirection != sprite->direction && canMoveInDirection(sprite->uiPosition, sprite->nextDirection))
-    {
         sprite->direction = sprite->nextDirection;
-    }
 
     // move the ghost in his current direction
     updatePosition(&sprite->uiPosition, sprite->direction, speed);
@@ -176,9 +171,22 @@ void moveGhost(struct Ghost *sprite)
 
 void onGhostGridPositionChanged(struct Ghost *sprite)
 {
-    selectNextGhostDirection(sprite);
+    // check if ghost should perform an action
+    MazeElement element = getMazeElementAt(sprite->gridPosition);
+    switch (element) {
+        case PACMAN:
 
-    // TODO : ghost will turn instantly but will go through walls. We should implement ghost whished direction + obstacle detection like for pacman
+            break;
+        case LEFT_TELEPORTER:
+            teleportGhost(sprite, RIGHT_TELEPORTER);
+            break;
+        case RIGHT_TELEPORTER:
+            teleportGhost(sprite, LEFT_TELEPORTER);
+            break;
+    }
+
+    // select his next direction
+    selectNextGhostDirection(sprite);
 }
 
 void setGhostTargetTile(struct Ghost *sprite, struct Position targetTile)
@@ -260,4 +268,11 @@ Direction getOppositeDirection(Direction direction) {
 int getDistance(struct Position pos1, struct Position pos2)
 {
     return abs(pos1.x - pos2.x) + abs(pos1.y - pos2.y);
+}
+
+void teleportGhost(struct Ghost *sprite, MazeElement destination)
+{
+    struct Position teleporterPosition = getInitialPositionOfElement(destination);
+    sprite->uiPosition = gridPosToUiPos(teleporterPosition);
+    sprite->gridPosition = teleporterPosition;
 }
