@@ -36,7 +36,7 @@ float getPacmanSpeed(struct Position pacmanGridPos)
             break;
     }
 
-    if (isGhostEatable()) pacmanSpeed = PACMAN_FRIGHT_SPEED;
+    if (getGhostMode() == FRIGHTENED) pacmanSpeed = PACMAN_FRIGHT_SPEED;
 
     int round = getRound();
     float speedPercentage = PACMAN_DEFAULT_SPEED;
@@ -64,6 +64,7 @@ float getPacmanSpeed(struct Position pacmanGridPos)
     return PACMAN_DEFAULT_SPEED * speedPercentage;
 }
 
+/*
 float getGhostSpeed(struct Position ghostGridPos __attribute__((unused)))
 {
     int round = getRound();
@@ -76,7 +77,7 @@ float getGhostSpeed(struct Position ghostGridPos __attribute__((unused)))
         //{
         //    speedPercentage = ghostSpeedLevels[i].tunnelSpeed;
         //}
-        if (isGhostEatable())
+        if (getGhostMode() == FRIGHTENED)
         {
             speedPercentage = ghostSpeedLevels[i].frightSpeed;
         }
@@ -88,4 +89,4 @@ float getGhostSpeed(struct Position ghostGridPos __attribute__((unused)))
     }
 
     return GHOST_DEFAULT_SPEED * speedPercentage;
-}
+}*/

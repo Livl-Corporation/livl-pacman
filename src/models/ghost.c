@@ -11,6 +11,9 @@ MazeElement ghostElementEaten = EMPTY;
 
 SDL_Rect eatableGhostRect;
 
+GhostMode previousGhostMode = CHASE;
+GhostMode ghostMode = CHASE;
+
 void initGhostList()
 {
 
@@ -115,7 +118,7 @@ void updateGhost(struct Ghost *sprite)
 
     moveGhost(sprite);
 
-    if (isGhostEatable())
+    if (getGhostMode() == FRIGHTENED)
     {
         ghost_in2 = eatableGhostRect;
 
@@ -143,26 +146,14 @@ void blitGhost(struct Ghost *sprite, SDL_Rect *spritePos)
     SDL_BlitScaled(pSurfacePacmanSpriteSheet, spritePos, pSurfaceWindow, &rect);
 }
 
-void makeGhostsEatable()
-{
-    resetTimer(&eatableGhostTimer);
-    startTimer(&eatableGhostTimer);
-    ghostEaten = 0;
-}
-
-bool isGhostEatable()
-{
-    return eatableGhostTimer.isRunning;
-}
-
 bool isGhostEatableRunningOut()
 {
     return eatableGhostTimer.count < EATABLE_GHOST_DURATION / 4;
 }
 
-int getEatenGhostScore(int ghostEaten)
+int getEatenGhostScore(int eatenGhostCount)
 {
-    return pow(2, ghostEaten) * 100;
+    return pow(2, eatenGhostCount) * 100;
 }
 
 void moveGhost(struct Ghost *sprite)
@@ -298,4 +289,47 @@ void teleportGhost(struct Ghost *sprite, MazeElement destination)
     struct Position teleporterPosition = getMazePositionOfElement(destination, initialMaze);
     sprite->uiPosition = gridPosToUiPos(teleporterPosition);
     sprite->gridPosition = teleporterPosition;
+}
+
+void onGhostEatableTimerEnds()
+{
+    setGhostMode(previousGhostMode);
+}
+
+void setGhostMode(GhostMode mode) {
+    ghostMode = mode;
+
+    if (mode == FRIGHTENED) {
+        resetTimer(&eatableGhostTimer);
+        setTimerCallback(&eatableGhostTimer, &onGhostEatableTimerEnds);
+        startTimer(&eatableGhostTimer);
+        ghostEaten = 0;
+        return;
+    }
+
+    previousGhostMode = ghostMode;
+}
+
+void eatGhost(MazeElement ghostElement) {
+    ghostEaten++;
+    removeMazeElement(ghostElement, entityMaze);
+    playAudioWithChannel(audioEatGhost, CHANNEL_EAT_GHOST);
+
+    incrementScore(getEatenGhostScore(ghostEaten));
+
+    setTimerCallback(&eatGhostAnimationTimer, endEatGhostAnimation);
+
+    resetTimer(&eatGhostAnimationTimer);
+    startTimer(&eatGhostAnimationTimer);
+
+    isGamePause = true;
+    ghostElementEaten = ghostElement;
+}
+
+int getGhostEatenCount() {
+    return ghostEaten;
+}
+
+GhostMode getGhostMode() {
+    return ghostMode;
 }

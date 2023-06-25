@@ -8,17 +8,12 @@
 #include <SDL.h>
 #include "models/position.h"
 #include "enums/direction.h"
+#include "enums/ghost-mode.h"
 #include "constants.h"
 #include "maze.h"
 #include "models/game.h"
 #include "models/timer.h"
 #include "../ui/game_window.h"
-
-extern int ghostEaten;
-/**
- * The ghost that has been eaten by pacman
- */
-extern MazeElement ghostElementEaten;
 
 struct Ghost
 {
@@ -59,13 +54,6 @@ void drawGhosts();
  */
 void freeGhosts();
 
-/**
- * Make all ghost eatable
- */
-void makeGhostsEatable();
-
-bool isGhostEatable();
-
 bool isGhostEatableRunningOut();
 
 /**
@@ -92,5 +80,15 @@ Direction getOppositeDirection(Direction direction);
 int getDistance(struct Position pos1, struct Position pos2);
 
 void teleportGhost(struct Ghost *sprite, MazeElement destination);
+
+void setGhostMode(GhostMode mode);
+
+GhostMode getGhostMode();
+
+void eatGhost(MazeElement ghostElement);
+
+int getGhostEatenCount();
+
+void onGhostEatableTimerEnds();
 
 #endif // PACMAN_GHOST_H
