@@ -6,25 +6,25 @@
 
 bool arePositionEquals(struct Position position1, struct Position position2)
 {
-    return position1.x == position2.x && position1.y == position2.y;
+    return (int)position1.x == (int)position2.x && (int)position1.y == (int)position2.y;
 }
 
-void updatePosition(struct Position *position, Direction direction, int step)
+void updatePosition(struct Position *position, Direction direction, float distance, float speed)
 {
     switch (direction)
     {
-    case DIRECTION_RIGHT:
-        position->x += step;
-        break;
-    case DIRECTION_LEFT:
-        position->x -= step;
-        break;
-    case DIRECTION_UP:
-        position->y -= step;
-        break;
-    case DIRECTION_DOWN:
-        position->y += step;
-        break;
+        case DIRECTION_LEFT:
+            position->x -= speed * distance;
+            break;
+        case DIRECTION_RIGHT:
+            position->x += speed * distance;
+            break;
+        case DIRECTION_UP:
+            position->y -= speed * distance;
+            break;
+        case DIRECTION_DOWN:
+            position->y += speed * distance;
+            break;
     }
 }
 

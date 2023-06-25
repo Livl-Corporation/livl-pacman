@@ -50,7 +50,7 @@ bool retrieveMazeFromFile()
 
 void blitRectWithOffset(SDL_Rect imgRect, struct Position positionOffsetInMaze, int offsetX, int offsetY, int width, int height)
 {
-    SDL_Rect destinationRect = {positionOffsetInMaze.x + offsetX, positionOffsetInMaze.y + offsetY, width, height};
+    SDL_Rect destinationRect = {(int)positionOffsetInMaze.x + offsetX, (int)positionOffsetInMaze.y + offsetY, width, height};
     SDL_SetColorKey(pSurfacePacmanSpriteSheet, true, 0);
     SDL_BlitScaled(pSurfacePacmanSpriteSheet, &imgRect, pSurfaceWindow, &destinationRect);
 }
@@ -108,10 +108,8 @@ void removeMazeElement(MazeElement elementToRemove, char **maze)
 
 void setMazeElementAt(struct Position position, MazeElement element, char **maze)
 {
-    if (!isInBounds(position))
-        return;
-
-    maze[position.y][position.x] = element;
+    if (!isInBounds(position)) return;
+    maze[(int)position.y][(int)position.x] = element;
 }
 
 struct Position getMazePositionOfElement(MazeElement element, char **maze)
@@ -121,10 +119,8 @@ struct Position getMazePositionOfElement(MazeElement element, char **maze)
 
 MazeElement getMazeElementAt(struct Position position, char **maze)
 {
-    if (!isInBounds(position))
-        return WALL;
-
-    return maze[position.y][position.x];
+    if (!isInBounds(position)) return WALL;
+    return maze[(int)position.y][(int)position.x];
 }
 
 void freeMaze()
@@ -169,9 +165,9 @@ struct Position uiPosToGridPos(struct Position posInPx)
 
     posInPx.y -= HEADER_SCREEN_HEIGHT;
 
-    // Get the position in the grid
-    position.x = posInPx.x / CELL_SIZE;
-    position.y = posInPx.y / CELL_SIZE;
+    // Get position in the grid
+    position.x = (int)posInPx.x / CELL_SIZE;
+    position.y = (int)posInPx.y / CELL_SIZE;
 
     return position;
 }

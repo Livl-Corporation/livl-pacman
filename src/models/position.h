@@ -7,8 +7,8 @@
 
 struct Position
 {
-    int x;
-    int y;
+    float x;
+    float y;
 };
 
 /**
@@ -23,9 +23,10 @@ bool arePositionEquals(struct Position position1, struct Position position2);
  * Update position according to direction and step
  * @param position
  * @param direction
- * @param step
+ * @param distance in pixel (per default equal to DEFAULT_POSITION_DISTANCE)
+ * @param speed in percentage (per default equal to DEFAULT_SPEED)
  */
-void updatePosition(struct Position *position, Direction direction, int step);
+void updatePosition(struct Position *position, Direction direction, float distance, float speed);
 
 struct Position getCellCenter(struct Position position);
 

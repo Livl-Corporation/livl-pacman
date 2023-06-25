@@ -16,6 +16,7 @@
 #include "models/ghost.h"
 #include "../ui/game_window.h"
 #include "models/fruit.h"
+#include "speed.h"
 #include "models/audio.h"
 
 extern struct Position pacmanUIPos;
@@ -37,6 +38,26 @@ void handlePacmanEvents();
  * Calculate, validate, update and draw pacman position
  */
 void drawPacman();
+
+bool shouldSkipPacmanDrawOnGamePause();
+
+void drawPacmanDeathAnimation();
+
+bool shouldSkipPacmanDrawOnDeathTimer();
+
+bool shouldChangeDirection();
+
+int getPacmanAnimation();
+
+SDL_Rect getPacmanSprite(int pacmanAnimation);
+
+struct Position calculateTargetPosition(struct Position pacmanPosCopy);
+
+bool hasPacmanMoved(struct Position newPacmanGridPos);
+
+void pacmanBlit(SDL_Rect srcRect);
+
+int calculatePacmanDeathAnimationIndex();
 
 void drawPacmanArrow();
 

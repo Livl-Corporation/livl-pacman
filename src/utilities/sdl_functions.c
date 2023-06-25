@@ -16,6 +16,11 @@ void initSDL()
     pSurfaceWindow = SDL_GetWindowSurface(pWindow);
     if (pSurfaceWindow == NULL)
         SDL_ExitWithError("Creation of the SDL window surface");
+
+    // Set the window icon
+    SDL_Surface *iconSurface = SDL_LoadBMP(PATH_LOGO_LIVL_PACMAN);
+    if (iconSurface != NULL)
+        SDL_SetWindowIcon(pWindow, iconSurface);
 }
 
 void initSDL_Mixer()
