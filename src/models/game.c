@@ -21,6 +21,7 @@ struct Timer pacmanDeathAnimationDelayTimer;
 struct Timer fruitTimer;
 struct Timer fruitScoreAnimationTimer;
 struct Timer nextRoundAnimationTimer;
+struct Timer ghostModeTimer;
 
 int getScore()
 {
@@ -76,6 +77,9 @@ void initTimers()
     initTimer(&fruitScoreAnimationTimer, FRUIT_SCORE_DISPLAY_DURATION);
 
     initTimer(&nextRoundAnimationTimer, NEXT_ROUND_ANIMATION_DURATION);
+
+    initTimer(&ghostModeTimer, 0);
+
 }
 
 void initGame() {

@@ -22,6 +22,8 @@ void startGame()
     spawnPacman();
     spawnGhosts();
 
+    resetGhostModeTimer();
+
     playAudioWithChannel(audioGameStart, CHANNEL_GAME_START);
     startReady(GAME_START_DURATION);
 
