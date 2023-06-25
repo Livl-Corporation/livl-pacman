@@ -69,8 +69,19 @@ void spawnGhost(int ghostId)
 {
     ghostList[ghostId].lastRect = ghostList[ghostId].rects[0];
     ghostList[ghostId].gridPosition = getMazePositionOfElement(ghostList[ghostId].ghostElement, initialMaze);
-    setMazeElementAt(ghostList[ghostId].gridPosition, ghostList[ghostId].ghostElement, entityMaze);
     ghostList[ghostId].uiPosition = gridPosToUiPos(ghostList[ghostId].gridPosition);
+
+    // TODO : reset position in entityMaze
+/*
+    if (!arePositionEquals(
+    ghostList[ghostId].gridPosition,
+    getMazePositionOfElement(ghostList[ghostId].ghostElement, &entityMaze)
+    )) {
+        removeMazeElement(ghostList[ghostId].ghostElement, entityMaze);
+        setMazeElementAt(ghostList[ghostId].gridPosition, ghostList[ghostId].ghostElement, entityMaze);
+    }
+*/
+
 }
 
 void drawGhosts()
@@ -171,11 +182,14 @@ void moveGhost(struct Ghost *sprite)
 
 void onGhostGridPositionChanged(struct Ghost *sprite)
 {
+
+    removeMazeElement(sprite->ghostElement, entityMaze);
+
     // check if ghost should perform an action
     MazeElement element = getMazeElementAt(sprite->gridPosition, entityMaze);
     switch (element) {
         case PACMAN:
-
+            handleGhostCollision(sprite->ghostElement);
             break;
         case LEFT_TELEPORTER:
             teleportGhost(sprite, RIGHT_TELEPORTER);
@@ -184,6 +198,9 @@ void onGhostGridPositionChanged(struct Ghost *sprite)
             teleportGhost(sprite, LEFT_TELEPORTER);
             break;
     }
+
+    // update ghost position in maze
+    setMazeElementAt(sprite->gridPosition, sprite->ghostElement, entityMaze);
 
     // select his next direction
     selectNextGhostDirection(sprite);

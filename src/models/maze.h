@@ -123,8 +123,6 @@ bool hasCollision(struct Position position, int hitboxSize);
  */
 struct Position gridPosToUiPos(struct Position gridPos);
 
-// Private
-
 /**
  * Retrieve the maze from a file
  * @return true if the maze has been retrieved from the file, false otherwise
@@ -134,7 +132,7 @@ bool retrieveMazeFromFile();
 /**
  * Reset the game maze to the initial maze
  */
-void resetGameMaze();
+void resetMaze();
 
 void removeMazeElement(MazeElement elementToRemove, char **maze);
 

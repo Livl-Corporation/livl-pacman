@@ -24,7 +24,7 @@ void initMaze()
     }
 }
 
-void resetGameMaze()
+void resetMaze()
 {
     copy2DArray(initialMaze, entityMaze, MAP_HEIGHT, MAP_WIDTH);
     copy2DArray(initialMaze, propsMaze, MAP_HEIGHT, MAP_WIDTH);
@@ -43,7 +43,7 @@ bool retrieveMazeFromFile()
 
     closeFile(mazeFile);
 
-    resetGameMaze();
+    resetMaze();
 
     return true;
 }
@@ -101,7 +101,7 @@ void removeMazeElement(MazeElement elementToRemove, char **maze)
         {
             struct Position gridPos = {j, i};
             if (getMazeElementAt(gridPos, maze) == elementToRemove)
-                maze[i][j] = EMPTY;
+                setMazeElementAt(gridPos, EMPTY, maze);
         }
     }
 }

@@ -66,6 +66,18 @@ void spawnPacman()
     pacmanWishedDirection = defaultDirection;
 
     lastPacmanPosition = pacmanRoundSprite;
+
+    // TODO : reset position in entityMaze
+/*
+    if (!arePositionEquals(
+        getMazePositionOfElement(PACMAN, entityMaze),
+        pacmanSpawnPos
+    )) {
+        removeMazeElement(PACMAN, &entityMaze);
+        setMazeElementAt(pacmanGridPos, PACMAN, &entityMaze);
+    }
+*/
+
 }
 
 void handlePacmanEvents()
@@ -224,6 +236,8 @@ struct Position onPacmanGridMove(struct Position *pacmanUiPos)
     default:
         break;
     }
+
+    setMazeElementAt(pacmanGridPos, PACMAN, entityMaze);
 
     return *pacmanUiPos;
 }
