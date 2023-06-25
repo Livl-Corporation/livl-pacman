@@ -21,9 +21,11 @@
 #define FRUIT_SCORE_Y_SPACING 2
 #define FRUIT_SCORE_UI_SCALE 2
 
+extern SDL_Rect fruitsRects[FRUIT_COUNTS];
+
 void initFruits();
 
-int getFruitLevel();
+int getFruitLevel(int round);
 
 void handleFruitCollision();
 
@@ -33,4 +35,4 @@ void drawFruit();
 
 void resetFruit();
 
-#endif //PACMAN_FRUIT_H
+#endif // PACMAN_FRUIT_H

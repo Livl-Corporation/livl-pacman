@@ -47,9 +47,8 @@ void initFruits()
         FRUIT_SCORE_H * FRUIT_SCORE_UI_SCALE};
 }
 
-int getFruitLevel()
+int getFruitLevel(int round)
 {
-    int round = getRound();
     int level = 0;
     for (int i = 0; i < FRUIT_COUNTS; i++)
     {
@@ -78,7 +77,7 @@ void handleFruitCollision()
 
 void spawnFruit()
 {
-    fruitLevel = getFruitLevel();
+    fruitLevel = getFruitLevel(getRound());
     resetTimer(&fruitTimer);
     startTimer(&fruitTimer);
 }
