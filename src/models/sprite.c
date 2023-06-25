@@ -6,7 +6,7 @@
 
 void moveSprintInDirection(struct Sprite *sprite)
 {
-    updatePosition(&sprite->uiPosition, sprite->direction, SPRITE_SPEED);
+    updatePosition(&sprite->uiPosition, sprite->direction, SPRITE_SPEED, DEFAULT_SPEED);
     sprite->gridPosition = uiPosToGridPos(getCellCenter(sprite->uiPosition));
 }
 
