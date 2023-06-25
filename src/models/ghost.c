@@ -18,13 +18,19 @@ void initGhostList()
 
     for (int i = 0; i < GHOST_COUNT; i++)
     {
-        ghostList[i].number = i;
+        ghostList[i].ghostElement = i + '0';
+
         ghostList[i].uiPosition.x = 0;
         ghostList[i].uiPosition.y = 0;
+
         ghostList[i].gridPosition.x = 0;
         ghostList[i].gridPosition.y = 0;
-        ghostList[i].ghostElement = i + '0';
-        ghostList[i].direction = DIRECTION_RIGHT;
+
+        ghostList[i].direction = DIRECTION_UP;
+        ghostList[i].nextDirection = DIRECTION_UP;
+
+        ghostList[i].targetTile.x = 0;
+        ghostList[i].targetTile.y = 0;
 
         // Sprites :
         ghostList[i].rects = malloc(sizeof(SDL_Rect) * DIRECTION_COUNT);

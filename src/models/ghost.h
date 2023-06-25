@@ -22,7 +22,6 @@ extern MazeElement ghostElementEaten;
 
 struct Ghost
 {
-    int number;
     struct Position uiPosition;
     struct Position gridPosition;
     Direction direction;
