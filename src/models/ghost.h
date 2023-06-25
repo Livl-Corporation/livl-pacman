@@ -8,7 +8,6 @@
 #include <SDL.h>
 #include "models/position.h"
 #include "enums/direction.h"
-#include "enums/ghost-mode.h"
 #include "constants.h"
 #include "maze.h"
 #include "models/game.h"
@@ -80,12 +79,6 @@ Direction getOppositeDirection(Direction direction);
 int getDistance(struct Position pos1, struct Position pos2);
 
 void teleportGhost(struct Ghost *sprite, MazeElement destination);
-
-void setGhostMode(GhostMode mode);
-
-GhostMode getGhostMode();
-
-void onGhostEatableTimerEnds();
 
 void eatGhost(MazeElement ghostElement);
 

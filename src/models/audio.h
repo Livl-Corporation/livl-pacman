@@ -8,6 +8,7 @@
 #include <SDL_mixer.h>
 #include "../utilities/sdl_functions.h"
 #include "game.h"
+#include "models/ghost-mode-manager.h"
 
 #define AUDIO_DEATH "../assets/sounds/death.wav"
 #define AUDIO_DOT_1 "../assets/sounds/dot_1.wav"
