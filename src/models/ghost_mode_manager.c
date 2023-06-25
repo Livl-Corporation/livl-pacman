@@ -113,15 +113,17 @@ void onModeTimerEnd() {
     int nextDuration = getPredeterminedModeDuration(++modeIndex);
 
     // setup next timer
-    resetTimer(&ghostModeTimer);
-    setDuration(&ghostModeTimer, nextDuration);
+    if (nextDuration>0) {
+        resetTimer(&ghostModeTimer);
+        setDuration(&ghostModeTimer, nextDuration);
+    }
 
     // go to next mode
     setGhostMode(getPredeterminedGhostMode(modeIndex));
 }
 
 void resetGhostModeTimer() {
-    setTimerCallback(&ghostModeTimer, &onGhostEatableTimerEnds);
+    setTimerCallback(&ghostModeTimer, &onModeTimerEnd);
     modeIndex = -1;
     onModeTimerEnd();
 }

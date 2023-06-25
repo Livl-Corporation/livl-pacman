@@ -146,3 +146,7 @@ void delayToMaintainFrameRate(clock_t before, Uint32 desiredDelayInMs)
     if (desiredDelayInMs > milliseconds)
         SDL_Delay(desiredDelayInMs - milliseconds);
 }
+
+bool isGameRunning() {
+    return !isGamePause;
+}

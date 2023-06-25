@@ -7,6 +7,7 @@
 #define MAX_TIMERS 10
 
 typedef void (*TimerCallback)();
+typedef bool (*TimerRunCondition)();
 
 struct Timer
 {
@@ -15,6 +16,7 @@ struct Timer
     bool isRunning;
     bool isFinished;
     TimerCallback callback;
+    TimerRunCondition runCondition;
 };
 
 void initTimer(struct Timer *timer, int count);
@@ -28,6 +30,8 @@ void resetTimer(struct Timer *timer);
 void setDuration(struct Timer *timer, int duration);
 
 void setTimerCallback(struct Timer *timer, TimerCallback callback);
+
+void setTimerRunCondition(struct Timer *timer, TimerRunCondition runCondition);
 
 void updateTimers();
 

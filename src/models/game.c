@@ -61,6 +61,7 @@ void afterGameOverAnimation()
 void initTimers()
 {
     initTimer(&eatableGhostTimer, EATABLE_GHOST_DURATION);
+    setTimerRunCondition(&eatableGhostTimer, &isGameRunning);
 
     initTimer(&readyTimer, READY_DURATION);
 
@@ -73,12 +74,15 @@ void initTimers()
     initTimer(&pacmanDeathAnimationDelayTimer, PACMAN_DEATH_ANIMATION_DELAY);
 
     initTimer(&fruitTimer, FRUIT_APPEAR_DURATION);
+    setTimerRunCondition(&fruitTimer, &isGameRunning);
 
     initTimer(&fruitScoreAnimationTimer, FRUIT_SCORE_DISPLAY_DURATION);
+    setTimerRunCondition(&fruitScoreAnimationTimer, &isGameRunning);
 
     initTimer(&nextRoundAnimationTimer, NEXT_ROUND_ANIMATION_DURATION);
 
     initTimer(&ghostModeTimer, 0);
+    setTimerRunCondition(&ghostModeTimer, &isGameRunning);
 
 }
 

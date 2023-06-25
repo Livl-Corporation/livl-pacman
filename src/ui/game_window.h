@@ -47,4 +47,6 @@ void drawGame();
 
 void drawHeader();
 
+bool isGameRunning();
+
 #endif // PACMAN_GAME_WINDOW_H
