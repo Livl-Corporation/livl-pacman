@@ -96,6 +96,8 @@ void updateGhost(struct Ghost *sprite)
 {
     SDL_Rect ghost_in2;
 
+    moveGhost(sprite);
+
     if (isGhostEatable())
     {
         ghost_in2 = eatableGhostRect;
@@ -163,7 +165,7 @@ void moveGhost(struct Ghost *sprite)
 void onGhostGridPositionChanged(struct Ghost *sprite)
 {
     // Todo : change direction when possible without collision
-    //sprite->direction = sprite->nextDirection;
+    sprite->direction = sprite->nextDirection;
     selectNextGhostDirection(sprite);
 
     // TODO : ghost will turn instantly but will go through walls. We should implement ghost whished direction + obstacle detection like for pacman
@@ -193,6 +195,11 @@ void selectNextGhostDirection(struct Ghost *sprite)
 
         struct Position cell = sprite->gridPosition;
         updatePosition(&cell, direction, 1);
+
+        // if out of bounds don't add
+        if (!isInBounds(cell))
+            continue;
+
         // if is obstacle don't add
         if (isObstacle(cell))
             continue;
