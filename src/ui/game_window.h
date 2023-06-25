@@ -25,7 +25,7 @@
 #define READY_H 7
 #define READY_UI_SCALE 3
 
-#define DELAY_MS 1.0 / GAME_SPEED * 1000
+#define DELAY_MS (1.0 / GAME_SPEED * 1000)
 
 extern int frameCount;
 extern bool isGamePause;

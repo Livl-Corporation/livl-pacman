@@ -24,7 +24,7 @@
 #define PATH_SPRITE_SHEET_PACMAN "../assets/img/pacman_sprites.bmp"
 #define PATH_LOGO_LIVL_PACMAN "../assets/img/logo_livl_pacman.bmp"
 
-#define GAME_SPEED 200.0   // IN FPS, BIGGER IS FASTER
+#define GAME_SPEED 200.0
 #define ANIMATION_SPEED 14 // BIGGER IS SLOWER
 #define SPRITE_SPEED 1     // Don't change this for the moment
 

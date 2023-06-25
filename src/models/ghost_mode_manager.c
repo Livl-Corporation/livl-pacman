@@ -86,7 +86,7 @@ int getPredeterminedModeDuration(int index) {
 
     int durationsIndex = 0;
     for (int i = 1; i < MODE_CHANGE_PRESETS_COUNTS; i++) {
-        if (modeDurationsLevels[i] >= round) {
+        if (modeDurationsLevels[i] <= round) {
             durationsIndex = i;
         } else {
             break;
@@ -114,8 +114,9 @@ void onModeTimerEnd() {
 
     // setup next timer
     if (nextDuration>0) {
+        // TODO : correct convertion to seconds :
+        setDuration(&ghostModeTimer, nextDuration*60);
         resetTimer(&ghostModeTimer);
-        setDuration(&ghostModeTimer, nextDuration);
     }
 
     // go to next mode

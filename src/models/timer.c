@@ -19,8 +19,7 @@ void initTimer(struct Timer *timer, int count)
 
 void startTimer(struct Timer *timer)
 {
-    if (timer->count > 0)
-        timer->isRunning = true;
+    timer->isRunning = true;
 }
 
 void stopTimer(struct Timer *timer)
@@ -42,7 +41,7 @@ void updateTimers()
     {
         struct Timer *timer = timers[i];
 
-        if (!timer->isRunning)
+        if (!timer->isRunning || timer->count <= 0)
             continue;
 
         if (timer->runCondition != NULL && !timer->runCondition())
