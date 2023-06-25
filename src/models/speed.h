@@ -6,7 +6,6 @@
 #define PACMAN_SPEED_H
 
 #include "game.h"
-#include <limits.h>
 
 enum PacmanSpeed
 {
@@ -26,7 +25,6 @@ enum GhostSpeed
 typedef struct
 {
     int minRound;
-    int maxRound;
     float normSpeed;
     float normDotsSpeed;
     float frightSpeed;
@@ -36,7 +34,6 @@ typedef struct
 typedef struct
 {
     int minRound;
-    int maxRound;
     float normSpeed;
     float frightSpeed;
     float tunnelSpeed;
