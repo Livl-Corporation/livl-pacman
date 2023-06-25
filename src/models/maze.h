@@ -21,6 +21,13 @@
 #define BLUE_MAZE_X 201
 #define WHITE_MAZE_OFFSET_X 169
 
+
+/** Use :
+- entityMaze when handling pacman or ghosts positions
+- propsMaze when handling coins & fruits
+- initialMaze when looking for obstacles
+*/
+
 extern char **initialMaze;
 
 /**
