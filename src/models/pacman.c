@@ -240,9 +240,9 @@ void drawPacmanArrow()
 struct Position onPacmanGridMove(struct Position *pacmanUiPos)
 {
     removeMazeElement(PACMAN, entityMaze);
-    MazeElement entityElement = getMazeElementAt(pacmanGridPos, entityMaze);
+    MazeElement element = getMazeElementInCollisionWithEntity(pacmanGridPos);
 
-    switch (entityElement) {
+    switch (element) {
         case RED_GHOST:
             handleGhostCollision(RED_GHOST);
             return *pacmanUiPos;
@@ -255,31 +255,25 @@ struct Position onPacmanGridMove(struct Position *pacmanUiPos)
         case ORANGE_GHOST:
             handleGhostCollision(ORANGE_GHOST);
             return *pacmanUiPos;
-    }
-
-    MazeElement propsElement = getMazeElementAt(pacmanGridPos, propsMaze);
-    switch (propsElement)
-    {
-    case LEFT_TELEPORTER:
-        return teleportPacman(RIGHT_TELEPORTER);
-    case RIGHT_TELEPORTER:
-        return teleportPacman(LEFT_TELEPORTER);
-    case SMALL_COIN:
-        playDotSound();
-        incrementScore(10);
-        setMazeElementAt(pacmanGridPos, EMPTY, propsMaze);
-        handleCoinCollision();
-        break;
-    case BIG_COIN:
-        incrementScore(50);
-        makeGhostsEatable();
-        setMazeElementAt(pacmanGridPos, EMPTY, propsMaze);
-        handleCoinCollision();
-        break;
-    case FRUIT:
-        handleFruitCollision();
-    default:
-        break;
+        case LEFT_TELEPORTER:
+            return teleportPacman(RIGHT_TELEPORTER);
+        case RIGHT_TELEPORTER:
+            return teleportPacman(LEFT_TELEPORTER);
+        case SMALL_COIN:
+            playDotSound();
+            incrementScore(10);
+            setMazeElementAt(pacmanGridPos, EMPTY, propsMaze);
+            handleCoinCollision();
+            break;
+        case BIG_COIN:
+            incrementScore(50);
+            makeGhostsEatable();
+            setMazeElementAt(pacmanGridPos, EMPTY, propsMaze);
+            handleCoinCollision();
+            break;
+        case FRUIT:
+            handleFruitCollision();
+            break;
     }
 
     setMazeElementAt(pacmanGridPos, PACMAN, entityMaze);
@@ -295,6 +289,7 @@ bool isScoreAnimationOnGhostEaten()
 struct Position teleportPacman(MazeElement teleporter)
 {
     pacmanGridPos = getMazePositionOfElement(teleporter, initialMaze);
+    setMazeElementAt(pacmanGridPos, PACMAN, entityMaze);
     return gridPosToUiPos(pacmanGridPos);
 }
 

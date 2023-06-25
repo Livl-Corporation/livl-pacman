@@ -192,7 +192,7 @@ void onGhostGridPositionChanged(struct Ghost *sprite)
     removeMazeElement(sprite->ghostElement, entityMaze);
 
     // check if ghost should perform an action
-    MazeElement element = getMazeElementAt(sprite->gridPosition, entityMaze);
+    MazeElement element = getMazeElementInCollisionWithEntity(sprite->gridPosition);
     switch (element) {
         case PACMAN:
             handleGhostCollision(sprite->ghostElement);

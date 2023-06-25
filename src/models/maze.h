@@ -149,4 +149,6 @@ void refillCoins();
 
 bool canMoveInDirection(struct Position position, Direction direction);
 
+MazeElement getMazeElementInCollisionWithEntity(struct Position position);
+
 #endif // PACMAN_MAZE_H

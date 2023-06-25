@@ -108,7 +108,13 @@ void removeMazeElement(MazeElement elementToRemove, char **maze)
 
 void setMazeElementAt(struct Position position, MazeElement element, char **maze)
 {
+    if (maze == initialMaze) {
+        ConsoleHandlerDisplayError("Trying to edit initial maze.");
+        return;
+    }
+
     if (!isInBounds(position)) return;
+
     maze[(int)position.y][(int)position.x] = element;
 }
 
@@ -132,7 +138,7 @@ void freeMaze()
 
 bool isObstacle(struct Position position)
 {
-    MazeElement element = (unsigned char)get2DArrayElement(entityMaze, position.y, position.x);
+    MazeElement element = getMazeElementAt(position, initialMaze);
     return element == WALL || element == DOOR;
 }
 
@@ -219,4 +225,38 @@ bool canMoveInDirection(struct Position position, Direction direction)
 {
     updatePosition(&position, direction, DEFAULT_POSITION_DISTANCE, DEFAULT_SPEED);
     return !hasCollision(position, CELL_SIZE-1);
+}
+
+MazeElement getMazeElementInCollisionWithEntity(struct Position position) {
+
+    // Priority 1 : entities
+    MazeElement entityElement = getMazeElementAt(position, entityMaze);
+    switch (entityElement) {
+        case RED_GHOST:
+        case PINK_GHOST:
+        case BLUE_GHOST:
+        case ORANGE_GHOST:
+        case PACMAN:
+            return entityElement;
+    }
+
+    // priority 2 : teleporters
+    MazeElement teleporterElement = getMazeElementAt(position, initialMaze);
+    switch (teleporterElement) {
+        case LEFT_TELEPORTER:
+        case RIGHT_TELEPORTER:
+            return teleporterElement;
+    }
+
+    // Priority 3 : props
+    MazeElement propsElement = getMazeElementAt(position, propsMaze);
+    switch (propsElement) {
+        case SMALL_COIN:
+        case BIG_COIN:
+        case FRUIT:
+            return propsElement;
+    }
+
+    return EMPTY;
+
 }
