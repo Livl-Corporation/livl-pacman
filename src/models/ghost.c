@@ -27,6 +27,7 @@ void initGhostList()
         ghostList[i].gridPosition.y = 0;
 
         ghostList[i].direction = DIRECTION_UP;
+        ghostList[i].wishedDirection = DIRECTION_UP;
         ghostList[i].nextDirection = DIRECTION_UP;
 
         ghostList[i].targetTile.x = 0;
@@ -171,8 +172,8 @@ void moveGhost(struct Ghost *sprite)
     float speed = SPRITE_SPEED;
 
     // check if next position will cause collision
-    if (sprite->nextDirection != sprite->direction && canMoveInDirection(sprite->uiPosition, sprite->nextDirection))
-        sprite->direction = sprite->nextDirection;
+    if (sprite->wishedDirection != sprite->direction && canMoveInDirection(sprite->uiPosition, sprite->wishedDirection))
+        sprite->direction = sprite->wishedDirection;
 
     // move the ghost in his current direction
     updatePosition(&sprite->uiPosition, sprite->direction, DEFAULT_POSITION_DISTANCE, speed);
@@ -190,6 +191,8 @@ void onGhostGridPositionChanged(struct Ghost *sprite)
 {
 
     removeMazeElement(sprite->ghostElement, entityMaze);
+
+    sprite->wishedDirection = sprite->nextDirection;
 
     // check if ghost should perform an action
     MazeElement element = getMazeElementInCollisionWithEntity(sprite->gridPosition);
@@ -230,11 +233,11 @@ void selectNextGhostDirection(struct Ghost *sprite)
     {
         Direction direction = i;
 
-        // if is opposite direction don't att
+        // if is opposite direction don't add
         if (direction == getOppositeDirection(sprite->direction))
             continue;
 
-        struct Position cell = sprite->gridPosition;
+        struct Position cell = nextPosition;
         updatePosition(&cell, direction, DEFAULT_POSITION_DISTANCE, DEFAULT_SPEED);
 
         // if out of bounds don't add

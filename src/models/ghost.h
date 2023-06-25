@@ -24,7 +24,13 @@ struct Ghost
 {
     struct Position uiPosition;
     struct Position gridPosition;
+    // current direction of the ghost
     Direction direction;
+
+    // direction that the ghost is trying to go right now
+    Direction wishedDirection;
+
+    // direction that the ghost will take next at his next grid move;
     Direction nextDirection;
     SDL_Rect *rects;
     SDL_Rect lastRect;
