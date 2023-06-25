@@ -143,4 +143,6 @@ int getInitialElementAmount(MazeElement element);
 
 void refillCoins();
 
+bool canMoveInDirection(struct Position position, Direction direction);
+
 #endif // PACMAN_MAZE_H

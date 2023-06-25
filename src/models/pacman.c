@@ -11,7 +11,7 @@ SDL_Rect pacmanDeathAnimation[PACMAN_DEATH_ANIMATION_FRAMES];
 
 SDL_Rect arrowSprite = {4, 266, PACMAN_ARROW_SIZE, PACMAN_ARROW_SIZE};
 
-SDL_Rect lastPacmanDirection = {0, 0, 0, 0};
+SDL_Rect lastPacmanPosition = {0, 0, 0, 0};
 
 struct Position pacmanSpawnPos = {1, 1};
 struct Position pacmanUIPos = {0, 0};
@@ -65,7 +65,7 @@ void spawnPacman()
     pacmanDirection = defaultDirection;
     pacmanWishedDirection = defaultDirection;
 
-    lastPacmanDirection = pacmanRoundSprite;
+    lastPacmanPosition = pacmanRoundSprite;
 }
 
 void handlePacmanEvents()
@@ -101,7 +101,7 @@ void drawPacman()
         if (isScoreAnimationOnGhostEaten())
             return;
 
-        pacmanBlit(lastPacmanDirection);
+        pacmanBlit(lastPacmanPosition);
         return;
     }
 
@@ -111,7 +111,7 @@ void drawPacman()
     struct Position pacmanPosCopy = pacmanUIPos;
 
     // Test is wished direction can be applied
-    if (pacmanDirection != pacmanWishedDirection && canMoveInDirection(pacmanWishedDirection))
+    if (pacmanDirection != pacmanWishedDirection && canMoveInDirection(pacmanPosCopy, pacmanWishedDirection))
         pacmanDirection = pacmanWishedDirection;
 
     int pacmanAnimation = (frameCount / ANIMATION_SPEED) % PACMAN_SPRITE_MOUTHS_DIRECTION;
@@ -133,7 +133,7 @@ void drawPacman()
     if (hasCollision(pacmanPosCopy, CELL_SIZE - 1))
     {
         // If pacman ran into obstacle, just blit him at without updating his position
-        pacmanBlit(lastPacmanDirection);
+        pacmanBlit(lastPacmanPosition);
         return;
     }
 
@@ -149,7 +149,7 @@ void drawPacman()
 
     // Move is valid, update pacman position
     pacmanUIPos = pacmanPosCopy;
-    lastPacmanDirection = newPacman;
+    lastPacmanPosition = newPacman;
 
     pacmanBlit(newPacman);
 }
@@ -179,12 +179,6 @@ void drawPacmanArrow()
     SDL_BlitScaled(pSurfacePacmanSpriteSheet, &arrowSprite, pSurfaceWindow, &arrowPosSDL);
 }
 
-int canMoveInDirection(Direction direction)
-{
-    struct Position pacmanPosCopy = pacmanUIPos;
-    updatePosition(&pacmanPosCopy, direction, 1);
-    return !hasCollision(pacmanPosCopy, CELL_SIZE - 1);
-}
 
 struct Position onPacmanGridMove(struct Position *pacmanUiPos)
 {

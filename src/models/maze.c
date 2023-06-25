@@ -226,3 +226,9 @@ void refillCoins() {
     }
 
 }
+
+bool canMoveInDirection(struct Position position, Direction direction)
+{
+    updatePosition(&position, direction, 1);
+    return !hasCollision(position, CELL_SIZE-1);
+}

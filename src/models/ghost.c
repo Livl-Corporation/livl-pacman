@@ -150,8 +150,20 @@ int getEatenGhostScore(int ghostEaten)
 
 void moveGhost(struct Ghost *sprite)
 {
-    updatePosition(&sprite->uiPosition, sprite->direction, SPRITE_SPEED);
 
+    float speed = SPRITE_SPEED;
+
+    // calculate next ghost position for his wished direction
+    struct Position ghostUiPos = sprite->uiPosition;
+
+    // check if next position will cause collision
+    if (sprite->nextDirection != sprite->direction && canMoveInDirection(sprite->uiPosition, sprite->nextDirection))
+    {
+        sprite->direction = sprite->nextDirection;
+    }
+
+    // move the ghost in his current direction
+    updatePosition(&sprite->uiPosition, sprite->direction, speed);
     struct Position updatedGridPos = uiPosToGridPos(getCellCenter(sprite->uiPosition));
 
     if (arePositionEquals(sprite->gridPosition, updatedGridPos))
@@ -164,8 +176,6 @@ void moveGhost(struct Ghost *sprite)
 
 void onGhostGridPositionChanged(struct Ghost *sprite)
 {
-    // Todo : change direction when possible without collision
-    sprite->direction = sprite->nextDirection;
     selectNextGhostDirection(sprite);
 
     // TODO : ghost will turn instantly but will go through walls. We should implement ghost whished direction + obstacle detection like for pacman

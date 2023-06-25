@@ -64,8 +64,6 @@ void pacmanEatGhost(MazeElement ghostElement);
 
 void pacmanBlit(SDL_Rect srcRect);
 
-int canMoveInDirection(Direction direction);
-
 struct Position teleportPacman(MazeElement teleporter);
 
 void startPacmanDeathAnimation();
