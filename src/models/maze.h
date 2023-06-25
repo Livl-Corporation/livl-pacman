@@ -22,7 +22,16 @@
 #define WHITE_MAZE_OFFSET_X 169
 
 extern char **initialMaze;
-extern char **gameMaze;
+
+/**
+ * Entity maze containing for storing pacman & ghosts positions
+ */
+extern char **entityMaze;
+
+/**
+ * Props maze containing for storing coins & fruits positions
+ */
+extern char **propsMaze;
 
 /**
  * Initialize maze
@@ -41,31 +50,21 @@ void freeMaze();
  * @param position the position to set as one of the maze element enum
  * @param element the element to set at the position
  */
-void setMazeElementAt(struct Position position, MazeElement element);
+void setMazeElementAt(struct Position position, MazeElement element, char **maze);
 
 /**
- * Get maze element at position in the current game maze
+ * Get maze element at position
  * @param position
  * @return MazeElement
  */
-MazeElement getMazeElementAt(struct Position position);
-
-MazeElement getInitialMazeElementAt(struct Position position);
+MazeElement getMazeElementAt(struct Position position, char **maze);
 
 /**
- * Find the position of a specific maze element in the current game maze
+ * Find the position of a specific maze element
  * @param element
  * @return Position
  */
-struct Position getMazePositionOfElement(MazeElement element);
-
-/**
- * Find the initial position of a specific maze element in the initial maze
- * @param element
- * @return Position
- */
-struct Position getInitialPositionOfElement(MazeElement element);
-
+struct Position getMazePositionOfElement(MazeElement element, char **maze);
 
 /**
  * Check if a position is in the maze bounds
@@ -137,9 +136,9 @@ bool retrieveMazeFromFile();
  */
 void resetGameMaze();
 
-void removeMazeElement(MazeElement elementToRemove);
+void removeMazeElement(MazeElement elementToRemove, char **maze);
 
-int getInitialElementAmount(MazeElement element);
+int getElementAmount(MazeElement element);
 
 void refillCoins();
 

@@ -1,7 +1,8 @@
 #include "maze.h"
 
 char **initialMaze = NULL;
-char **gameMaze = NULL;
+char **entityMaze = NULL;
+char **propsMaze = NULL;
 
 SDL_Rect imgSmallCoinSprite = {163, 96, 2, 2};
 SDL_Rect imgBigCoinSprite = {177, 93, 7, 7};
@@ -11,6 +12,11 @@ SDL_Rect mazeUi = {0, HEADER_SCREEN_HEIGHT, TOTAL_SCREEN_WIDTH, MAZE_SCREEN_HEIG
 
 void initMaze()
 {
+
+    allocate2DArray(&initialMaze, MAP_HEIGHT, MAP_WIDTH);
+    allocate2DArray(&entityMaze, MAP_HEIGHT, MAP_WIDTH);
+    allocate2DArray(&propsMaze, MAP_HEIGHT, MAP_WIDTH);
+
     if (!retrieveMazeFromFile())
     {
         ConsoleHandlerDisplayError("while retrieving maze from file.");
@@ -20,13 +26,12 @@ void initMaze()
 
 void resetGameMaze()
 {
-    copy2DArray(initialMaze, gameMaze, MAP_HEIGHT, MAP_WIDTH);
+    copy2DArray(initialMaze, entityMaze, MAP_HEIGHT, MAP_WIDTH);
+    copy2DArray(initialMaze, propsMaze, MAP_HEIGHT, MAP_WIDTH);
 }
 
 bool retrieveMazeFromFile()
 {
-    allocate2DArray(&initialMaze, MAP_HEIGHT, MAP_WIDTH);
-    allocate2DArray(&gameMaze, MAP_HEIGHT, MAP_WIDTH);
 
     FILE *mazeFile = initFile(PATH_FILE_MAZE, 'r');
 
@@ -59,7 +64,7 @@ void drawCoins(int frameCount)
             struct Position gridPos = {j, i};
             struct Position uiPos = gridPosToUiPos(gridPos);
 
-            MazeElement mazeElement = getMazeElementAt(gridPos);
+            MazeElement mazeElement = getMazeElementAt(gridPos, propsMaze);
 
             switch (mazeElement)
             {
@@ -88,63 +93,50 @@ void drawMaze(bool applyWhiteMazeOffset)
 
 }
 
-void removeMazeElement(MazeElement elementToRemove)
+void removeMazeElement(MazeElement elementToRemove, char **maze)
 {
     for (int i = 0; i < MAP_HEIGHT; i++)
     {
         for (int j = 0; j < MAP_WIDTH; j++)
         {
             struct Position gridPos = {j, i};
-            if (getMazeElementAt(gridPos) == elementToRemove)
-                gameMaze[i][j] = EMPTY;
+            if (getMazeElementAt(gridPos, maze) == elementToRemove)
+                maze[i][j] = EMPTY;
         }
     }
 }
 
-void setMazeElementAt(struct Position position, MazeElement element)
+void setMazeElementAt(struct Position position, MazeElement element, char **maze)
 {
     if (!isInBounds(position))
         return;
 
-    gameMaze[position.y][position.x] = element;
+    maze[position.y][position.x] = element;
 }
 
-struct Position getInitialPositionOfElement(MazeElement element)
+struct Position getMazePositionOfElement(MazeElement element, char **maze)
 {
-    return find2DArrayElement(initialMaze, MAP_HEIGHT, MAP_WIDTH, element);
+    return find2DArrayElement(maze, MAP_HEIGHT, MAP_WIDTH, element);
 }
 
-MazeElement getMazeElementAt(struct Position position)
-{
-    if (!isInBounds(position))
-        return WALL;
-
-    return gameMaze[position.y][position.x];
-}
-
-MazeElement getInitialMazeElementAt(struct Position position)
+MazeElement getMazeElementAt(struct Position position, char **maze)
 {
     if (!isInBounds(position))
         return WALL;
 
-    return initialMaze[position.y][position.x];
-}
-
-struct Position getPositionOfElement(MazeElement element)
-{
-    return find2DArrayElement(gameMaze, MAP_HEIGHT, MAP_WIDTH, element);
+    return maze[position.y][position.x];
 }
 
 void freeMaze()
 {
     ConsoleHandlerDisplayMessage("Freeing maze array.");
     free2DArray(initialMaze, MAP_HEIGHT);
-    free2DArray(gameMaze, MAP_HEIGHT);
+    free2DArray(entityMaze, MAP_HEIGHT);
 }
 
 bool isObstacle(struct Position position)
 {
-    MazeElement element = (unsigned char)get2DArrayElement(gameMaze, position.y, position.x);
+    MazeElement element = (unsigned char)get2DArrayElement(entityMaze, position.y, position.x);
     return element == WALL || element == DOOR;
 }
 
@@ -194,7 +186,7 @@ struct Position gridPosToUiPos(struct Position gridPos)
     return position;
 }
 
-int getInitialElementAmount(MazeElement element) {
+int getElementAmount(MazeElement element) {
     int amount = 0;
 
     for (int i = 0; i < MAP_HEIGHT; i++)
@@ -202,7 +194,7 @@ int getInitialElementAmount(MazeElement element) {
         for (int j = 0; j < MAP_WIDTH; j++)
         {
             struct Position gridPos = {j, i};
-            if (getMazeElementAt(gridPos) == element)
+            if (getMazeElementAt(gridPos, initialMaze) == element)
                 amount++;
         }
     }
@@ -217,10 +209,10 @@ void refillCoins() {
         for (int j = 0; j < MAP_WIDTH; j++)
         {
             struct Position position = {j, i};
-            MazeElement element = getInitialMazeElementAt(position);
+            MazeElement element = getMazeElementAt(position, initialMaze);
 
             if (element == SMALL_COIN || element == BIG_COIN)
-                setMazeElementAt(position, element);
+                setMazeElementAt(position, element, propsMaze);
         }
 
     }

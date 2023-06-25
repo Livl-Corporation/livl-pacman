@@ -16,7 +16,7 @@ void startGame()
     initGame();
     initFruits();
 
-    int dotsCount = getInitialElementAmount(BIG_COIN) + getInitialElementAmount(SMALL_COIN);
+    int dotsCount = getElementAmount(BIG_COIN) + getElementAmount(SMALL_COIN);
     setInitialDotsCount(dotsCount);
 
     spawnPacman();
