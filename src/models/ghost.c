@@ -169,7 +169,7 @@ void moveGhost(struct Ghost *sprite)
         sprite->direction = sprite->nextDirection;
 
     // move the ghost in his current direction
-    updatePosition(&sprite->uiPosition, sprite->direction, speed);
+    updatePosition(&sprite->uiPosition, sprite->direction, DEFAULT_POSITION_DISTANCE, speed);
     struct Position updatedGridPos = uiPosToGridPos(getCellCenter(sprite->uiPosition));
 
     if (arePositionEquals(sprite->gridPosition, updatedGridPos))
@@ -214,7 +214,7 @@ void setGhostTargetTile(struct Ghost *sprite, struct Position targetTile)
 void selectNextGhostDirection(struct Ghost *sprite)
 {
     struct Position nextPosition = sprite->gridPosition;
-    updatePosition(&nextPosition, sprite->direction, 1);
+    updatePosition(&nextPosition, sprite->direction, DEFAULT_POSITION_DISTANCE, DEFAULT_SPEED);
 
     // Get possible directions
     Direction possibleDirections[DIRECTION_COUNT-1];
@@ -229,7 +229,7 @@ void selectNextGhostDirection(struct Ghost *sprite)
             continue;
 
         struct Position cell = sprite->gridPosition;
-        updatePosition(&cell, direction, 1);
+        updatePosition(&cell, direction, DEFAULT_POSITION_DISTANCE, DEFAULT_SPEED);
 
         // if out of bounds don't add
         if (!isInBounds(cell))
@@ -256,7 +256,7 @@ void selectNextGhostDirection(struct Ghost *sprite)
     for (int i = 0; i < possibleDirectionsCount; i++)
     {
         struct Position cell = sprite->gridPosition;
-        updatePosition(&cell, possibleDirections[i], 1);
+        updatePosition(&cell, possibleDirections[i], DEFAULT_POSITION_DISTANCE, DEFAULT_SPEED);
         int distance = getDistance(cell, sprite->targetTile);
         if (distance < minimumDistance)
         {

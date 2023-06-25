@@ -172,7 +172,7 @@ bool shouldSkipPacmanDrawOnDeathTimer()
 
 bool shouldChangeDirection()
 {
-    return pacmanDirection != pacmanWishedDirection && canMoveInDirection(pacmanWishedDirection);
+    return pacmanDirection != pacmanWishedDirection && canMoveInDirection(pacmanUIPos,pacmanWishedDirection);
 }
 
 int getPacmanAnimation()

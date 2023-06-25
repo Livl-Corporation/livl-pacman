@@ -20,7 +20,7 @@ GhostSpeedLevel ghostSpeedLevels[] = {
 
 float getPacmanSpeed(struct Position pacmanGridPos)
 {
-    MazeElement element = getMazeElementAt(pacmanGridPos);
+    MazeElement element = getMazeElementAt(pacmanGridPos, propsMaze);
     enum PacmanSpeed pacmanSpeed;
 
     switch (element)
