@@ -163,6 +163,14 @@ void moveGhost(struct Ghost *sprite)
     if (sprite->wishedDirection != sprite->direction && canMoveInDirection(sprite->uiPosition, sprite->wishedDirection))
         sprite->direction = sprite->wishedDirection;
 
+    bool isMoveValid = false;
+    do {
+        isMoveValid = canMoveInDirection(sprite->uiPosition, sprite->direction);
+        if (!isMoveValid)
+            sprite->direction = getNextDirection(sprite->direction);
+
+    } while(!isMoveValid);
+
     // move the ghost in his current direction
     updatePosition(&sprite->uiPosition, sprite->direction, DEFAULT_POSITION_DISTANCE, speed);
     struct Position updatedGridPos = uiPosToGridPos(getCellCenter(sprite->uiPosition));
@@ -177,10 +185,9 @@ void moveGhost(struct Ghost *sprite)
 
 void onGhostGridPositionChanged(struct Ghost *sprite)
 {
+    sprite->wishedDirection = sprite->nextDirection;
 
     removeMazeElement(sprite->ghostElement, entityMaze);
-
-    sprite->wishedDirection = sprite->nextDirection;
 
     // check if ghost should perform an action
     MazeElement element = getMazeElementInCollisionWithEntity(sprite->gridPosition);
@@ -214,7 +221,7 @@ void selectNextGhostDirection(struct Ghost *sprite)
     updatePosition(&nextPosition, sprite->direction, DEFAULT_POSITION_DISTANCE, DEFAULT_SPEED);
 
     // Get possible directions
-    Direction possibleDirections[DIRECTION_COUNT-1];
+    Direction possibleDirections[DIRECTION_COUNT-1] = {};
     int possibleDirectionsCount = 0;
 
     for (int i = 0; i < DIRECTION_COUNT; i++)
@@ -237,8 +244,8 @@ void selectNextGhostDirection(struct Ghost *sprite)
             continue;
 
         // add direction if previous conditions passed
-        possibleDirections[possibleDirectionsCount] = direction;
-        possibleDirectionsCount++;
+        possibleDirections[possibleDirectionsCount++] = direction;
+
     }
 
     // if 1 direction possible, select it
@@ -318,6 +325,17 @@ void resetGhostEatenCount() {
 void reverseGhostsDirections() {
     for (int i = 0; i < GHOST_COUNT; i++) {
         struct Ghost *ghost = &ghostList[i];
-        ghost->nextDirection = getOppositeDirection(ghost->direction);
+        Direction newDirection = getOppositeDirection(ghost->direction);
+        ghost->nextDirection = newDirection;
+        ghost->wishedDirection = newDirection;
     }
+}
+
+Direction getNextDirection(Direction direction) {
+    if (direction >= DIRECTION_COUNT-1) {
+        return 0;
+    }
+
+    return direction + 1;
+
 }

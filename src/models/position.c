@@ -6,7 +6,7 @@
 
 bool arePositionEquals(struct Position position1, struct Position position2)
 {
-    return (int)position1.x == (int)position2.x && (int)position1.y == (int)position2.y;
+    return position1.x == position2.x && position1.y == position2.y;
 }
 
 void updatePosition(struct Position *position, Direction direction, float distance, float speed)

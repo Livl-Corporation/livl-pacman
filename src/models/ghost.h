@@ -94,4 +94,6 @@ void resetGhostEatenCount();
 
 void reverseGhostsDirections();
 
+Direction getNextDirection(Direction direction);
+
 #endif // PACMAN_GHOST_H
