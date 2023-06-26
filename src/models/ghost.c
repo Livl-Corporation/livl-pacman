@@ -11,6 +11,8 @@ MazeElement ghostElementEaten = EMPTY;
 
 SDL_Rect eatableGhostRect;
 
+SDL_Rect deadGhostRect = {72, 196, GHOST_SIZE, GHOST_SIZE};
+
 struct Position redGhostScatterTargetTile = {MAP_WIDTH, -1};
 struct Position pinkGhostScatterTargetTile = {-1, -1};
 struct Position blueGhostScatterTargetTile = {MAP_WIDTH+1, MAP_HEIGHT+1};
@@ -37,6 +39,8 @@ void initGhostList()
 
         ghostList[i].targetTile.x = 0;
         ghostList[i].targetTile.y = 0;
+
+        ghostList[i].isDead = false;
 
         // Sprites :
         ghostList[i].rects = malloc(sizeof(SDL_Rect) * DIRECTION_COUNT);
@@ -122,7 +126,14 @@ void updateGhost(struct Ghost *sprite)
 
     moveGhost(sprite);
 
-    if (getGhostMode() == FRIGHTENED)
+    if (sprite->isDead) {
+        ghost_in2 = (SDL_Rect){
+            deadGhostRect.x + sprite->direction * (GHOST_SIZE + GHOST_SPACING_X),
+            deadGhostRect.y,
+            GHOST_SIZE,
+            GHOST_SIZE
+        };
+    } else if (getGhostMode() == FRIGHTENED)
     {
         ghost_in2 = eatableGhostRect;
 
@@ -167,14 +178,14 @@ void moveGhost(struct Ghost *sprite)
     // check if next position will cause collision
     if (getGhostMode() != FRIGHTENED)
     {
-        if (sprite->wishedDirection != sprite->direction && canMoveInDirection(sprite->uiPosition, sprite->wishedDirection))
+        if (sprite->wishedDirection != sprite->direction && canMoveInDirection(sprite->uiPosition, sprite->wishedDirection, false))
             sprite->direction = sprite->wishedDirection;
     }
 
     bool isMoveValid = false;
     do
     {
-        isMoveValid = canMoveInDirection(sprite->uiPosition, sprite->direction);
+        isMoveValid = canMoveInDirection(sprite->uiPosition, sprite->direction, true);
         if (!isMoveValid)
             sprite->direction = getNextDirection(sprite->direction);
 
@@ -290,7 +301,7 @@ void selectNextGhostDirection(struct Ghost *sprite)
             continue;
 
         // if is obstacle don't add
-        if (isObstacle(cell))
+        if (isObstacle(cell, true))
             continue;
 
         // add direction if previous conditions passed
@@ -358,6 +369,15 @@ void eatGhost(MazeElement ghostElement)
 
     setTimerCallback(&eatGhostAnimationTimer, endEatGhostAnimation);
 
+    struct Position ghostSpawnPoint = getMazePositionOfElement(ghostElement, initialMaze);
+
+    struct Ghost *sprite = getGhostByElement(ghostElement);
+
+    if (sprite != NULL) {
+        sprite->isDead = true;
+        sprite->targetTile = ghostSpawnPoint;
+    }
+
     resetTimer(&eatGhostAnimationTimer);
     startTimer(&eatGhostAnimationTimer);
 
@@ -399,4 +419,14 @@ Direction getNextDirection(Direction direction)
 Direction getRandomDirection()
 {
     return rand() % DIRECTION_COUNT;
+}
+
+struct Ghost *getGhostByElement(MazeElement element) {
+    for(int i=0; i<GHOST_COUNT; i++) {
+        if(ghostList[i].ghostElement == element) {
+            return &ghostList[i];
+        }
+    }
+
+    return NULL;
 }

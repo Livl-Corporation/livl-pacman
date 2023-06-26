@@ -30,6 +30,8 @@ struct Ghost
     SDL_Rect lastRect;
     MazeElement ghostElement;
     struct Position targetTile;
+
+    bool isDead;
 };
 
 void moveGhost(struct Ghost *sprite);
@@ -101,5 +103,7 @@ void reverseGhostsDirections();
 Direction getNextDirection(Direction direction);
 
 Direction getRandomDirection();
+
+struct Ghost *getGhostByElement(MazeElement element);
 
 #endif // PACMAN_GHOST_H

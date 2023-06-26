@@ -114,14 +114,14 @@ void blitRectWithOffset(SDL_Rect imgRect, struct Position positionOffsetInMaze, 
  * @param position
  * @return true if the position is an obstacle, false otherwise
  */
-bool isObstacle(struct Position position);
+bool isObstacle(struct Position position, bool allowDoors);
 
 /**
  * Check if the provided position has a collision with an obstacle
  * @param position
  * @param hitboxSize
  */
-bool hasCollision(struct Position position, int hitboxSize);
+bool hasCollision(struct Position position, int hitboxSize, bool allowDoors);
 
 /**
  * Convert a position in the grid to a position in pixels
@@ -147,7 +147,7 @@ int getElementAmount(MazeElement element);
 
 void refillCoins();
 
-bool canMoveInDirection(struct Position position, Direction direction);
+bool canMoveInDirection(struct Position position, Direction direction, bool allowDoors);
 
 MazeElement getMazeElementInCollisionWithEntity(struct Position position);
 

@@ -136,9 +136,12 @@ void freeMaze()
     free2DArray(entityMaze, MAP_HEIGHT);
 }
 
-bool isObstacle(struct Position position)
+bool isObstacle(struct Position position, bool allowDoors)
 {
     MazeElement element = getMazeElementAt(position, initialMaze);
+
+    if (allowDoors) return element == WALL;
+
     return element == WALL || element == DOOR;
 }
 
@@ -147,7 +150,7 @@ bool isInBounds(struct Position position)
     return position.x >= 0 && position.x < MAP_WIDTH && position.y >= 0 && position.y < MAP_HEIGHT;
 }
 
-bool hasCollision(struct Position position, int hitboxSize)
+bool hasCollision(struct Position position, int hitboxSize, bool allowDoors)
 {
 
     for (int i = 0; i <= hitboxSize; i += hitboxSize)
@@ -157,7 +160,7 @@ bool hasCollision(struct Position position, int hitboxSize)
             if (isObstacle(uiPosToGridPos((struct Position) {
                     position.x + i,
                     position.y + j,
-            })))
+            }), allowDoors))
                 return true;
         }
     }
@@ -221,11 +224,11 @@ void refillCoins() {
 
 }
 
-bool canMoveInDirection(struct Position position, Direction direction)
+bool canMoveInDirection(struct Position position, Direction direction, bool allowDoors)
 {
     struct Position posCopy = position;
     updatePosition(&posCopy, direction, DEFAULT_POSITION_DISTANCE, DEFAULT_SPEED);
-    return !hasCollision(posCopy, CELL_SIZE-1);
+    return !hasCollision(posCopy, CELL_SIZE-1, allowDoors);
 }
 
 MazeElement getMazeElementInCollisionWithEntity(struct Position position) {

@@ -118,7 +118,7 @@ void drawPacman()
 
     struct Position targetUiPosition = calculateTargetPosition(pacmanPosCopy);
 
-    if (hasCollision(targetUiPosition, CELL_SIZE - 1))
+    if (hasCollision(targetUiPosition, CELL_SIZE - 1, false))
     {
         pacmanBlit(lastPacmanPosition);
         return;
@@ -172,7 +172,7 @@ bool shouldSkipPacmanDrawOnDeathTimer()
 
 bool shouldChangeDirection()
 {
-    return pacmanDirection != pacmanWishedDirection && canMoveInDirection(pacmanUIPos,pacmanWishedDirection);
+    return pacmanDirection != pacmanWishedDirection && canMoveInDirection(pacmanUIPos,pacmanWishedDirection, false);
 }
 
 int getPacmanAnimation()
