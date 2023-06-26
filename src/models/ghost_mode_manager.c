@@ -81,6 +81,11 @@ void setGhostMode(GhostMode mode) {
         return;
     }
 
+    if(mode == SCATTER)
+    {
+        setGhostScatterModeTargetTile();
+    }
+
     startTimer(&ghostModeTimer);
 
     previousGhostMode = ghostMode;
