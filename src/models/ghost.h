@@ -76,6 +76,8 @@ void blitGhost(struct Ghost *sprite, SDL_Rect *spritePos);
 
 void onGhostGridPositionChanged(struct Ghost *sprite);
 
+void setGhostScatterModeTargetTile();
+
 void setGhostTargetTile(struct Ghost *sprite, struct Position targetTile);
 
 void selectNextGhostDirection(struct Ghost *sprite);

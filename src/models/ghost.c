@@ -11,6 +11,11 @@ MazeElement ghostElementEaten = EMPTY;
 
 SDL_Rect eatableGhostRect;
 
+struct Position redGhostScatterTargetTile = {MAP_WIDTH, -1};
+struct Position pinkGhostScatterTargetTile = {-1, -1};
+struct Position blueGhostScatterTargetTile = {MAP_WIDTH+1, MAP_HEIGHT+1};
+struct Position orangeGhostScatterTargetTile = {0, MAP_HEIGHT+1};
+
 void initGhostList()
 {
 
@@ -214,6 +219,30 @@ void onGhostGridPositionChanged(struct Ghost *sprite)
     setMazeElementAt(sprite->gridPosition, sprite->ghostElement, entityMaze);
 
     selectNextGhostDirection(sprite);
+}
+
+void setGhostScatterModeTargetTile()
+{
+    for(int i=0; i<GHOST_COUNT; i++)
+    {
+        switch(ghostList[i].ghostElement)
+        {
+            case RED_GHOST:
+                setGhostTargetTile(&ghostList[i], redGhostScatterTargetTile);
+                break;
+            case PINK_GHOST:
+                setGhostTargetTile(&ghostList[i], pinkGhostScatterTargetTile);
+                break;
+            case BLUE_GHOST:
+                setGhostTargetTile(&ghostList[i], blueGhostScatterTargetTile);
+                break;
+            case ORANGE_GHOST:
+                setGhostTargetTile(&ghostList[i], orangeGhostScatterTargetTile);
+                break;
+            default:
+                break;
+        }
+    }
 }
 
 void setGhostTargetTile(struct Ghost *sprite, struct Position targetTile)
