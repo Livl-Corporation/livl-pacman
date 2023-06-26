@@ -267,7 +267,7 @@ struct Position onPacmanGridMove(struct Position *pacmanUiPos)
             break;
         case BIG_COIN:
             incrementScore(50);
-            makeGhostsEatable();
+            setGhostMode(FRIGHTENED);
             setMazeElementAt(pacmanGridPos, EMPTY, propsMaze);
             handleCoinCollision();
             break;
@@ -306,8 +306,12 @@ void endEatGhostAnimation() {
 
 void handleGhostCollision(MazeElement ghostElement)
 {
-    if (isGhostEatable()) pacmanEatGhost(ghostElement);
-    else killPacman();
+    if (getGhostMode() == FRIGHTENED) {
+        setMazeElementAt(pacmanGridPos, PACMAN, entityMaze);
+        eatGhost(ghostElement);
+    } else {
+        killPacman();
+    }
 }
 
 void killPacman()
@@ -316,25 +320,6 @@ void killPacman()
     decrementLives();
     isGamePause = true;
     startPacmanDeathAnimation();
-}
-
-void pacmanEatGhost(MazeElement ghostElement)
-{
-    removeMazeElement(ghostElement, entityMaze);
-    setMazeElementAt(pacmanGridPos, PACMAN, entityMaze);
-    ghostEaten++;
-
-    playAudioWithChannel(audioEatGhost, CHANNEL_EAT_GHOST);
-
-    incrementScore(getEatenGhostScore(ghostEaten));
-
-    setTimerCallback(&eatGhostAnimationTimer, endEatGhostAnimation);
-
-    resetTimer(&eatGhostAnimationTimer);
-    startTimer(&eatGhostAnimationTimer);
-
-    isGamePause = true;
-    ghostElementEaten = ghostElement;
 }
 
 void startPacmanDeathAnimation() {

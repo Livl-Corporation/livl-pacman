@@ -22,6 +22,8 @@ void startGame()
     spawnPacman();
     spawnGhosts();
 
+    resetGhostModeTimer();
+
     playAudioWithChannel(audioGameStart, CHANNEL_GAME_START);
     startReady(GAME_START_DURATION);
 
@@ -143,4 +145,8 @@ void delayToMaintainFrameRate(clock_t before, Uint32 desiredDelayInMs)
 
     if (desiredDelayInMs > milliseconds)
         SDL_Delay(desiredDelayInMs - milliseconds);
+}
+
+bool isGameRunning() {
+    return !isGamePause;
 }

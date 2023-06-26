@@ -66,7 +66,7 @@ void playSirenOrPowerUpSound()
         return;
     }
 
-    if (isGhostEatable()) {
+    if (getGhostMode() == FRIGHTENED) {
         if (!isPowerUpPlaying) {
             playAudioWithChannelLoop(audioPowerUp, CHANNEL_POWER_UP);
             isPowerUpPlaying = true;

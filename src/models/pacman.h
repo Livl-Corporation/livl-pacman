@@ -81,8 +81,6 @@ void handleGhostCollision(MazeElement ghostElement);
 
 void killPacman();
 
-void pacmanEatGhost(MazeElement ghostElement);
-
 void pacmanBlit(SDL_Rect srcRect);
 
 struct Position teleportPacman(MazeElement teleporter);

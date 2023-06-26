@@ -223,8 +223,9 @@ void refillCoins() {
 
 bool canMoveInDirection(struct Position position, Direction direction)
 {
-    updatePosition(&position, direction, DEFAULT_POSITION_DISTANCE, DEFAULT_SPEED);
-    return !hasCollision(position, CELL_SIZE-1);
+    struct Position posCopy = position;
+    updatePosition(&posCopy, direction, DEFAULT_POSITION_DISTANCE, DEFAULT_SPEED);
+    return !hasCollision(posCopy, CELL_SIZE-1);
 }
 
 MazeElement getMazeElementInCollisionWithEntity(struct Position position) {

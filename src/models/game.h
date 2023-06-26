@@ -20,6 +20,7 @@ extern struct Timer pacmanDeathAnimationDelayTimer;
 extern struct Timer fruitTimer;
 extern struct Timer fruitScoreAnimationTimer;
 extern struct Timer nextRoundAnimationTimer;
+extern struct Timer ghostModeTimer;
 
 void initTimers();
 

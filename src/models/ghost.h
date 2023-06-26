@@ -14,12 +14,6 @@
 #include "models/timer.h"
 #include "../ui/game_window.h"
 
-extern int ghostEaten;
-/**
- * The ghost that has been eaten by pacman
- */
-extern MazeElement ghostElementEaten;
-
 struct Ghost
 {
     struct Position uiPosition;
@@ -65,13 +59,6 @@ void drawGhosts();
  */
 void freeGhosts();
 
-/**
- * Make all ghost eatable
- */
-void makeGhostsEatable();
-
-bool isGhostEatable();
-
 bool isGhostEatableRunningOut();
 
 /**
@@ -98,5 +85,13 @@ Direction getOppositeDirection(Direction direction);
 int getDistance(struct Position pos1, struct Position pos2);
 
 void teleportGhost(struct Ghost *sprite, MazeElement destination);
+
+void eatGhost(MazeElement ghostElement);
+
+int getGhostEatenCount();
+
+void resetGhostEatenCount();
+
+void reverseGhostsDirections();
 
 #endif // PACMAN_GHOST_H

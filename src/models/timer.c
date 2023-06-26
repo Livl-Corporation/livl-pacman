@@ -11,6 +11,7 @@ void initTimer(struct Timer *timer, int count)
     timer->isRunning = false;
     timer->isFinished = false;
     timer->callback = NULL;
+    timer->runCondition = NULL;
 
     timers[timerCount] = timer;
     timerCount++;
@@ -40,7 +41,10 @@ void updateTimers()
     {
         struct Timer *timer = timers[i];
 
-        if (!timer->isRunning)
+        if (!timer->isRunning || timer->count <= 0)
+            continue;
+
+        if (timer->runCondition != NULL && !timer->runCondition())
             continue;
 
         timer->count--;
@@ -75,4 +79,8 @@ void clearTimers()
     }
 
     timerCount = 0;
+}
+
+void setTimerRunCondition(struct Timer *timer, TimerRunCondition runCondition) {
+    timer->runCondition = runCondition;
 }
