@@ -86,6 +86,8 @@ int getDistance(struct Position pos1, struct Position pos2);
 
 void teleportGhost(struct Ghost *sprite, MazeElement destination);
 
+bool isGhostInTunnel(struct Ghost *sprite);
+
 void eatGhost(MazeElement ghostElement);
 
 int getGhostEatenCount();

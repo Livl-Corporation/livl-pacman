@@ -64,20 +64,18 @@ float getPacmanSpeed(struct Position pacmanGridPos)
     return PACMAN_DEFAULT_SPEED * speedPercentage;
 }
 
-/*
-float getGhostSpeed(struct Position ghostGridPos __attribute__((unused)))
+float getGhostSpeed(struct Ghost *ghost)
 {
     int round = getRound();
-    float speedPercentage = PACMAN_DEFAULT_SPEED;
+    float speedPercentage = GHOST_DEFAULT_SPEED;
 
     int i = 0;
     while (ghostSpeedLevels[i].minRound <= round) {
-        // TODO: check if ghost is in Tunnel
-        //if (isGhostInTunnel(ghostGridPos))
-        //{
-        //    speedPercentage = ghostSpeedLevels[i].tunnelSpeed;
-        //}
-        if (getGhostMode() == FRIGHTENED)
+        if(isGhostInTunnel(ghost))
+        {
+            speedPercentage = ghostSpeedLevels[i].tunnelSpeed;
+        }
+        else if (getGhostMode() == FRIGHTENED)
         {
             speedPercentage = ghostSpeedLevels[i].frightSpeed;
         }
@@ -89,4 +87,4 @@ float getGhostSpeed(struct Position ghostGridPos __attribute__((unused)))
     }
 
     return GHOST_DEFAULT_SPEED * speedPercentage;
-}*/
+}
