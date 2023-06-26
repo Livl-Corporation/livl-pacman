@@ -96,4 +96,6 @@ void reverseGhostsDirections();
 
 Direction getNextDirection(Direction direction);
 
+Direction getRandomDirection();
+
 #endif // PACMAN_GHOST_H
