@@ -162,8 +162,7 @@ int getEatenGhostScore(int eatenGhostCount)
 
 void moveGhost(struct Ghost *sprite)
 {
-
-    float speed = SPRITE_SPEED;
+    float speed = getGhostSpeed(sprite);
 
     // check if next position will cause collision
     if (getGhostMode() != FRIGHTENED)
@@ -219,6 +218,22 @@ void onGhostGridPositionChanged(struct Ghost *sprite)
     setMazeElementAt(sprite->gridPosition, sprite->ghostElement, entityMaze);
 
     selectNextGhostDirection(sprite);
+}
+
+bool isGhostInTunnel(struct Ghost *sprite)
+{
+    bool isGhostInTunnel = false;
+
+    if (sprite->gridPosition.y == TUNNEL_POSITION_Y)
+    {
+        if ((sprite->gridPosition.x >= 0 && sprite->gridPosition.x <= TUNNEL_LENGTH) ||
+            (sprite->gridPosition.x <= MAP_WIDTH && sprite->gridPosition.x >= MAP_WIDTH - TUNNEL_LENGTH))
+        {
+            isGhostInTunnel = true;
+        }
+    }
+
+    return isGhostInTunnel;
 }
 
 void setGhostScatterModeTargetTile()

@@ -20,6 +20,9 @@
 #define TOTAL_SCREEN_WIDTH 525
 #define TOTAL_SCREEN_HEIGHT (MAZE_SCREEN_HEIGHT + HEADER_SCREEN_HEIGHT + FOOTER_SCREEN_HEIGHT)
 
+#define TUNNEL_POSITION_Y 14
+#define TUNNEL_LENGTH 5
+
 #define PATH_FILE_MAZE "../assets/text/maze.txt"
 #define PATH_SPRITE_SHEET_PACMAN "../assets/img/pacman_sprites.bmp"
 #define PATH_LOGO_LIVL_PACMAN "../assets/img/logo_livl_pacman.bmp"
