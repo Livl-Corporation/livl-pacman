@@ -56,7 +56,8 @@ void initGhostList()
         GHOST_SIZE};
 }
 
-void spawnGhosts() {
+void spawnGhosts()
+{
     for (int i = 0; i < GHOST_COUNT; i++)
     {
         spawnGhost(i);
@@ -79,22 +80,22 @@ void spawnGhost(int ghostId)
     ghostList[ghostId].uiPosition = gridPosToUiPos(ghostList[ghostId].gridPosition);
 
     // TODO : reset position in entityMaze
-/*
-    if (!arePositionEquals(
-    ghostList[ghostId].gridPosition,
-    getMazePositionOfElement(ghostList[ghostId].ghostElement, &entityMaze)
-    )) {
-        removeMazeElement(ghostList[ghostId].ghostElement, entityMaze);
-        setMazeElementAt(ghostList[ghostId].gridPosition, ghostList[ghostId].ghostElement, entityMaze);
-    }
-*/
-
+    /*
+        if (!arePositionEquals(
+        ghostList[ghostId].gridPosition,
+        getMazePositionOfElement(ghostList[ghostId].ghostElement, &entityMaze)
+        )) {
+            removeMazeElement(ghostList[ghostId].ghostElement, entityMaze);
+            setMazeElementAt(ghostList[ghostId].gridPosition, ghostList[ghostId].ghostElement, entityMaze);
+        }
+    */
 }
 
 void drawGhosts()
 {
     // Don't draw ghosts during delay after Pacman death animation
-    if(pacmanDeathAnimationTimer.isRunning || (pacmanDeathAnimationTimer.isFinished && pacmanDeathAnimationDelayTimer.isRunning)) return;
+    if (pacmanDeathAnimationTimer.isRunning || (pacmanDeathAnimationTimer.isFinished && pacmanDeathAnimationDelayTimer.isRunning))
+        return;
 
     for (int i = 0; i < GHOST_COUNT; i++)
     {
@@ -160,16 +161,20 @@ void moveGhost(struct Ghost *sprite)
     float speed = SPRITE_SPEED;
 
     // check if next position will cause collision
-    if (sprite->wishedDirection != sprite->direction && canMoveInDirection(sprite->uiPosition, sprite->wishedDirection))
-        sprite->direction = sprite->wishedDirection;
+    if (getGhostMode() != FRIGHTENED)
+    {
+        if (sprite->wishedDirection != sprite->direction && canMoveInDirection(sprite->uiPosition, sprite->wishedDirection))
+            sprite->direction = sprite->wishedDirection;
+    }
 
     bool isMoveValid = false;
-    do {
+    do
+    {
         isMoveValid = canMoveInDirection(sprite->uiPosition, sprite->direction);
         if (!isMoveValid)
             sprite->direction = getNextDirection(sprite->direction);
 
-    } while(!isMoveValid);
+    } while (!isMoveValid);
 
     // move the ghost in his current direction
     updatePosition(&sprite->uiPosition, sprite->direction, DEFAULT_POSITION_DISTANCE, speed);
@@ -180,33 +185,34 @@ void moveGhost(struct Ghost *sprite)
 
     sprite->gridPosition = updatedGridPos;
     onGhostGridPositionChanged(sprite);
-
 }
 
 void onGhostGridPositionChanged(struct Ghost *sprite)
 {
-    sprite->wishedDirection = sprite->nextDirection;
+
+    if (getGhostMode() != FRIGHTENED)
+        sprite->wishedDirection = sprite->nextDirection;
 
     removeMazeElement(sprite->ghostElement, entityMaze);
 
     // check if ghost should perform an action
     MazeElement element = getMazeElementInCollisionWithEntity(sprite->gridPosition);
-    switch (element) {
-        case PACMAN:
-            handleGhostCollision(sprite->ghostElement);
-            break;
-        case LEFT_TELEPORTER:
-            teleportGhost(sprite, RIGHT_TELEPORTER);
-            break;
-        case RIGHT_TELEPORTER:
-            teleportGhost(sprite, LEFT_TELEPORTER);
-            break;
+    switch (element)
+    {
+    case PACMAN:
+        handleGhostCollision(sprite->ghostElement);
+        break;
+    case LEFT_TELEPORTER:
+        teleportGhost(sprite, RIGHT_TELEPORTER);
+        break;
+    case RIGHT_TELEPORTER:
+        teleportGhost(sprite, LEFT_TELEPORTER);
+        break;
     }
 
     // update ghost position in maze
     setMazeElementAt(sprite->gridPosition, sprite->ghostElement, entityMaze);
 
-    // select his next direction
     selectNextGhostDirection(sprite);
 }
 
@@ -221,7 +227,7 @@ void selectNextGhostDirection(struct Ghost *sprite)
     updatePosition(&nextPosition, sprite->direction, DEFAULT_POSITION_DISTANCE, DEFAULT_SPEED);
 
     // Get possible directions
-    Direction possibleDirections[DIRECTION_COUNT-1] = {};
+    Direction possibleDirections[DIRECTION_COUNT - 1] = {};
     int possibleDirectionsCount = 0;
 
     for (int i = 0; i < DIRECTION_COUNT; i++)
@@ -245,7 +251,6 @@ void selectNextGhostDirection(struct Ghost *sprite)
 
         // add direction if previous conditions passed
         possibleDirections[possibleDirectionsCount++] = direction;
-
     }
 
     // if 1 direction possible, select it
@@ -268,21 +273,22 @@ void selectNextGhostDirection(struct Ghost *sprite)
             sprite->nextDirection = possibleDirections[i];
         }
     }
-
 }
 
-Direction getOppositeDirection(Direction direction) {
-    switch (direction) {
-        case DIRECTION_UP:
-            return DIRECTION_DOWN;
-        case DIRECTION_DOWN:
-            return DIRECTION_UP;
-        case DIRECTION_LEFT:
-            return DIRECTION_RIGHT;
-        case DIRECTION_RIGHT:
-            return DIRECTION_LEFT;
-        default:
-            return DIRECTION_UP;
+Direction getOppositeDirection(Direction direction)
+{
+    switch (direction)
+    {
+    case DIRECTION_UP:
+        return DIRECTION_DOWN;
+    case DIRECTION_DOWN:
+        return DIRECTION_UP;
+    case DIRECTION_LEFT:
+        return DIRECTION_RIGHT;
+    case DIRECTION_RIGHT:
+        return DIRECTION_LEFT;
+    default:
+        return DIRECTION_UP;
     }
 }
 
@@ -298,7 +304,8 @@ void teleportGhost(struct Ghost *sprite, MazeElement destination)
     sprite->gridPosition = teleporterPosition;
 }
 
-void eatGhost(MazeElement ghostElement) {
+void eatGhost(MazeElement ghostElement)
+{
     ghostEaten++;
     removeMazeElement(ghostElement, entityMaze);
     playAudioWithChannel(audioEatGhost, CHANNEL_EAT_GHOST);
@@ -314,16 +321,20 @@ void eatGhost(MazeElement ghostElement) {
     ghostElementEaten = ghostElement;
 }
 
-int getGhostEatenCount() {
+int getGhostEatenCount()
+{
     return ghostEaten;
 }
 
-void resetGhostEatenCount() {
+void resetGhostEatenCount()
+{
     ghostEaten = 0;
 }
 
-void reverseGhostsDirections() {
-    for (int i = 0; i < GHOST_COUNT; i++) {
+void reverseGhostsDirections()
+{
+    for (int i = 0; i < GHOST_COUNT; i++)
+    {
         struct Ghost *ghost = &ghostList[i];
         Direction newDirection = getOppositeDirection(ghost->direction);
         ghost->nextDirection = newDirection;
@@ -331,11 +342,17 @@ void reverseGhostsDirections() {
     }
 }
 
-Direction getNextDirection(Direction direction) {
-    if (direction >= DIRECTION_COUNT-1) {
+Direction getNextDirection(Direction direction)
+{
+    if (direction >= DIRECTION_COUNT - 1)
+    {
         return 0;
     }
 
     return direction + 1;
+}
 
+Direction getRandomDirection()
+{
+    return rand() % DIRECTION_COUNT;
 }
