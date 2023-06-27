@@ -9,8 +9,6 @@ SDL_Rect pacmanRoundSprite = {4, 90, PACMAN_SIZE, PACMAN_SIZE};
 
 SDL_Rect pacmanDeathAnimation[PACMAN_DEATH_ANIMATION_FRAMES];
 
-SDL_Rect arrowSprite = {4, 266, PACMAN_ARROW_SIZE, PACMAN_ARROW_SIZE};
-
 SDL_Rect lastPacmanPosition = {0, 0, 0, 0};
 
 struct Position pacmanSpawnPos = {1, 1};
@@ -21,9 +19,6 @@ Direction defaultDirection = DIRECTION_RIGHT;
 
 Direction pacmanDirection;
 Direction pacmanWishedDirection;
-
-int arrowOffset = (PACMAN_SIZE / 2) - (PACMAN_ARROW_SIZE / 2);
-float arrowDisplaySize = (float)PACMAN_ARROW_SIZE * ((float)CELL_SIZE / PACMAN_SIZE);
 
 float pacmanSpeed = PACMAN_DEFAULT_SPEED;
 
@@ -116,9 +111,10 @@ void drawPacman()
     else
         newPacmanSpriteMouth = getPacmanSprite(pacmanAnimation);
 
-    struct Position targetUiPosition = calculateTargetPosition(pacmanPosCopy);
+    struct Position targetUiPosition = pacmanPosCopy;
+    updatePosition(&targetUiPosition, pacmanDirection, DEFAULT_POSITION_DISTANCE, pacmanSpeed);
 
-    if (hasCollision(targetUiPosition, CELL_SIZE - 1))
+    if (hasCollision(targetUiPosition, CELL_SIZE - 1, false))
     {
         pacmanBlit(lastPacmanPosition);
         return;
@@ -126,7 +122,7 @@ void drawPacman()
 
     struct Position targetGridPosition = uiPosToGridPos(getCellCenter(targetUiPosition));
 
-    if (hasPacmanMoved(targetGridPosition))
+    if (!arePositionEquals(pacmanGridPos, targetGridPosition))
     {
         pacmanGridPos = targetGridPosition;
         pacmanSpeed = getPacmanSpeed(pacmanGridPos);
@@ -172,7 +168,7 @@ bool shouldSkipPacmanDrawOnDeathTimer()
 
 bool shouldChangeDirection()
 {
-    return pacmanDirection != pacmanWishedDirection && canMoveInDirection(pacmanUIPos,pacmanWishedDirection);
+    return pacmanDirection != pacmanWishedDirection && canMoveInDirection(pacmanUIPos,pacmanWishedDirection, false);
 }
 
 int getPacmanAnimation()
@@ -187,17 +183,6 @@ SDL_Rect getPacmanSprite(int pacmanAnimation)
     return sprite;
 }
 
-struct Position calculateTargetPosition(struct Position pacmanPosCopy)
-{
-    updatePosition(&pacmanPosCopy, pacmanDirection, DEFAULT_POSITION_DISTANCE, pacmanSpeed);
-    return pacmanPosCopy;
-}
-
-bool hasPacmanMoved(struct Position newPacmanGridPos)
-{
-    return !arePositionEquals(pacmanGridPos, newPacmanGridPos);
-}
-
 void pacmanBlit(SDL_Rect srcRect)
 {
     SDL_Rect rect = {(int)pacmanUIPos.x, (int)pacmanUIPos.y, CELL_SIZE, CELL_SIZE};
@@ -210,32 +195,6 @@ int calculatePacmanDeathAnimationIndex()
     float animationIndex = (1 - ((float)pacmanDeathAnimationTimer.count / (float)pacmanDeathAnimationTimer.initialCount)) * PACMAN_DEATH_ANIMATION_FRAMES;
     return (int)animationIndex;
 }
-
-void drawPacmanArrow()
-{
-
-    if (isGamePause)
-        return;
-
-    SDL_Rect newArrowSprite = getArrow(pacmanWishedDirection);
-
-    struct Position arrowPos = {
-        pacmanUIPos.x + (float)arrowOffset,
-        pacmanUIPos.y + (float)arrowOffset,
-    };
-
-    updatePosition(&arrowPos, pacmanWishedDirection, PACMAN_ARROW_SPACING, DEFAULT_SPEED);
-
-    struct SDL_Rect arrowPosSDL = {
-        (int)arrowPos.x,
-        (int)arrowPos.y,
-        (int)arrowDisplaySize,
-        (int)arrowDisplaySize,
-    };
-
-    SDL_BlitScaled(pSurfacePacmanSpriteSheet, &newArrowSprite, pSurfaceWindow, &arrowPosSDL);
-}
-
 
 struct Position onPacmanGridMove(struct Position *pacmanUiPos)
 {
@@ -281,11 +240,6 @@ struct Position onPacmanGridMove(struct Position *pacmanUiPos)
     return *pacmanUiPos;
 }
 
-bool isScoreAnimationOnGhostEaten()
-{
-    return eatGhostAnimationTimer.isRunning;
-}
-
 struct Position teleportPacman(MazeElement teleporter)
 {
     pacmanGridPos = getMazePositionOfElement(teleporter, initialMaze);
@@ -293,22 +247,18 @@ struct Position teleportPacman(MazeElement teleporter)
     return gridPosToUiPos(pacmanGridPos);
 }
 
-struct SDL_Rect getArrow(Direction direction)
-{
-    SDL_Rect arrow = arrowSprite;
-    arrow.x += (int)direction * arrow.w;
-    return arrow;
-}
 
-void endEatGhostAnimation() {
-    isGamePause = false;
-}
 
 void handleGhostCollision(MazeElement ghostElement)
 {
     if (getGhostMode() == FRIGHTENED) {
+        struct Ghost *ghostSprite = getGhostByElement(ghostElement);
+
+        if (ghostSprite->isDead) return;
+
         setMazeElementAt(pacmanGridPos, PACMAN, entityMaze);
         eatGhost(ghostElement);
+
     } else {
         killPacman();
     }
@@ -365,6 +315,7 @@ void afterPacmanDeath() {
     }
 
     resetFruit();
+    resetGhostModeTimer();
     spawnPacman();
     spawnGhosts();
     startReady(READY_DURATION);

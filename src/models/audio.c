@@ -19,6 +19,7 @@ Mix_Chunk *audioSirenOne = NULL;
 
 bool isPowerUpPlaying = false;
 bool isSirenPlaying = false;
+bool isGhostEyePlaying = false;
 
 void initAudio()
 {
@@ -84,6 +85,8 @@ void playSirenOrPowerUpSound()
             stopAudio(CHANNEL_POWER_UP);
             isPowerUpPlaying = false;
         }
+
+
     }
 }
 
@@ -121,4 +124,18 @@ void freeAudios()
     freeSound(audioEatGhost);
     freeSound(audioEyes);
     freeSound(audioFruit);
+}
+
+void startEyeSound() {
+    if (!isGhostEyePlaying) {
+        playAudioWithChannelLoop(audioEyes, CHANNEL_EYES);
+        isGhostEyePlaying = true;
+    }
+}
+
+void stopEyeSound() {
+    if (isGhostEyePlaying) {
+        stopAudio(CHANNEL_EYES);
+        isGhostEyePlaying = false;
+    }
 }

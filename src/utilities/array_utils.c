@@ -49,3 +49,29 @@ struct Position find2DArrayElement(char **array, int rows, int columns, char ele
     position.y = -1;
     return position;
 }
+
+int countArrayElementEqualsTo(int *array, int size, int value) {
+    int counter = 0;
+    for (int i = 0; i<size; i++) {
+        if (array[i] == value)
+            counter++;
+    }
+    return counter;
+}
+
+int findIndexOf(int *array, int size, int value) {
+    for(int i = 0; i < size; i++) {
+        if (array[i] == value) return i;
+    }
+
+    return -1;
+}
+
+int arrayMinimumValue(int *array, int size) {
+    int min = array[0];
+    for(int i = 1; i < size; i++) {
+        if (array[i] < min) min = array[i];
+    }
+
+    return min;
+}

@@ -7,7 +7,7 @@
 
 #include "game.h"
 #include "maze.h"
-#include "ghost.h"
+#include "models/ghosts/ghost.h"
 
 enum PacmanSpeed
 {
@@ -85,6 +85,8 @@ typedef struct
 #define GHOST_LEVEL21_MORE_NORM_SPEED 0.95
 #define GHOST_LEVEL21_MORE_FRIGHT_SPEED 1
 #define GHOST_LEVEL21_MORE_TUNNEL_SPEED 0.5
+
+#define GHOST_DEAD_SPEED 2.0
 
 float getPacmanSpeed(struct Position pacmanGridPos);
 float getGhostSpeed(struct Ghost *ghost);

@@ -2,7 +2,7 @@
 // Created by Franck GUTMANN on 25/06/2023.
 //
 
-#include "ghost_mode_manager.h"
+#include "mode_manager.h"
 
 int modeDurationsLvl1[MODE_CHANGE_COUNT] = {
         MODE_SCATTER_1_DURATION_LVL1,

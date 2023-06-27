@@ -66,6 +66,9 @@ float getPacmanSpeed(struct Position pacmanGridPos)
 
 float getGhostSpeed(struct Ghost *ghost)
 {
+
+    if (ghost->isDead) return GHOST_DEAD_SPEED;
+
     int round = getRound();
     float speedPercentage = GHOST_DEFAULT_SPEED;
 

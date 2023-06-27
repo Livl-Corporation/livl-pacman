@@ -10,6 +10,7 @@
 #include "models/pacman.h"
 #include "models/fruit.h"
 #include "utilities/sdl_functions.h"
+#include "models/ghosts/frightened.h"
 
 #define GHOST_SCORE_W 15
 #define GHOST_SCORE_H 7

@@ -7,7 +7,7 @@
 
 #include "constants.h"
 #include "timer.h"
-#include "ghost.h"
+#include "models/ghosts/ghost.h"
 #include "maze.h"
 #include "ui/menu_window.h"
 

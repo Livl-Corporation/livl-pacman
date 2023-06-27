@@ -59,4 +59,10 @@ char get2DArrayElement(char **array, int row, int column);
  */
 struct Position find2DArrayElement(char **array, int rows, int columns, char element);
 
+int countArrayElementEqualsTo(int *array, int size, int value);
+
+int findIndexOf(int *array, int size, int value);
+
+int arrayMinimumValue(int *array, int size);
+
 #endif //PACMAN_ARRAY_UTILS_H

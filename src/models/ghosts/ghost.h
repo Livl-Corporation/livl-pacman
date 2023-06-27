@@ -9,10 +9,13 @@
 #include "models/position.h"
 #include "enums/direction.h"
 #include "constants.h"
-#include "maze.h"
+#include "models/maze.h"
 #include "models/game.h"
 #include "models/timer.h"
-#include "../ui/game_window.h"
+#include "ui/game_window.h"
+#include "models/ghosts/frightened.h"
+#include "models/pathfinding.h"
+#include "models/ghosts/ghost_pathfinding.h"
 
 struct Ghost
 {
@@ -21,18 +24,20 @@ struct Ghost
     // current direction of the ghost
     Direction direction;
 
-    // direction that the ghost is trying to go right now
-    Direction wishedDirection;
-
     // direction that the ghost will take next at his next grid move;
     Direction nextDirection;
     SDL_Rect *rects;
     SDL_Rect lastRect;
     MazeElement ghostElement;
     struct Position targetTile;
+
+    bool isDead;
+
+    bool hasMoved;
+
 };
 
-void moveGhost(struct Ghost *sprite);
+extern struct Position ghostSpawnPoint;
 
 /**
  * Initialize the ghost list
@@ -48,9 +53,6 @@ void spawnGhosts();
  */
 void spawnGhost(int ghostId);
 
-/**
- * Make all ghost movesafare
- */
 void drawGhosts();
 
 /**
@@ -59,8 +61,6 @@ void drawGhosts();
  */
 void freeGhosts();
 
-bool isGhostEatableRunningOut();
-
 /**
  * Check if the ghost can be blit in paused game and when a pacman is eaten we only blit all the ghosts except the one who ate the pacman
  * @param ghostId : the ghost id
@@ -68,38 +68,30 @@ bool isGhostEatableRunningOut();
  */
 bool canBlitGhostInPausedGame(int ghostId);
 
-int getEatenGhostScore(int ghostEaten);
-
 void updateGhost(struct Ghost *sprite);
 
 void blitGhost(struct Ghost *sprite, SDL_Rect *spritePos);
 
 void onGhostGridPositionChanged(struct Ghost *sprite);
 
+void onGhostReachCellCenter(struct Ghost *sprite);
+
 void setGhostScatterModeTargetTile();
 
 void setGhostTargetTile(struct Ghost *sprite, struct Position targetTile);
-
-void selectNextGhostDirection(struct Ghost *sprite);
-
-Direction getOppositeDirection(Direction direction);
-
-int getDistance(struct Position pos1, struct Position pos2);
 
 void teleportGhost(struct Ghost *sprite, MazeElement destination);
 
 bool isGhostInTunnel(struct Ghost *sprite);
 
-void eatGhost(MazeElement ghostElement);
-
-int getGhostEatenCount();
-
-void resetGhostEatenCount();
-
 void reverseGhostsDirections();
 
-Direction getNextDirection(Direction direction);
+struct Ghost *getGhostByElement(MazeElement element);
 
-Direction getRandomDirection();
+SDL_Rect getGhostSpriteAnimation(struct Ghost *sprite);
+
+void moveGhost(struct Ghost *sprite);
+
+void onGhostUiPositionChanged(struct Ghost *sprite);
 
 #endif // PACMAN_GHOST_H

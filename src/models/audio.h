@@ -8,7 +8,7 @@
 #include <SDL_mixer.h>
 #include "../utilities/sdl_functions.h"
 #include "game.h"
-#include "models/ghost_mode_manager.h"
+#include "models/ghosts/mode_manager.h"
 
 #define AUDIO_DEATH "../assets/sounds/death.wav"
 #define AUDIO_DOT_1 "../assets/sounds/dot_1.wav"
@@ -63,5 +63,8 @@ void playSirenOrPowerUpSound();
 void stopSirenOrPowerUpSound();
 void stopAudio(int channel);
 void freeAudios();
+
+void startEyeSound();
+void stopEyeSound();
 
 #endif //PACMAN_AUDIO_H
