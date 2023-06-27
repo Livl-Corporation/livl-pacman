@@ -7,8 +7,8 @@
 
 #define GAME_TITLE "PacMan"
 
-#define GAME_START_DURATION 800
-#define READY_DURATION 250
+#define GAME_START_DURATION 700
+#define READY_DURATION 300
 
 #define CELL_SIZE 25
 #define MAP_WIDTH 21
