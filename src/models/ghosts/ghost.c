@@ -206,7 +206,11 @@ void onGhostGridPositionChanged(struct Ghost *sprite)
         teleportGhost(sprite, LEFT_TELEPORTER);
         break;
     case HOME:
-        sprite->isDead = false;
+        if (sprite->isDead) {
+            sprite->isDead = false;
+            // TODO : stop sound when all ghost are home
+            stopEyeSound();
+        }
         break;
     }
 

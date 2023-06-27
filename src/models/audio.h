@@ -64,4 +64,7 @@ void stopSirenOrPowerUpSound();
 void stopAudio(int channel);
 void freeAudios();
 
+void startEyeSound();
+void stopEyeSound();
+
 #endif //PACMAN_AUDIO_H

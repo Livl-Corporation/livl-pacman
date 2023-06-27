@@ -28,6 +28,8 @@ void eatGhost(MazeElement ghostElement)
 
     isGamePause = true;
     lastGhostEaten = ghostElement;
+
+    startEyeSound();
 }
 
 int getGhostEatenCount()
