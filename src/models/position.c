@@ -6,7 +6,7 @@
 
 bool arePositionEquals(struct Position position1, struct Position position2)
 {
-    return position1.x == position2.x && position1.y == position2.y;
+    return (int)position1.x == (int)position2.x && (int)position1.y == (int)position2.y;
 }
 
 void updatePosition(struct Position *position, Direction direction, float distance, float speed)
@@ -40,4 +40,12 @@ struct Position getCellCenter(struct Position position)
 int getDistance(struct Position pos1, struct Position pos2)
 {
     return abs(pos1.x - pos2.x) + abs(pos1.y - pos2.y);
+}
+
+struct Position addPosition(struct Position pos1, struct Position pos2) {
+    struct Position result = {
+            pos1.x + pos2.x,
+            pos1.y + pos2.y
+    };
+    return result;
 }

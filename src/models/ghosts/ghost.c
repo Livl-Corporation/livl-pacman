@@ -43,6 +43,7 @@ void initGhostList()
         ghostList[i].targetTile.y = 0;
 
         ghostList[i].isDead = false;
+        ghostList[i].hasMoved = false;
 
         // Sprites :
         ghostList[i].rects = malloc(sizeof(SDL_Rect) * DIRECTION_COUNT);
@@ -92,6 +93,8 @@ void spawnGhost(int ghostId)
 
     // ghost select his next direction
     ghost->nextDirection = selectNextGhostDirection(ghost);
+
+    ghost->hasMoved = true;
 
     // TODO : reset position in entityMaze
     /*
@@ -179,8 +182,6 @@ void blitGhost(struct Ghost *sprite, SDL_Rect *spritePos)
 void onGhostGridPositionChanged(struct Ghost *sprite)
 {
 
-    sprite->direction = sprite->nextDirection;
-
     removeMazeElement(sprite->ghostElement, entityMaze);
 
     // check if ghost should perform an action
@@ -201,8 +202,14 @@ void onGhostGridPositionChanged(struct Ghost *sprite)
     // update ghost position in maze
     setMazeElementAt(sprite->gridPosition, sprite->ghostElement, entityMaze);
 
-    sprite->nextDirection = selectNextGhostDirection(sprite);
 }
+
+void onGhostReachCellCenter(struct Ghost *sprite) {
+    sprite->direction = sprite->nextDirection;
+    sprite->nextDirection = selectNextGhostDirection(sprite);
+    printf("Ghost direction %d, next : %d\n", sprite->direction, sprite->nextDirection);
+}
+
 
 bool isGhostInTunnel(struct Ghost *sprite)
 {
@@ -274,17 +281,36 @@ void moveGhost(struct Ghost *sprite)
         // select a valid adjacent cell
 //        Direction validDirection = getValidDirection(sprite->uiPosition);
 //        sprite->direction = validDirection;
-        return;
+        //return;
     }
 
     // move the ghost in his current direction
     updatePosition(&sprite->uiPosition, sprite->direction, DEFAULT_POSITION_DISTANCE, speed);
 
+    struct Position centeredGhostUiPos = getCellCenter(sprite->uiPosition);
+
     // update grid position if changed
-    struct Position updatedGridPos = uiPosToGridPos(getCellCenter(sprite->uiPosition));
+    struct Position updatedGridPos = uiPosToGridPos(centeredGhostUiPos);
     if (!arePositionEquals(sprite->gridPosition, updatedGridPos)) {
         sprite->gridPosition = updatedGridPos;
+        sprite->hasMoved = false;
         onGhostGridPositionChanged(sprite);
     }
 
+    onGhostUiPositionChanged(sprite);
+
 }
+
+void onGhostUiPositionChanged(struct Ghost *sprite) {
+    if (!sprite->hasMoved) {
+
+        struct Position lastCenteredGhostUiPos = gridPosToUiPos(sprite->gridPosition);
+        updatePosition(&lastCenteredGhostUiPos, getOppositeDirection(sprite->direction), CELL_SIZE/2, 1);
+
+        if (getDistance(sprite->uiPosition, lastCenteredGhostUiPos) >= CELL_SIZE/2) {
+            sprite->hasMoved = true;
+            onGhostReachCellCenter(sprite);
+        }
+    }
+}
+

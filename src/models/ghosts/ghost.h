@@ -32,6 +32,9 @@ struct Ghost
     struct Position targetTile;
 
     bool isDead;
+
+    bool hasMoved;
+
 };
 
 /**
@@ -69,6 +72,8 @@ void blitGhost(struct Ghost *sprite, SDL_Rect *spritePos);
 
 void onGhostGridPositionChanged(struct Ghost *sprite);
 
+void onGhostReachCellCenter(struct Ghost *sprite);
+
 void setGhostScatterModeTargetTile();
 
 void setGhostTargetTile(struct Ghost *sprite, struct Position targetTile);
@@ -84,5 +89,7 @@ struct Ghost *getGhostByElement(MazeElement element);
 SDL_Rect getGhostSpriteAnimation(struct Ghost *sprite);
 
 void moveGhost(struct Ghost *sprite);
+
+void onGhostUiPositionChanged(struct Ghost *sprite);
 
 #endif // PACMAN_GHOST_H

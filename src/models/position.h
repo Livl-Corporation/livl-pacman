@@ -4,6 +4,7 @@
 #include <stdbool.h>
 #include "enums/direction.h"
 #include "constants.h"
+#include "math.h"
 
 struct Position
 {
@@ -31,5 +32,7 @@ void updatePosition(struct Position *position, Direction direction, float distan
 struct Position getCellCenter(struct Position position);
 
 int getDistance(struct Position pos1, struct Position pos2);
+
+struct Position addPosition(struct Position pos1, struct Position pos2);
 
 #endif
