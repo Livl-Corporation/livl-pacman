@@ -87,10 +87,7 @@ bool isInBounds(struct Position position);
  */
 struct Position uiPosToGridPos(struct Position posInPx);
 
-/**
- * Fill the maze with coins
- */
-void drawCoins(int frameCount);
+
 
 /**
  * Draw the maze
@@ -99,29 +96,11 @@ void drawCoins(int frameCount);
 void drawMaze(bool applyWhiteMazeOffset);
 
 /**
- * Blit a rect with an offset
- * @param imgRect : the image rect to display
- * @param positionOffsetInMaze : the position where to display the image rect in the maze
- * @param offsetX
- * @param offsetY
- * @param width
- * @param height
- */
-void blitRectWithOffset(SDL_Rect imgRect, struct Position positionOffsetInMaze, int offsetX, int offsetY, int width, int height);
-
-/**
  * Check if a position is an obstacle
  * @param position
  * @return true if the position is an obstacle, false otherwise
  */
 bool isObstacle(struct Position position, bool allowDoors);
-
-/**
- * Check if the provided position has a collision with an obstacle
- * @param position
- * @param hitboxSize
- */
-bool hasCollision(struct Position position, int hitboxSize, bool allowDoors);
 
 /**
  * Convert a position in the grid to a position in pixels
@@ -144,10 +123,6 @@ void resetMaze();
 void removeMazeElement(MazeElement elementToRemove, char **maze);
 
 int getElementAmount(MazeElement element);
-
-void refillCoins();
-
-bool canMoveInDirection(struct Position position, Direction direction, bool allowDoors);
 
 MazeElement getMazeElementInCollisionWithEntity(struct Position position);
 

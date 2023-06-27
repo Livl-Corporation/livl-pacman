@@ -2,8 +2,8 @@
 // Created by Franck GUTMANN on 25/06/2023.
 //
 
-#ifndef PACMAN_GHOST_MODE_MANAGER_H
-#define PACMAN_GHOST_MODE_MANAGER_H
+#ifndef PACMAN_MODE_MANAGER_H
+#define PACMAN_MODE_MANAGER_H
 
 #define MODE_CHANGE_COUNT 8
 #define MODE_CHANGE_PRESETS_COUNTS 3
@@ -27,8 +27,8 @@
 #define MODE_CHASE_4_DURATION -1
 
 #include "enums/ghost-mode.h"
-#include "ghost.h"
-#include "game.h"
+#include "models/ghosts/ghost.h"
+#include "models/game.h"
 
 void setGhostMode(GhostMode mode);
 
@@ -44,4 +44,4 @@ void onModeTimerEnd();
 
 void resetGhostModeTimer();
 
-#endif //PACMAN_GHOST_MODE_MANAGER_H
+#endif //PACMAN_MODE_MANAGER_H

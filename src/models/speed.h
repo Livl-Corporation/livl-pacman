@@ -7,7 +7,7 @@
 
 #include "game.h"
 #include "maze.h"
-#include "ghost.h"
+#include "models/ghosts/ghost.h"
 
 enum PacmanSpeed
 {

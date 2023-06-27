@@ -13,6 +13,7 @@ int main(void)
     startMenu();
 
     closeWindow();
+    closeSDL_Mixer();
 
     return 0;
 }

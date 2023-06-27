@@ -30,4 +30,6 @@ void updatePosition(struct Position *position, Direction direction, float distan
 
 struct Position getCellCenter(struct Position position);
 
+int getDistance(struct Position pos1, struct Position pos2);
+
 #endif

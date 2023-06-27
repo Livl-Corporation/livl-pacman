@@ -4,9 +4,6 @@ char **initialMaze = NULL;
 char **entityMaze = NULL;
 char **propsMaze = NULL;
 
-SDL_Rect imgSmallCoinSprite = {163, 96, 2, 2};
-SDL_Rect imgBigCoinSprite = {177, 93, 7, 7};
-
 SDL_Rect imgMazeSprite = {BLUE_MAZE_X, 4, 166, 214};
 SDL_Rect mazeUi = {0, HEADER_SCREEN_HEIGHT, TOTAL_SCREEN_WIDTH, MAZE_SCREEN_HEIGHT};
 
@@ -46,42 +43,6 @@ bool retrieveMazeFromFile()
     resetMaze();
 
     return true;
-}
-
-void blitRectWithOffset(SDL_Rect imgRect, struct Position positionOffsetInMaze, int offsetX, int offsetY, int width, int height)
-{
-    SDL_Rect destinationRect = {(int)positionOffsetInMaze.x + offsetX, (int)positionOffsetInMaze.y + offsetY, width, height};
-    SDL_SetColorKey(pSurfacePacmanSpriteSheet, true, 0);
-    SDL_BlitScaled(pSurfacePacmanSpriteSheet, &imgRect, pSurfaceWindow, &destinationRect);
-}
-
-void drawCoins(int frameCount)
-{
-    for (int i = 0; i < MAP_HEIGHT; i++)
-    {
-        for (int j = 0; j < MAP_WIDTH; j++)
-        {
-            struct Position gridPos = {j, i};
-            struct Position uiPos = gridPosToUiPos(gridPos);
-
-            MazeElement mazeElement = getMazeElementAt(gridPos, propsMaze);
-
-            switch (mazeElement)
-            {
-            case SMALL_COIN:
-                blitRectWithOffset(imgSmallCoinSprite, uiPos, SMALL_COIN_OFFSET_X, SMALL_COIN_OFFSET_Y, SMALL_COIN_WIDTH, SMALL_COIN_HEIGHT);
-                break;
-
-            case BIG_COIN:
-                if (frameCount % BIG_COIN_RATE)
-                    blitRectWithOffset(imgBigCoinSprite, uiPos, BIG_COIN_OFFSET_X, BIG_COIN_OFFSET_Y, BIG_COIN_WIDTH, BIG_COIN_HEIGHT);
-                break;
-
-            default:
-                break;
-            }
-        }
-    }
 }
 
 void drawMaze(bool applyWhiteMazeOffset)
@@ -150,24 +111,6 @@ bool isInBounds(struct Position position)
     return position.x >= 0 && position.x < MAP_WIDTH && position.y >= 0 && position.y < MAP_HEIGHT;
 }
 
-bool hasCollision(struct Position position, int hitboxSize, bool allowDoors)
-{
-
-    for (int i = 0; i <= hitboxSize; i += hitboxSize)
-    {
-        for (int j = 0; j <= hitboxSize; j += hitboxSize)
-        {
-            if (isObstacle(uiPosToGridPos((struct Position) {
-                    position.x + i,
-                    position.y + j,
-            }), allowDoors))
-                return true;
-        }
-    }
-
-    return false;
-}
-
 struct Position uiPosToGridPos(struct Position posInPx)
 {
     struct Position position;
@@ -205,30 +148,6 @@ int getElementAmount(MazeElement element) {
     }
 
     return amount;
-}
-
-void refillCoins() {
-
-    for (int i = 0; i < MAP_HEIGHT; i++)
-    {
-        for (int j = 0; j < MAP_WIDTH; j++)
-        {
-            struct Position position = {j, i};
-            MazeElement element = getMazeElementAt(position, initialMaze);
-
-            if (element == SMALL_COIN || element == BIG_COIN)
-                setMazeElementAt(position, element, propsMaze);
-        }
-
-    }
-
-}
-
-bool canMoveInDirection(struct Position position, Direction direction, bool allowDoors)
-{
-    struct Position posCopy = position;
-    updatePosition(&posCopy, direction, DEFAULT_POSITION_DISTANCE, DEFAULT_SPEED);
-    return !hasCollision(posCopy, CELL_SIZE-1, allowDoors);
 }
 
 MazeElement getMazeElementInCollisionWithEntity(struct Position position) {

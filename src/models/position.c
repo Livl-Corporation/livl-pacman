@@ -36,3 +36,8 @@ struct Position getCellCenter(struct Position position)
     };
     return center;
 }
+
+int getDistance(struct Position pos1, struct Position pos2)
+{
+    return abs(pos1.x - pos2.x) + abs(pos1.y - pos2.y);
+}
