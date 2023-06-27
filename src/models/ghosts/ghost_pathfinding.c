@@ -18,7 +18,7 @@ Direction selectNextGhostDirection(struct Ghost *sprite)
 Direction selectGhostDirection(struct Position cell, struct Ghost *sprite) {
     // Get possible directions
     Direction directions[DIRECTION_COUNT-1] = {};
-    int possibleDirectionsCount = testDirections(cell, sprite->direction, directions);
+    int possibleDirectionsCount = testDirections(cell, sprite, directions);
 
     if (possibleDirectionsCount > 1) {
 
@@ -28,7 +28,18 @@ Direction selectGhostDirection(struct Position cell, struct Ghost *sprite) {
         }
 
         // if dead, target ghost spawn point
-        struct Position targetPosition = sprite->isDead ? ghostSpawnPoint : sprite->targetTile;
+        struct Position targetPosition;
+
+        if (sprite->isDead) {
+            // ghost id dead, go to home
+            targetPosition = ghostSpawnPoint;
+        } else if (!sprite->isLocked) {
+            // ghost should exit house
+            targetPosition = ghostForceExitHome;
+        } else {
+            // ghost should
+            targetPosition = sprite->targetTile;
+        }
 
         // if >1 direction possible, select minimum distance one
         return getMinimumDistanceDirection(cell, possibleDirectionsCount, directions, targetPosition);
@@ -39,7 +50,7 @@ Direction selectGhostDirection(struct Position cell, struct Ghost *sprite) {
 
 }
 
-int testDirections(struct Position cell, Direction currentDirection, Direction *directions) {
+int testDirections(struct Position cell, struct Ghost *sprite, Direction *directions) {
     int possibleDirectionsCount = 0;
 
     for (int i = 0; i < DIRECTION_COUNT; i++)
@@ -47,7 +58,7 @@ int testDirections(struct Position cell, Direction currentDirection, Direction *
         Direction direction = i;
 
         // if is opposite direction don't add
-        if (direction == getOppositeDirection(currentDirection))
+        if (direction == getOppositeDirection(sprite->direction))
             continue;
 
         // get cell corresponding to move in tested direction
@@ -59,7 +70,7 @@ int testDirections(struct Position cell, Direction currentDirection, Direction *
             continue;
 
         // if is obstacle don't add
-        if (isObstacle(testedTile, true))
+        if (isObstacle(testedTile, sprite->isDead || !sprite->isLocked))
             continue;
 
         // add direction if previous conditions passed

@@ -14,7 +14,10 @@ SDL_Rect eatableGhostRect = {
 
 SDL_Rect deadGhostRect = {72, 196, GHOST_SIZE, GHOST_SIZE};
 
+int dotLimit[GHOST_COUNT] = {0, 0, 30, 60};
+
 struct Position ghostSpawnPoint;
+struct Position ghostForceExitHome;
 
 struct Position scatterPositions[GHOST_COUNT] = {
         {MAP_WIDTH, -1},            // RED
@@ -27,6 +30,7 @@ void initGhostList()
 {
 
     ghostSpawnPoint = getMazePositionOfElement(HOME, initialMaze);
+    ghostForceExitHome = getMazePositionOfElement(RED_GHOST, initialMaze);
 
     ghostList = malloc(sizeof(struct Ghost) * GHOST_COUNT);
 
@@ -48,6 +52,11 @@ void initGhostList()
 
         ghostList[i].isDead = false;
         ghostList[i].hasMoved = false;
+
+        ghostList[i].dotLimit = dotLimit[i];
+        ghostList[i].dotCount = 0;
+
+        ghostList[i].isLocked = true;
 
         // Sprites :
         ghostList[i].rects = malloc(sizeof(SDL_Rect) * DIRECTION_COUNT);
@@ -100,6 +109,10 @@ void spawnGhost(int ghostId)
 
     ghost->isDead = false;
     ghost->hasMoved = true;
+
+    ghost->dotCount = 0;
+
+    ghost->isLocked = ghost->dotLimit > 0;
 
     // TODO : reset position in entityMaze
     /*
@@ -325,3 +338,16 @@ void onGhostUiPositionChanged(struct Ghost *sprite) {
     }
 }
 
+void onDotEaten() {
+    for (int i = 0; i < GHOST_COUNT; i++) {
+        struct Ghost *ghost = &ghostList[i];
+        if (ghost->dotCount < ghost->dotLimit) {
+            ghost->dotCount++;
+
+            if (ghost->dotCount >= ghost->dotLimit) {
+                ghost->isLocked = false;
+            }
+
+        }
+    }
+}

@@ -325,6 +325,7 @@ void afterPacmanDeath() {
 void handleCoinCollision() {
 
     incrementEatenDotsCount();
+    onDotEaten();
 
     int eatenDotsCount = getEatenDotsCount();
     if (eatenDotsCount == getInitialDotsCount()) nextRound();

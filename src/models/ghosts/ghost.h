@@ -35,9 +35,15 @@ struct Ghost
 
     bool hasMoved;
 
+    int dotLimit;
+    int dotCount;
+
+    bool isLocked;
+
 };
 
 extern struct Position ghostSpawnPoint;
+extern struct Position ghostForceExitHome;
 
 /**
  * Initialize the ghost list
@@ -93,5 +99,7 @@ SDL_Rect getGhostSpriteAnimation(struct Ghost *sprite);
 void moveGhost(struct Ghost *sprite);
 
 void onGhostUiPositionChanged(struct Ghost *sprite);
+
+void onDotEaten();
 
 #endif // PACMAN_GHOST_H
