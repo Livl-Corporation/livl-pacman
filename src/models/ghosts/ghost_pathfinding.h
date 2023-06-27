@@ -11,8 +11,8 @@ Direction selectNextGhostDirection(struct Ghost *sprite);
 
 Direction selectGhostDirection(struct Position cell, struct Ghost *sprite);
 
-int testDirections(struct Position cell, Direction currentDirection, Direction *possibleDirections);
+int testDirections(struct Position cell, Direction currentDirection, Direction *directions);
 
-Direction getMinimumDistanceDirection(struct Position cell, int directionCount, Direction *possibleDirections, struct Position targetPosition);
+Direction getMinimumDistanceDirection(struct Position cell, int directionCount, Direction *directions, struct Position targetPosition);
 
 #endif //PACMAN_GHOST_PATHFINDING_H

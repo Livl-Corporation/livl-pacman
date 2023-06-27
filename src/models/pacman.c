@@ -310,6 +310,7 @@ void afterPacmanDeath() {
     }
 
     resetFruit();
+    resetGhostModeTimer();
     spawnPacman();
     spawnGhosts();
     startReady(READY_DURATION);

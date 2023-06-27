@@ -20,9 +20,10 @@ void startGame()
     setInitialDotsCount(dotsCount);
 
     spawnPacman();
-    spawnGhosts();
 
+    // we should set scatter mode before ghosts select their directions
     resetGhostModeTimer();
+    spawnGhosts();
 
     playAudioWithChannel(audioGameStart, CHANNEL_GAME_START);
     startReady(GAME_START_DURATION);

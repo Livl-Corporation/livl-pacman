@@ -22,6 +22,6 @@ bool hasCollision(struct Position position, int hitboxSize, bool allowDoors);
 
 Direction getValidDirection(struct Position uiPos);
 
-Direction breakDirectionTie(int directionCount, Direction *possibleDirections);
+Direction breakDirectionTie(int directionCount, Direction *directions);
 
 #endif //PACMAN_PATHFINDING_H

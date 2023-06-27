@@ -90,6 +90,9 @@ void spawnGhost(int ghostId)
     // ghost should select his first direction
     ghost->direction = selectGhostDirection(ghost->gridPosition, ghost);
 
+    // ghost select his next direction
+    ghost->nextDirection = selectNextGhostDirection(ghost);
+
     // TODO : reset position in entityMaze
     /*
         if (!arePositionEquals(
@@ -261,6 +264,10 @@ struct Ghost *getGhostByElement(MazeElement element) {
 
 void moveGhost(struct Ghost *sprite)
 {
+
+    // TODO : remove test
+    if (sprite->ghostElement != RED_GHOST) return;
+
     float speed = getGhostSpeed(sprite);
 
     if (!canMoveInDirection(sprite->uiPosition, sprite->direction, sprite->isDead)) {

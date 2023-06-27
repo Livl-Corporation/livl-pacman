@@ -47,10 +47,10 @@ Direction getValidDirection(struct Position uiPos) {
 
 }
 
-Direction breakDirectionTie(int directionCount, Direction *possibleDirections) {
+Direction breakDirectionTie(int directionCount, Direction *directions) {
     for (int i = 0; i < DIRECTION_COUNT; i++) {
         Direction direction = preferedDirectionOrder[i];
-        if (findIndexOf(possibleDirections, directionCount, directionCount) != -1)
+        if (findIndexOf(directions, directionCount, directionCount) != -1)
             return direction;
     }
 }

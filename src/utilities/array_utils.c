@@ -66,3 +66,12 @@ int findIndexOf(int *array, int size, int value) {
 
     return -1;
 }
+
+int arrayMinimumValue(int *array, int size) {
+    int min = array[0];
+    for(int i = 1; i < size; i++) {
+        if (array[i] < min) min = array[i];
+    }
+
+    return min;
+}
