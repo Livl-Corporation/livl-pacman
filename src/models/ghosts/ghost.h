@@ -37,6 +37,8 @@ struct Ghost
 
 };
 
+extern struct Position ghostSpawnPoint;
+
 /**
  * Initialize the ghost list
  * <!> Must be called before any other ghost function

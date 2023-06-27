@@ -17,13 +17,10 @@ void eatGhost(MazeElement ghostElement)
 
     setTimerCallback(&eatGhostAnimationTimer, endEatGhostAnimation);
 
-    struct Position ghostSpawnPoint = getMazePositionOfElement(ghostElement, initialMaze);
-
     struct Ghost *sprite = getGhostByElement(ghostElement);
 
     if (sprite != NULL) {
         sprite->isDead = true;
-        sprite->targetTile = ghostSpawnPoint;
     }
 
     resetTimer(&eatGhostAnimationTimer);

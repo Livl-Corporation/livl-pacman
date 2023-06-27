@@ -163,12 +163,14 @@ MazeElement getMazeElementInCollisionWithEntity(struct Position position) {
             return entityElement;
     }
 
-    // priority 2 : teleporters
-    MazeElement teleporterElement = getMazeElementAt(position, initialMaze);
-    switch (teleporterElement) {
+    // priority 2 : teleporters & home
+    MazeElement initialElement = getMazeElementAt(position, initialMaze);
+    switch (initialElement) {
         case LEFT_TELEPORTER:
         case RIGHT_TELEPORTER:
-            return teleporterElement;
+            return initialElement;
+        case HOME:
+            return HOME;
     }
 
     // Priority 3 : props

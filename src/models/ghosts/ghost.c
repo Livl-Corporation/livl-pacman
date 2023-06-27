@@ -14,6 +14,8 @@ SDL_Rect eatableGhostRect = {
 
 SDL_Rect deadGhostRect = {72, 196, GHOST_SIZE, GHOST_SIZE};
 
+struct Position ghostSpawnPoint;
+
 struct Position scatterPositions[GHOST_COUNT] = {
         {MAP_WIDTH, -1},            // RED
         {-1, -1},                   // PINK
@@ -23,6 +25,8 @@ struct Position scatterPositions[GHOST_COUNT] = {
 
 void initGhostList()
 {
+
+    ghostSpawnPoint = getMazePositionOfElement(HOME, initialMaze);
 
     ghostList = malloc(sizeof(struct Ghost) * GHOST_COUNT);
 
@@ -94,6 +98,7 @@ void spawnGhost(int ghostId)
     // ghost select his next direction
     ghost->nextDirection = selectNextGhostDirection(ghost);
 
+    ghost->isDead = false;
     ghost->hasMoved = true;
 
     // TODO : reset position in entityMaze
@@ -200,6 +205,9 @@ void onGhostGridPositionChanged(struct Ghost *sprite)
     case RIGHT_TELEPORTER:
         teleportGhost(sprite, LEFT_TELEPORTER);
         break;
+    case HOME:
+        sprite->isDead = false;
+        break;
     }
 
     // update ghost position in maze
@@ -282,13 +290,6 @@ void moveGhost(struct Ghost *sprite)
 {
 
     float speed = getGhostSpeed(sprite);
-
-    if (!canMoveInDirection(sprite->uiPosition, sprite->direction, sprite->isDead)) {
-        // select a valid adjacent cell
-//        Direction validDirection = getValidDirection(sprite->uiPosition);
-//        sprite->direction = validDirection;
-        //return;
-    }
 
     // move the ghost in his current direction
     updatePosition(&sprite->uiPosition, sprite->direction, DEFAULT_POSITION_DISTANCE, speed);

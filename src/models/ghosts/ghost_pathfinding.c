@@ -27,8 +27,11 @@ Direction selectGhostDirection(struct Position cell, struct Ghost *sprite) {
             return directions[rand() % possibleDirectionsCount];
         }
 
+        // if dead, target ghost spawn point
+        struct Position targetPosition = sprite->isDead ? ghostSpawnPoint : sprite->targetTile;
+
         // if >1 direction possible, select minimum distance one
-        return getMinimumDistanceDirection(cell, possibleDirectionsCount, directions, sprite->targetTile);
+        return getMinimumDistanceDirection(cell, possibleDirectionsCount, directions, targetPosition);
     }
 
     // if 1 direction possible, return it
