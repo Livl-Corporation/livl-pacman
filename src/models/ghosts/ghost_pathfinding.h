@@ -15,4 +15,6 @@ int testDirections(struct Position cell, Direction currentDirection, Direction *
 
 Direction getMinimumDistanceDirection(struct Position cell, int directionCount, Direction *directions, struct Position targetPosition);
 
+
+
 #endif //PACMAN_GHOST_PATHFINDING_H

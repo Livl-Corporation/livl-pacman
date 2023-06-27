@@ -20,9 +20,16 @@ Direction selectGhostDirection(struct Position cell, struct Ghost *sprite) {
     Direction directions[DIRECTION_COUNT-1] = {};
     int possibleDirectionsCount = testDirections(cell, sprite->direction, directions);
 
-    // if >1 direction possible, select minimum distance one
-    if (possibleDirectionsCount > 1)
+    if (possibleDirectionsCount > 1) {
+
+        // if frightened, select random direction
+        if (getGhostMode() == FRIGHTENED) {
+            return directions[rand() % possibleDirectionsCount];
+        }
+
+        // if >1 direction possible, select minimum distance one
         return getMinimumDistanceDirection(cell, possibleDirectionsCount, directions, sprite->targetTile);
+    }
 
     // if 1 direction possible, return it
     return directions[0];
