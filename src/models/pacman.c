@@ -252,8 +252,13 @@ struct Position teleportPacman(MazeElement teleporter)
 void handleGhostCollision(MazeElement ghostElement)
 {
     if (getGhostMode() == FRIGHTENED) {
+        struct Ghost *ghostSprite = getGhostByElement(ghostElement);
+
+        if (ghostSprite->isDead) return;
+
         setMazeElementAt(pacmanGridPos, PACMAN, entityMaze);
         eatGhost(ghostElement);
+
     } else {
         killPacman();
     }

@@ -189,6 +189,9 @@ void onGhostGridPositionChanged(struct Ghost *sprite)
     switch (element)
     {
     case PACMAN:
+
+        if (sprite->isDead) return;
+
         handleGhostCollision(sprite->ghostElement);
         break;
     case LEFT_TELEPORTER:
@@ -207,7 +210,6 @@ void onGhostGridPositionChanged(struct Ghost *sprite)
 void onGhostReachCellCenter(struct Ghost *sprite) {
     sprite->direction = sprite->nextDirection;
     sprite->nextDirection = selectNextGhostDirection(sprite);
-    printf("Ghost direction %d, next : %d\n", sprite->direction, sprite->nextDirection);
 }
 
 
@@ -252,9 +254,16 @@ void reverseGhostsDirections()
     for (int i = 0; i < GHOST_COUNT; i++)
     {
         struct Ghost *ghost = &ghostList[i];
+
+        if (ghost->isDead) continue;
+
         Direction newDirection = getOppositeDirection(ghost->direction);
-        ghost->direction = newDirection;
-        ghost->nextDirection = newDirection;
+
+        // test new direction
+        if (canMoveInDirection(ghost->uiPosition, newDirection, ghost->isDead)) {
+            ghost->nextDirection = newDirection;
+        }
+
     }
 }
 
