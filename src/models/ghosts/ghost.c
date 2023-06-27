@@ -281,9 +281,6 @@ struct Ghost *getGhostByElement(MazeElement element) {
 void moveGhost(struct Ghost *sprite)
 {
 
-    // TODO : remove test
-    if (sprite->ghostElement != RED_GHOST) return;
-
     float speed = getGhostSpeed(sprite);
 
     if (!canMoveInDirection(sprite->uiPosition, sprite->direction, sprite->isDead)) {
