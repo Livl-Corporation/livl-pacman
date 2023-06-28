@@ -16,6 +16,11 @@ Direction selectNextGhostDirection(struct Ghost *sprite)
 }
 
 Direction selectGhostDirection(struct Position cell, struct Ghost *sprite) {
+
+    if (isGhostInTunnel(sprite)) {
+        return sprite->direction;
+    }
+
     // Get possible directions
     Direction directions[DIRECTION_COUNT-1] = {};
     int possibleDirectionsCount = testDirections(cell, sprite, directions);

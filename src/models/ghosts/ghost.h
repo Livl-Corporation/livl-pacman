@@ -103,6 +103,4 @@ void onGhostUiPositionChanged(struct Ghost *sprite);
 
 void onDotEaten();
 
-void resetGhostDotCount();
-
 #endif // PACMAN_GHOST_H

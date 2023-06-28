@@ -287,6 +287,8 @@ void reverseGhostsDirections()
 
         if (ghost->isDead) continue;
 
+        if (isGhostInTunnel(ghost)) continue;
+
         Direction newDirection = getOppositeDirection(ghost->direction);
 
         // test new direction
@@ -354,13 +356,5 @@ void onDotEaten() {
             }
 
         }
-    }
-}
-
-void resetGhostDotCount() {
-    for (int i = 0; i < GHOST_COUNT; i++) {
-        struct Ghost *ghost = &ghostList[i];
-        ghost->dotCount = 0;
-        ghost->isLocked = ghost->dotCount < ghost->dotLimit;
     }
 }

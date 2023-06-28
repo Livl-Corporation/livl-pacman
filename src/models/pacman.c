@@ -268,6 +268,7 @@ void killPacman()
 {
     removeMazeElement(PACMAN, entityMaze);
     decrementLives();
+    stopEyeSound();
     isGamePause = true;
     startPacmanDeathAnimation();
 }

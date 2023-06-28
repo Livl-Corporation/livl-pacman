@@ -114,6 +114,7 @@ void startNextRoundAnimation()
 void endNextRoundAnimation()
 {
     spawnPacman();
+    spawnGhosts();
     refillCoins();
     resetEatenDotsCount();
     startReady(READY_DURATION);
@@ -129,7 +130,6 @@ void incrementEatenDotsCount() {
 
 void resetEatenDotsCount() {
     eatenDotsCount = 0;
-    resetGhostDotCount();
 }
 
 int getInitialDotsCount() {
