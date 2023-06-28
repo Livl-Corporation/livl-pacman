@@ -16,6 +16,9 @@
 #include "models/ghosts/frightened.h"
 #include "models/pathfinding.h"
 #include "models/ghosts/ghost_pathfinding.h"
+#include "models/ghosts/chase.h"
+
+typedef struct Position (*GhostChaseFunction)();
 
 struct Ghost
 {
@@ -29,7 +32,7 @@ struct Ghost
     SDL_Rect *rects;
     SDL_Rect lastRect;
     MazeElement ghostElement;
-    struct Position targetTile;
+    struct Position scatterTile;
 
     bool isDead;
 
@@ -39,6 +42,8 @@ struct Ghost
     int dotCount;
 
     bool isLocked;
+
+    GhostChaseFunction chaseFunction;
 
 };
 
@@ -81,10 +86,6 @@ void blitGhost(struct Ghost *sprite, SDL_Rect *spritePos);
 void onGhostGridPositionChanged(struct Ghost *sprite);
 
 void onGhostReachCellCenter(struct Ghost *sprite);
-
-void setGhostScatterModeTargetTile();
-
-void setGhostTargetTile(struct Ghost *sprite, struct Position targetTile);
 
 void teleportGhost(struct Ghost *sprite, MazeElement destination);
 

@@ -36,9 +36,12 @@ Direction selectGhostDirection(struct Position cell, struct Ghost *sprite) {
         } else if (!sprite->isLocked) {
             // ghost should exit house
             targetPosition = ghostForceExitHome;
+        } else if (getGhostMode() == SCATTER) {
+            // go to scatter position
+            targetPosition = sprite->scatterTile;
         } else {
-            // ghost should
-            targetPosition = sprite->targetTile;
+            // go to chase position
+            targetPosition = sprite->chaseFunction();
         }
 
         // if >1 direction possible, select minimum distance one

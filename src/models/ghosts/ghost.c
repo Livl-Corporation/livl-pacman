@@ -16,6 +16,13 @@ SDL_Rect deadGhostRect = {72, 196, GHOST_SIZE, GHOST_SIZE};
 
 int dotLimit[GHOST_COUNT] = {0, 0, 30, 60};
 
+GhostChaseFunction chaseFunctions[GHOST_COUNT] = {
+        &blinkyChase,
+        &pinkyChase,
+        &inkyChase,
+        &clydeChase
+};
+
 struct Position ghostSpawnPoint;
 struct Position ghostForceExitHome;
 
@@ -47,8 +54,8 @@ void initGhostList()
         ghostList[i].direction = DIRECTION_UP;
         ghostList[i].nextDirection = DIRECTION_UP;
 
-        ghostList[i].targetTile.x = 0;
-        ghostList[i].targetTile.y = 0;
+        ghostList[i].scatterTile.x = 0;
+        ghostList[i].scatterTile.y = 0;
 
         ghostList[i].isDead = false;
         ghostList[i].hasMoved = false;
@@ -57,6 +64,10 @@ void initGhostList()
         ghostList[i].dotCount = 0;
 
         ghostList[i].isLocked = true;
+
+        ghostList[i].scatterTile = scatterPositions[i];
+
+        ghostList[i].chaseFunction = chaseFunctions[i];
 
         // Sprites :
         ghostList[i].rects = malloc(sizeof(SDL_Rect) * DIRECTION_COUNT);
@@ -110,7 +121,8 @@ void spawnGhost(int ghostId)
     ghost->isDead = false;
     ghost->hasMoved = true;
 
-    ghost->dotCount = 0;
+    if (getEatenDotsCount() == 0)
+        ghost->dotCount = 0;
 
     ghost->isLocked = ghost->dotLimit > 0;
 
@@ -252,19 +264,6 @@ bool isGhostInTunnel(struct Ghost *sprite)
     }
 
     return isGhostInTunnel;
-}
-
-void setGhostScatterModeTargetTile()
-{
-    for(int i=0; i<GHOST_COUNT; i++)
-    {
-        setGhostTargetTile(&ghostList[i], scatterPositions[i]);
-    }
-}
-
-void setGhostTargetTile(struct Ghost *sprite, struct Position targetTile)
-{
-    sprite->targetTile = targetTile;
 }
 
 void teleportGhost(struct Ghost *sprite, MazeElement destination)

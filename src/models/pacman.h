@@ -21,6 +21,7 @@
 
 extern struct Position pacmanUIPos;
 extern Direction pacmanWishedDirection;
+extern Direction pacmanDirection;
 
 void initPacmanSprites();
 

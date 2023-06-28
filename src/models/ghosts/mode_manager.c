@@ -70,8 +70,6 @@ void setGhostMode(GhostMode mode) {
 
     ghostMode = mode;
 
-    printf("mode change : %d\n", mode);
-
     if (mode == FRIGHTENED) {
         stopTimer(&ghostModeTimer);
         resetTimer(&eatableGhostTimer);
@@ -79,11 +77,6 @@ void setGhostMode(GhostMode mode) {
         startTimer(&eatableGhostTimer);
         resetGhostEatenCount();
         return;
-    }
-
-    if(mode == SCATTER)
-    {
-        setGhostScatterModeTargetTile();
     }
 
     startTimer(&ghostModeTimer);
@@ -126,7 +119,7 @@ void onModeTimerEnd() {
     // setup next timer
     if (nextDuration>0) {
         // TODO : correct convertion to seconds :
-        setDuration(&ghostModeTimer, nextDuration*60);
+        setDuration(&ghostModeTimer, nextDuration*MODE_DURATION_MULTIPLIER);
         resetTimer(&ghostModeTimer);
     }
 

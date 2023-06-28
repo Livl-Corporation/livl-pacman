@@ -9,6 +9,7 @@
 #include "enums/maze-element.h"
 #include "models/position.h"
 #include "models/maze.h"
+#include "utilities/sdl_functions.h"
 
 /**
  * Fill the maze with coins
