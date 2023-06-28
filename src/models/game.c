@@ -113,10 +113,10 @@ void startNextRoundAnimation()
 
 void endNextRoundAnimation()
 {
-    spawnPacman();
-    spawnGhosts();
     refillCoins();
     resetEatenDotsCount();
+    spawnPacman();
+    spawnGhosts();
     startReady(READY_DURATION);
 }
 
