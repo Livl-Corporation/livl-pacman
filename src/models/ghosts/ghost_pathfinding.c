@@ -27,7 +27,6 @@ Direction selectGhostDirection(struct Position cell, struct Ghost *sprite) {
             return directions[rand() % possibleDirectionsCount];
         }
 
-        // if dead, target ghost spawn point
         struct Position targetPosition;
 
         if (sprite->isDead) {

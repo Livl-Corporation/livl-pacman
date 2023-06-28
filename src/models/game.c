@@ -128,6 +128,7 @@ void incrementEatenDotsCount() {
 
 void resetEatenDotsCount() {
     eatenDotsCount = 0;
+    resetGhostDotCount();
 }
 
 int getInitialDotsCount() {

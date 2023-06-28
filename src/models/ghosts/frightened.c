@@ -26,6 +26,7 @@ void eatGhost(MazeElement ghostElement)
     resetTimer(&eatGhostAnimationTimer);
     startTimer(&eatGhostAnimationTimer);
 
+
     isGamePause = true;
     lastGhostEaten = ghostElement;
 

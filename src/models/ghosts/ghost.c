@@ -124,7 +124,7 @@ void spawnGhost(int ghostId)
     if (getEatenDotsCount() == 0)
         ghost->dotCount = 0;
 
-    ghost->isLocked = ghost->dotLimit > 0;
+    ghost->isLocked = ghost->dotCount < ghost->dotLimit;
 
     // TODO : reset position in entityMaze
     /*
@@ -214,6 +214,11 @@ void onGhostGridPositionChanged(struct Ghost *sprite)
 
     removeMazeElement(sprite->ghostElement, entityMaze);
 
+    MazeElement initialElement  = getMazeElementAt(sprite->gridPosition, initialMaze);
+    if (initialElement == RED_GHOST) {
+        sprite->isLocked = true;
+    }
+
     // check if ghost should perform an action
     MazeElement element = getMazeElementInCollisionWithEntity(sprite->gridPosition);
     switch (element)
@@ -233,6 +238,7 @@ void onGhostGridPositionChanged(struct Ghost *sprite)
     case HOME:
         if (sprite->isDead) {
             sprite->isDead = false;
+            sprite->isLocked = sprite->dotCount < sprite->dotLimit;
             // TODO : stop sound when all ghost are home
             stopEyeSound();
         }
@@ -348,5 +354,13 @@ void onDotEaten() {
             }
 
         }
+    }
+}
+
+void resetGhostDotCount() {
+    for (int i = 0; i < GHOST_COUNT; i++) {
+        struct Ghost *ghost = &ghostList[i];
+        ghost->dotCount = 0;
+        ghost->isLocked = ghost->dotCount < ghost->dotLimit;
     }
 }
