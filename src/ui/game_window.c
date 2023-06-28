@@ -16,10 +16,13 @@ void startGame()
     initGame();
     initFruits();
 
-    int dotsCount = getInitialElementAmount(BIG_COIN) + getInitialElementAmount(SMALL_COIN);
+    int dotsCount = getElementAmount(BIG_COIN) + getElementAmount(SMALL_COIN);
     setInitialDotsCount(dotsCount);
 
     spawnPacman();
+
+    // we should set scatter mode before ghosts select their directions
+    resetGhostModeTimer();
     spawnGhosts();
 
     playAudioWithChannel(audioGameStart, CHANNEL_GAME_START);
@@ -143,4 +146,8 @@ void delayToMaintainFrameRate(clock_t before, Uint32 desiredDelayInMs)
 
     if (desiredDelayInMs > milliseconds)
         SDL_Delay(desiredDelayInMs - milliseconds);
+}
+
+bool isGameRunning() {
+    return !isGamePause;
 }

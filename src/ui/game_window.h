@@ -13,19 +13,21 @@
 #include "variables.h"
 #include "models/pacman.h"
 #include "models/position.h"
-#include "models/ghost.h"
+#include "models/ghosts/ghost.h"
 #include "models/game.h"
 #include "ui/game_info_panel.h"
 #include "ui/menu_window.h"
 #include "ui/pause_menu.h"
 #include "models/fruit.h"
 #include "models/audio.h"
+#include "models/coins.h"
+#include "models/arrow.h"
 
 #define READY_W 46
 #define READY_H 7
 #define READY_UI_SCALE 3
 
-#define DELAY_MS 1.0 / GAME_SPEED * 1000
+#define DELAY_MS (1.0 / GAME_SPEED * 1000)
 
 extern int frameCount;
 extern bool isGamePause;
@@ -46,5 +48,7 @@ void handleGameEvents();
 void drawGame();
 
 void drawHeader();
+
+bool isGameRunning();
 
 #endif // PACMAN_GAME_WINDOW_H

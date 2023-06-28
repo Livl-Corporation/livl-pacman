@@ -33,7 +33,7 @@ void initFruits()
         FRUIT_COUNTS,
         0,
         FRUIT_SCORE_H + FRUIT_SCORE_Y_SPACING);
-    struct Position gridPos = getInitialPositionOfElement(FRUIT);
+    struct Position gridPos = getMazePositionOfElement(FRUIT, initialMaze);
     struct Position uiPos = gridPosToUiPos(gridPos);
     fruitUiPos = (SDL_Rect){
         uiPos.x,

@@ -27,3 +27,25 @@ void updatePosition(struct Position *position, Direction direction, float distan
             break;
     }
 }
+
+struct Position getCellCenter(struct Position position)
+{
+    struct Position center = {
+            position.x + CELL_SIZE / 2,
+            position.y + CELL_SIZE / 2,
+    };
+    return center;
+}
+
+int getDistance(struct Position pos1, struct Position pos2)
+{
+    return abs(pos1.x - pos2.x) + abs(pos1.y - pos2.y);
+}
+
+struct Position addPosition(struct Position pos1, struct Position pos2) {
+    struct Position result = {
+            pos1.x + pos2.x,
+            pos1.y + pos2.y
+    };
+    return result;
+}

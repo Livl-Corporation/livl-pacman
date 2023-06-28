@@ -20,7 +20,7 @@ GhostSpeedLevel ghostSpeedLevels[] = {
 
 float getPacmanSpeed(struct Position pacmanGridPos)
 {
-    MazeElement element = getMazeElementAt(pacmanGridPos);
+    MazeElement element = getMazeElementAt(pacmanGridPos, propsMaze);
     enum PacmanSpeed pacmanSpeed;
 
     switch (element)
@@ -36,7 +36,7 @@ float getPacmanSpeed(struct Position pacmanGridPos)
             break;
     }
 
-    if (isGhostEatable()) pacmanSpeed = PACMAN_FRIGHT_SPEED;
+    if (getGhostMode() == FRIGHTENED) pacmanSpeed = PACMAN_FRIGHT_SPEED;
 
     int round = getRound();
     float speedPercentage = PACMAN_DEFAULT_SPEED;
@@ -64,19 +64,21 @@ float getPacmanSpeed(struct Position pacmanGridPos)
     return PACMAN_DEFAULT_SPEED * speedPercentage;
 }
 
-float getGhostSpeed(struct Position ghostGridPos __attribute__((unused)))
+float getGhostSpeed(struct Ghost *ghost)
 {
+
+    if (ghost->isDead) return GHOST_DEAD_SPEED;
+
     int round = getRound();
-    float speedPercentage = PACMAN_DEFAULT_SPEED;
+    float speedPercentage = GHOST_DEFAULT_SPEED;
 
     int i = 0;
     while (ghostSpeedLevels[i].minRound <= round) {
-        // TODO: check if ghost is in Tunnel
-        //if (isGhostInTunnel(ghostGridPos))
-        //{
-        //    speedPercentage = ghostSpeedLevels[i].tunnelSpeed;
-        //}
-        if (isGhostEatable())
+        if(isGhostInTunnel(ghost))
+        {
+            speedPercentage = ghostSpeedLevels[i].tunnelSpeed;
+        }
+        else if (getGhostMode() == FRIGHTENED)
         {
             speedPercentage = ghostSpeedLevels[i].frightSpeed;
         }

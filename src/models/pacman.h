@@ -13,13 +13,15 @@
 #include "enums/direction.h"
 #include "models/maze.h"
 #include "models/game.h"
-#include "models/ghost.h"
+#include "models/ghosts/ghost.h"
 #include "../ui/game_window.h"
 #include "models/fruit.h"
 #include "speed.h"
 #include "models/audio.h"
 
 extern struct Position pacmanUIPos;
+extern Direction pacmanWishedDirection;
+extern Direction pacmanDirection;
 
 void initPacmanSprites();
 
@@ -51,27 +53,15 @@ int getPacmanAnimation();
 
 SDL_Rect getPacmanSprite(int pacmanAnimation);
 
-struct Position calculateTargetPosition(struct Position pacmanPosCopy);
-
-bool hasPacmanMoved(struct Position newPacmanGridPos);
-
 void pacmanBlit(SDL_Rect srcRect);
 
 int calculatePacmanDeathAnimationIndex();
-
-void drawPacmanArrow();
-
-void endEatGhostAnimation();
 
 /**
  * Perform action when pacman has moved in grid
  * @return pacman position in UI
  */
 struct Position onPacmanGridMove(struct Position *pacmanUiPos);
-
-struct SDL_Rect getArrow(Direction direction);
-
-bool isScoreAnimationOnGhostEaten();
 
 /**
  * Do the logic by checking if pacman eat a ghost either a ghost ate the pacman
@@ -81,11 +71,7 @@ void handleGhostCollision(MazeElement ghostElement);
 
 void killPacman();
 
-void pacmanEatGhost(MazeElement ghostElement);
-
 void pacmanBlit(SDL_Rect srcRect);
-
-int canMoveInDirection(Direction direction);
 
 struct Position teleportPacman(MazeElement teleporter);
 

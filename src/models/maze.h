@@ -21,8 +21,24 @@
 #define BLUE_MAZE_X 201
 #define WHITE_MAZE_OFFSET_X 169
 
+
+/** Use :
+- entityMaze when handling pacman or ghosts positions
+- propsMaze when handling coins & fruits
+- initialMaze when looking for obstacles
+*/
+
 extern char **initialMaze;
-extern char **gameMaze;
+
+/**
+ * Entity maze containing for storing pacman & ghosts positions
+ */
+extern char **entityMaze;
+
+/**
+ * Props maze containing for storing coins & fruits positions
+ */
+extern char **propsMaze;
 
 /**
  * Initialize maze
@@ -41,31 +57,21 @@ void freeMaze();
  * @param position the position to set as one of the maze element enum
  * @param element the element to set at the position
  */
-void setMazeElementAt(struct Position position, MazeElement element);
+void setMazeElementAt(struct Position position, MazeElement element, char **maze);
 
 /**
- * Get maze element at position in the current game maze
+ * Get maze element at position
  * @param position
  * @return MazeElement
  */
-MazeElement getMazeElementAt(struct Position position);
-
-MazeElement getInitialMazeElementAt(struct Position position);
+MazeElement getMazeElementAt(struct Position position, char **maze);
 
 /**
- * Find the position of a specific maze element in the current game maze
+ * Find the position of a specific maze element
  * @param element
  * @return Position
  */
-struct Position getMazePositionOfElement(MazeElement element);
-
-/**
- * Find the initial position of a specific maze element in the initial maze
- * @param element
- * @return Position
- */
-struct Position getInitialPositionOfElement(MazeElement element);
-
+struct Position getMazePositionOfElement(MazeElement element, char **maze);
 
 /**
  * Check if a position is in the maze bounds
@@ -81,10 +87,7 @@ bool isInBounds(struct Position position);
  */
 struct Position uiPosToGridPos(struct Position posInPx);
 
-/**
- * Fill the maze with coins
- */
-void drawCoins(int frameCount);
+
 
 /**
  * Draw the maze
@@ -93,29 +96,11 @@ void drawCoins(int frameCount);
 void drawMaze(bool applyWhiteMazeOffset);
 
 /**
- * Blit a rect with an offset
- * @param imgRect : the image rect to display
- * @param positionOffsetInMaze : the position where to display the image rect in the maze
- * @param offsetX
- * @param offsetY
- * @param width
- * @param height
- */
-void blitRectWithOffset(SDL_Rect imgRect, struct Position positionOffsetInMaze, int offsetX, int offsetY, int width, int height);
-
-/**
  * Check if a position is an obstacle
  * @param position
  * @return true if the position is an obstacle, false otherwise
  */
-bool isObstacle(struct Position position);
-
-/**
- * Check if the provided position has a collision with an obstacle
- * @param position
- * @param hitboxSize
- */
-bool hasCollision(struct Position position, int hitboxSize);
+bool isObstacle(struct Position position, bool allowDoors);
 
 /**
  * Convert a position in the grid to a position in pixels
@@ -123,8 +108,6 @@ bool hasCollision(struct Position position, int hitboxSize);
  * @return Position
  */
 struct Position gridPosToUiPos(struct Position gridPos);
-
-// Private
 
 /**
  * Retrieve the maze from a file
@@ -135,12 +118,12 @@ bool retrieveMazeFromFile();
 /**
  * Reset the game maze to the initial maze
  */
-void resetGameMaze();
+void resetMaze();
 
-void removeMazeElement(MazeElement elementToRemove);
+void removeMazeElement(MazeElement elementToRemove, char **maze);
 
-int getInitialElementAmount(MazeElement element);
+int getElementAmount(MazeElement element);
 
-void refillCoins();
+MazeElement getMazeElementInCollisionWithEntity(struct Position position);
 
 #endif // PACMAN_MAZE_H

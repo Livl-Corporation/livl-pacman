@@ -7,7 +7,7 @@
 
 #include "constants.h"
 #include "timer.h"
-#include "ghost.h"
+#include "models/ghosts/ghost.h"
 #include "maze.h"
 #include "ui/menu_window.h"
 
@@ -20,6 +20,7 @@ extern struct Timer pacmanDeathAnimationDelayTimer;
 extern struct Timer fruitTimer;
 extern struct Timer fruitScoreAnimationTimer;
 extern struct Timer nextRoundAnimationTimer;
+extern struct Timer ghostModeTimer;
 
 void initTimers();
 

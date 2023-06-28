@@ -26,5 +26,16 @@ void initSDL();
 void loadMedia();
 void closeWindow();
 
+/**
+ * Blit a rect with an offset
+ * @param imgRect : the image rect to display
+ * @param positionOffsetInMaze : the position where to display the image rect in the maze
+ * @param offsetX
+ * @param offsetY
+ * @param width
+ * @param height
+ */
+void blitRectWithOffset(SDL_Rect imgRect, struct Position positionOffsetInMaze, int offsetX, int offsetY, int width, int height);
+
 
 #endif // PACMAN_SDL_FUNCTIONS_H

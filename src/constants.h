@@ -7,7 +7,7 @@
 
 #define GAME_TITLE "PacMan"
 
-#define GAME_START_DURATION 800
+#define GAME_START_DURATION 700
 #define READY_DURATION 300
 
 #define CELL_SIZE 25
@@ -20,13 +20,15 @@
 #define TOTAL_SCREEN_WIDTH 525
 #define TOTAL_SCREEN_HEIGHT (MAZE_SCREEN_HEIGHT + HEADER_SCREEN_HEIGHT + FOOTER_SCREEN_HEIGHT)
 
+#define TUNNEL_POSITION_Y 13
+#define TUNNEL_LENGTH 5
+
 #define PATH_FILE_MAZE "../assets/text/maze.txt"
 #define PATH_SPRITE_SHEET_PACMAN "../assets/img/pacman_sprites.bmp"
 #define PATH_LOGO_LIVL_PACMAN "../assets/img/logo_livl_pacman.bmp"
 
-#define GAME_SPEED 200.0   // IN FPS, BIGGER IS FASTER
+#define GAME_SPEED 200.0
 #define ANIMATION_SPEED 14 // BIGGER IS SLOWER
-#define SPRITE_SPEED 1     // Don't change this for the moment
 
 #define GHOST_INITIAL_POS_X 4
 #define GHOST_INITIAL_POS_Y 124
@@ -39,8 +41,6 @@
 #define PACMAN_SPRITE_MOUTHS_DIRECTION 3
 #define PACMAN_SPACING_X 3
 #define PACMAN_SPACING_Y 2
-#define PACMAN_ARROW_SIZE 7
-#define PACMAN_ARROW_SPACING 20
 
 #define PACMAN_DEATH_ANIMATION_FRAMES 10
 #define PACMAN_DEATH_ANIMATION_DURATION 200

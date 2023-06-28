@@ -17,11 +17,10 @@ typedef enum
     BLUE_GHOST = '2',
     ORANGE_GHOST = '3',
     HOME = 'h',
-    CHERRY = 'c',
     DOOR = 'd',
     LEFT_TELEPORTER = 'l',
     RIGHT_TELEPORTER = 'r',
-    FRUIT = 'f'
+    FRUIT = 'f',
 } MazeElement;
 
 #endif //PACMAN_MAZE_ELEMENT_H
