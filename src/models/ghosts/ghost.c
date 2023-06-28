@@ -126,16 +126,6 @@ void spawnGhost(int ghostId)
 
     ghost->isLocked = ghost->dotCount < ghost->dotLimit;
 
-    // TODO : reset position in entityMaze
-    /*
-        if (!arePositionEquals(
-        ghostList[ghostId].gridPosition,
-        getMazePositionOfElement(ghostList[ghostId].ghostElement, &entityMaze)
-        )) {
-            removeMazeElement(ghostList[ghostId].ghostElement, entityMaze);
-            setMazeElementAt(ghostList[ghostId].gridPosition, ghostList[ghostId].ghostElement, entityMaze);
-        }
-    */
 }
 
 void drawGhosts()

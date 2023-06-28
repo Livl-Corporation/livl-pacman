@@ -64,17 +64,6 @@ void spawnPacman()
 
     lastPacmanPosition = pacmanRoundSprite;
 
-    // TODO : reset position in entityMaze
-/*
-    if (!arePositionEquals(
-        getMazePositionOfElement(PACMAN, entityMaze),
-        pacmanSpawnPos
-    )) {
-        removeMazeElement(PACMAN, &entityMaze);
-        setMazeElementAt(pacmanGridPos, PACMAN, &entityMaze);
-    }
-*/
-
 }
 
 void handlePacmanEvents()
@@ -246,8 +235,6 @@ struct Position teleportPacman(MazeElement teleporter)
     setMazeElementAt(pacmanGridPos, PACMAN, entityMaze);
     return gridPosToUiPos(pacmanGridPos);
 }
-
-
 
 void handleGhostCollision(MazeElement ghostElement)
 {
