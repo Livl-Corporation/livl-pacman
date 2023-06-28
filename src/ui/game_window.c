@@ -142,7 +142,7 @@ void drawHeader()
 void delayToMaintainFrameRate(clock_t before, Uint32 desiredDelayInMs)
 {
     clock_t difference = clock() - before;
-    int64_t milliseconds = (difference * 1000) / CLOCKS_PER_SEC;
+    int64_t milliseconds = (difference * 1000.0) / CLOCKS_PER_SEC;
 
     if (desiredDelayInMs > milliseconds)
         SDL_Delay(desiredDelayInMs - milliseconds);

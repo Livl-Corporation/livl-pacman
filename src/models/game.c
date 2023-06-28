@@ -100,6 +100,7 @@ int getRound() {
 void nextRound(){
     roundNumber++;
     startNextRoundAnimation();
+    stopEyeSound();
 }
 
 void startNextRoundAnimation()
