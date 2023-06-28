@@ -42,7 +42,7 @@ typedef struct
 } GhostSpeedLevel;
 
 #define PACMAN_DEFAULT_SPEED 1.0
-#define GHOST_DEFAULT_SPEED 1.0
+#define GHOST_DEFAULT_SPEED 0.9
 
 /*
  * PACMAN SPEED
