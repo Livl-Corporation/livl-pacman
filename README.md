@@ -21,7 +21,7 @@
 > [!NOTE]
 > Here is a video from our Pacman game made from scratch ! The game was fully implemented, with different levels, music, AI for the ghost and everything !
 
-[![Watch the gameplay]()](/assets/videos/gameplay.mp4)
+[![Gameplay video](https://youtube.com/shorts/2im7196q84Y)](https://youtube.com/shorts/2im7196q84Y)
 
 
 # 📦 Prerequisites
